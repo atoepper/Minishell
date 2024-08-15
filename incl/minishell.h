@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/08 14:04:17 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:41:17 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <string.h>
 # include <stdio.h>
+# include <stdarg.h>
 # include <sys/types.h>
 # include <sys/ioctl.h>
 # include <sys/stat.h>
@@ -54,6 +55,14 @@ typedef enum e_token_type
 
 /* STRUCTURES */
 
+typedef struct s_token
+{
+	t_token_type		type;
+	char				*value;
+	struct s_token		*next;
+	struct s_token		*prev;
+}	t_token;
+
 typedef struct s_shell
 {
 	char			*line;
@@ -71,15 +80,10 @@ typedef struct s_shell
 	// bool			heredoc_sigint;
 } t_shell;
 
-typedef struct s_token
-{
-	t_token_type		type;
-	char				*value;
-	struct s_token		*next;
-	struct s_token		*prev;
-}	t_token;
+
 
 /* BUILTINS */
+int	ft_echo(char **argc);
 int	ft_print_env(char **env);
 int	ft_exit(int exitvalue);
 int	ft_pwd(void);
