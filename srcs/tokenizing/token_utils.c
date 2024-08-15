@@ -6,13 +6,13 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:25:12 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/08 14:19:42 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:32:18 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-t_token	*ft_newtoken(char *value, t_token_type type)
+t_token	*ft_newtoken(char *value, int type)
 {
 	t_token	*newtoken;
 
