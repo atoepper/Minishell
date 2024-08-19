@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 11:13:29 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/19 11:13:31 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:18:39 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	main(void)
 	char	*argv[] = {"/bin/pwd", NULL};
     char	*envp[] = {NULL};
 	char	*str;
-
-	
 
 	if (pipe(pipefd) == -1)
 	{
