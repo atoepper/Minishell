@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/19 12:56:05 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:20:47 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_shell
 typedef struct s_buildin
 {
 	char	*name;
-	void	(*func)(void);
+	int		(*func)(int argc, char **argv);
 }	t_buildin;
 
 /* BUILTINS */
