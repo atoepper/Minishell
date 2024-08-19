@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:29:53 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/19 16:06:50 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:13:26 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_echo(char **argv)
 	i = 1;
 	if (argv == NULL || argv[1] == NULL)
 		return (0);
-	if (ft_strncmp(argv[1], "-n\0", 3) == 0)
+	if (ft_strncmp(argv[1], "-n", 3) == 0)
 		i++;
 	if (argv[i] != NULL)
 	{
