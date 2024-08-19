@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:24:37 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/19 12:27:05 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:38:49 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_function_builtin(char *name)
 {
-	char	*lst_builtins[8];
+	char	*lst_builtins[2][8];
 	int		i;
 
 	lst_builtins[0] = "echo\0";
@@ -25,10 +25,18 @@ int	is_function_builtin(char *name)
 	lst_builtins[5] = "env\0";
 	lst_builtins[6] = "exit\0";
 	lst_builtins[7] = NULL;
+	lst_builtins[0] = &echo;
+	lst_builtins[1] = &cd;
+	lst_builtins[2] = &pwd;
+	lst_builtins[3] = &export;
+	lst_builtins[4] = &unset;
+	lst_builtins[5] = &env;
+	lst_builtins[6] = &exit;
+	lst_builtins[7] = NULL;
 	i = 0;
-	while (lst_builtins[i] != NULL)
+	while (lst_builtins[0][i] != NULL)
 	{
-		if (ft_strncmp(lst_builtins[i], name, ft_strlen(name) + 1) == 0)
+		if (ft_strncmp(lst_builtins[0][i], name, ft_strlen(name) + 1) == 0)
 			return (1);
 		i++;
 	}
