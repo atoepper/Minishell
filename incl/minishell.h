@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/15 15:41:17 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:56:05 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,20 @@ typedef struct s_shell
 	// char			**environ;
 	// t_env			*envlst;
 	// bool			heredoc_sigint;
-} t_shell;
+}	t_shell;
 
-
+typedef struct s_buildin
+{
+	char	*name;
+	void	(*func)(void);
+}	t_buildin;
 
 /* BUILTINS */
 int	ft_echo(char **argc);
 int	ft_print_env(char **env);
 int	ft_exit(int exitvalue);
 int	ft_pwd(void);
+int	ft_cd(const char *path);
 
 /* EXECUTION */
 
