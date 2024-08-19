@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/19 15:55:27 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:22:38 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,14 +150,14 @@ char	*search_function_in_path(char *name)
 	return (str);
 }
 
-int exec_builtin(int argc, char **argv)
+int exec_builtin(char **argv)
 {
 	t_function_ptr	func;
 
 	func = functionpath_builtins(argv[0]);
 	if (func != NULL)
 	{
-		func(argc, argv);
+		func(argv);
 		return (0);
 	}
 	return (1);
@@ -210,10 +210,10 @@ int	exec_external(char **argv)
 
 int	main(void)
 {
-	char			*argv[] = {"echo", "-n", "hellorrrrr world"};
-	int				argc = 3;
+	char	*argv[] = {"echo", "-n5", "hellorrrrr world", "bla", "blubb", NULL};
 
-	if (exec_builtin(argc, argv))
+	if (exec_builtin(argv))
 		exec_external(argv);
 	return (0);
 }
+
