@@ -6,29 +6,11 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:24:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/15 12:57:15 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:06:18 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-void	ft_skipspaces(char **line)
-{
-	while (*line && **line == ' ')
-		(*line)++;
-}
-
-int	ft_nextchar(char *str, char c)
-{
-	int index;
-
-	index = 0;
-	while (str[index] && str[index] != c)
-		index++;
-	if (str[index] == '\0' && c != '\0')
-		return (-1);
-	return (index);
-}
 
 t_token *ft_newquote(char **line)
 {
@@ -39,7 +21,7 @@ t_token *ft_newquote(char **line)
 	line_ptr = *line;
 	if ((*line_ptr == '\"' && !ft_strchr(line_ptr + 1, '\"')) ||  
 		(*line_ptr == '\'' && !ft_strchr(line_ptr + 1, '\'')))
-			return (/* set error */ NULL);
+			return (/* error */ printf("open quotes\n"), NULL);
 	len = ft_nextchar(line_ptr + 1, (*line_ptr == '\'') * '\''
 		+ (*line_ptr == '\"') * '\"');
 	new = ft_newtoken(ft_substr(line_ptr, 1, len),
@@ -56,12 +38,12 @@ t_token *ft_newredirection(char **line)
 	char	*line_ptr;
 
 	line_ptr = *line;
-	new = ft_newtoken("", REDIRECT);
+	new = ft_newtoken(NULL, REDIRECT);
 	if (!new)
 		return(/* malloc error */NULL);
-	if (!ft_strncmp(*line_ptr, "<<", 2))
+	if (!ft_strncmp(line_ptr, "<<", 2))
 		new->type |= HEREDOC;
-	else if (!ft_strncmp(*line_ptr, ">>", 2))
+	else if (!ft_strncmp(line_ptr, ">>", 2))
 		new->type |= WRITE_APPEND;
 	else if (*line_ptr == '<')
 		new->type |= READ;
@@ -71,41 +53,91 @@ t_token *ft_newredirection(char **line)
 		(*line) += 2;
 	else
 		(*line) += 1;
+	// printf("value test: %s, %d\n", new->value, new->type);
 	return (new); 
 }
 
 t_token *ft_newpipe(char **line)
 {
 	t_token	*new;
-	new = ft_newtoken("|", PIPE);
+
+	new = ft_newtoken(NULL, PIPE);
+	if (!new)
+		return (/* error malloc */ NULL);
+	(*line)++;
 	return (new); 
 }
 
 t_token *ft_newword(char **line)
 {
-	
+	t_token	*new;
+	char	*word;
+	char	*line_ptr;
+
+	line_ptr = *line;
+	word = ft_substr(line_ptr, 0, ft_wordlength(line_ptr));
+	new = ft_newtoken(word, WORD);
+	if (!new)
+		return (/* malloc error */ NULL);
+	if (ft_strchr(new->value, '$'))
+		new->type |= EXPANDER;
+	(*line) += ft_wordlength(line_ptr);
+	return(new);
 }
 
 
 t_token *ft_linetolist(char *line, int *error)
 {
-	int		error;
 	t_token	*list;
 	t_token	*new;
 
+	(void)error;
 	list = NULL;
+	ft_skipspaces(&line);
 	while (*line)
 	{
-		ft_skipspaces(line);
 		if (*line == '\'' || *line == '\"')
-			/* read quotes */
-		if (*line == '<' || *line == '>')
-			/* read redirection < << >> > | */
-		if (*line == '|')
-			/* read pipe */
+			new = ft_newquote(&line);
+		else if (*line == '<' || *line == '>')
+			new = ft_newredirection(&line);
+		else if (*line == '|')
+			new = ft_newpipe(&line);
 		else
-			/* read word */
-		/* append token to list */
+			new = ft_newword(&line);
+		if (!new)
+			return(ft_clear_tokenlist(&list), NULL);
+		if (new->type & WORD && !ft_isseparator(*line))
+			new->type |= RIGHT_JOIN;
+		ft_skipspaces(&line);
+		ft_addtoken(&list, new);
 	}
 	return (list);
+}
+
+int	ft_joinwords(t_token **list)
+{
+	t_token *current;
+	t_token	*tmp;
+	char	*joint;
+ 	
+	current = *list;
+	while (current->next != NULL)
+	{
+		if (current->type & RIGHT_JOIN)
+		{
+			joint = ft_strjoin(current->value, current->next->value);
+			if (!joint)
+				return (/* handle error */ 1);
+			free(current->value);
+			current->value = joint;
+			if (!(current->next->type & RIGHT_JOIN))
+				current->type &= ~RIGHT_JOIN;
+			tmp = current->next;
+			current->next = current->next->next;
+			ft_deltoken(tmp);
+		}
+		else 
+			current = current->next;	
+	}
+	return (0);
 }

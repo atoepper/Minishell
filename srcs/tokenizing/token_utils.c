@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:25:12 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/13 18:32:18 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:03:26 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_addtoken(t_token **tokenlist, t_token *newtoken)
 {
 	t_token	*current;
 
-	if (!tokenlist)
+	if (!*tokenlist)
 		*tokenlist = newtoken;
 	else
 	{
@@ -40,6 +40,12 @@ void	ft_addtoken(t_token **tokenlist, t_token *newtoken)
 		current->next = newtoken;
 		newtoken->prev = current;
 	}
+}
+
+void	ft_deltoken(t_token *token)
+{
+	free(token->value);
+	free(token);
 }
 
 void	ft_clear_tokenlist(t_token	**tokenlist)
@@ -60,14 +66,48 @@ void	ft_clear_tokenlist(t_token	**tokenlist)
 	*tokenlist = NULL;
 }
 
+void ft_printtypes(int type)
+{
+	if (type & DQUOTE)
+		printf("DQUOTE ");
+	if (type & SQUOTE)
+		printf("SQUOTE ");
+	if (type & WORD)
+		printf("WORD ");
+	if (type & EXPANDER)
+		printf("EXPANDER ");
+	if (type & PIPE)
+		printf("PIPE ");
+	if (type & REDIRECT)
+		printf("REDIRECT ");
+	if (type & WRITE)
+		printf("WRITE ");
+	if (type & WRITE_APPEND)
+		printf("WRITE APPEND ");
+	if (type & HEREDOC)
+		printf("HEREDOC ");
+	if (type & READ)
+		printf("READ ");
+	if (type & RIGHT_JOIN)
+		printf("RIGHT_JOIN");
+	printf ("\n");
+}
+
 void	ft_printlist(t_token **tokenlist)
 {
 	t_token	*current;
 
 	current = *tokenlist;
+	if (!tokenlist || !*tokenlist)
+	{
+		printf("list is empty\n");
+		return ;
+	}
+	printf("token list: \n");
 	while (current)
 	{
-		printf("Value: %s, Type; %i\n", current->value, current->type);
+		printf("Value: %s, Type: ", current->value);
+		ft_printtypes(current->type);
 		current = current->next;
 	}
 	
