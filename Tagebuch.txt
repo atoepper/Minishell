@@ -5,3 +5,6 @@
 19.8.	Johannes	Ausfuehren einer Funktoin mittels execve und pipen der Ausgabe in ein str
 19.8.	Johannes	suchen einer Funktion in PATH und rueckgabe des Ordners wenn vorhanden sonst NULL
 19.8.	Johannes	Checken ob Funktion in buildin-Liste
+19.8. Alexander Zerlegung des Inputs in die tokens REDIRECTION, PIPE, WORD, QUOTES mit weiterer Qualifizierung.
+19.8. Alexander Verbindung von nicht getrennten WORDS wie abc"def" -> abcdef
+19.8. Alexander Erfolgreiche Tests der Tokenization mit entsprechender Ausgabe.
