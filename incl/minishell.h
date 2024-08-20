@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/19 16:03:39 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/20 13:26:08 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,24 @@ typedef struct s_builtin
 }	t_builtin;
 
 /* BUILTINS */
-int	ft_echo(char **argv);
-int	ft_print_env(char **env);
-int	ft_exit(int exitvalue);
-int	ft_pwd(void);
-int	ft_cd(const char *path);
+int		ft_echo(char **argv);
+int		ft_print_env(char **env);
+int		ft_exit(int exitvalue);
+int		ft_pwd(void);
+int		ft_cd(const char *path);
 
 /* EXECUTION */
+int				exec_external(char **argv);
+char			*ft_join_path_and_name(char *path, char *name);
+char			*search_function_in_path(char *name);
+int				search_file_in_directory(const char *directory, char *name);
+int				exec_builtin(char **argv);
+t_function_ptr	functionpath_builtins(char *name);
+t_builtin		**fill_lst_builtins(void);
+t_builtin		**alloc_lst_builtins(void);
+void			free_lst_builtin(t_builtin	**lst_builtins);
+int				exec_function(char **argv);
+char			*read_fd_to_str(int fd);
 
 /* EXPANDER */
 
