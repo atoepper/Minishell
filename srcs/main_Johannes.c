@@ -5,69 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/07 09:19:56 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/15 16:34:16 by jweingar         ###   ########.fr       */
+/*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
+/*   Updated: 2024/08/20 16:36:57 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int search_file_in_directory(const char *directory, const char *filename) {
-    struct dirent *entry;
-    DIR *dp = opendir(directory);
+int	pipe_function(char *argvs[2][6], int in_fd)
+{
+	int		pipefd[2];
+	pid_t	pid;
+	int		exit_status;
 
-    if (dp == NULL) {
-        perror("opendir");
-        return -1;
-    }
-
-    while ((entry = readdir(dp)) != NULL) {
-        if (strcmp(entry->d_name, filename) == 0) {
-            closedir(dp);
-            return 1;  // Datei gefunden
-        }
-    }
-
-    closedir(dp);
-    return 0;  // Datei nicht gefunden
+	if (argvs[0][0] == NULL)
+		return (0);
+	if (pipe(pipefd) == -1)
+		return (perror("pipe"), 1);
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return (EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		if (in_fd != 0)
+		{
+			dup2(in_fd, 0);
+			close(in_fd);
+		}
+		if (argvs[1][0] != NULL)
+			dup2(pipefd[1], 1);
+		close(pipefd[0]);
+		exec_function(argvs[0]);
+		exit(EXIT_SUCCESS);
+	}
+	else if (pid != 0)
+	{
+		wait(&exit_status);
+		close(pipefd[1]);
+		if (in_fd != 0)
+			close(in_fd);
+		pipe_function(argvs + 1, pipefd[0]);
+	}
+	return (0);
 }
-
 
 int	main(void)
 {
-	char *path;
-	char **lst_path;
-	int i;
-	// const char *directory = "/bin";
-    // const char *filename = "echo";
-
-	path = getenv("PATH");
-	if (path != NULL) {
-        // Ausgabe des PATH-Werts
-        printf("PATH: %s\n", path);
-    } else {
-        // Fehlerbehandlung, falls PATH nicht gesetzt ist
-        printf("The PATH environment variable is not set.\n");
-    }
-	lst_path = ft_split(path, ':');
-	i = 0;
-	while (lst_path[i] != NULL)
-	{
-		printf("%s\n", lst_path[i]);
-		i++;
-	}
-
-
-    while (search_file_in_directory(directory, filename) != 0;
-
-    // if (result == 1) {
-    //     printf("File '%s' found in directory '%s'.\n", filename, directory);
-    // } else if (result == 0) {
-    //     printf("File '%s' not found in directory '%s'.\n", filename, directory);
-    // } else {
-    //     printf("An error occurred while searching the directory.\n");
-    // }
-
-
-	return (0);
+	char *argvs[][6] = {
+		{"echo", "n5", "hellorrrrr world", "bla", "blubb", NULL},
+		{"wc", NULL},
+		{"wc", NULL},
+		{"wc", "-w", NULL},
+		{NULL}
+	};
+	
+	pipe_function(argvs, 0);
 }
