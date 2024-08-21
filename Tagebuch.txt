@@ -8,3 +8,5 @@
 19.8. Alexander Zerlegung des Inputs in die tokens REDIRECTION, PIPE, WORD, QUOTES mit weiterer Qualifizierung.
 19.8. Alexander Verbindung von nicht getrennten WORDS wie abc"def" -> abcdef
 19.8. Alexander Erfolgreiche Tests der Tokenization mit entsprechender Ausgabe.
+20.8. Alexander Habe die Funktionsweise des $-expanders untersucht und eine moegliche Struktur in Pesudo-code notiert.
+21.8. Alexander Implementierung der Environment-Liste und des Expanders.
