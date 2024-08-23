@@ -14,3 +14,4 @@
 22.8.  Alexander  Expander funktioniert ueberwiegend. Segfault, wenn Keword nicht in der Environment-list -> In diesem Fall muss ein leerer String erzeugt werden.
 23.8.  Alexander  Segfault im Expander beseitigt.
 23.8.  Alexander  Recherche zu verschiedenen Parsertypen. Top-down parsing oder Bottom-up parsing?
+23.8.  Alexander  Recursive descendent Parser vorbereitet. 
