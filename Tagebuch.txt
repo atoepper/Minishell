@@ -12,3 +12,5 @@
 21.8.  Alexander  Implementierung der Environment-Liste und des Expanders.
 22.8.  Alexander  Environment-Liste ist angelegt und wird zu Beginn des Programms initialisiert, allociert und am Ende freigegeben. Zwei verbleibende Memoryleaks.
 22.8.  Alexander  Expander funktioniert ueberwiegend. Segfault, wenn Keword nicht in der Environment-list -> In diesem Fall muss ein leerer String erzeugt werden.
+23.8.  Alexander  Segfault im Expander beseitigt.
+23.8.  Alexander  Recherche zu verschiedenen Parsertypen. Top-down parsing oder Bottom-up parsing?
