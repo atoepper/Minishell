@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:14:23 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/22 16:10:11 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:57:42 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,18 @@ char	*ft_getvalue(char *str)
 	char	*value;
 
 	value = ft_strchr(str, '=');
-	if (value == NULL || *(value + 1) == '\0')
+	if (value == NULL)
         return NULL;
 	value++;
 	return (value);
+}
+
+char	*ft_getkeyword(char *str)
+{
+	char	*key;
+
+	key = ft_substr(str, 0, ft_nextchar(str, '='));
+	return (key);
 }
 
 char	*ft_find_value_by_key(t_env *list, char *keyword)
@@ -35,13 +43,6 @@ char	*ft_find_value_by_key(t_env *list, char *keyword)
 	return (NULL);
 }
 
-char	*ft_getkeyword(char *str)
-{
-	char	*key;
-
-	key = ft_substr(str, 0, ft_nextchar(str, '='));
-	return (key);
-}
 
 void	ft_change_envvalue(t_env *envlist, char *key, char *new_value)
 {

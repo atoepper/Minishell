@@ -6,11 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/26 16:06:29 by atoepper         ###   ########.fr       */
-=======
-/*   Updated: 2024/08/26 15:48:59 by jweingar         ###   ########.fr       */
->>>>>>> 1c56f663f999d470319345e20662c0ba636f2890
+/*   Updated: 2024/08/26 16:38:45 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +136,8 @@ int		ft_print_env(char **envp);
 int		ft_exit(char **argv, char **envp);
 int		ft_pwd(char **argv, char **envp);
 int		ft_cd(char **argv, char **envp);
-int		ft_env(char **argv, char **envp);
-int		ft_export(char **argv, char **envp);
+int		ft_env(char **argv, t_env *envlst);
+int		ft_export(char **argv, t_env *envlst);
 int		ft_unset(char **argv, char **envp);
 
 /* ENVIRONMENT */
