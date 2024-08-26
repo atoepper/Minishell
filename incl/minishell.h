@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 15:44:31 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:48:59 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ char			*ft_join_path_and_name(char *path, char *name);
 char			*search_function_in_path(char *name);
 int				search_file_in_directory(const char *directory, char *name);
 int				exec_builtin(char **argv, char **envp);
-t_function_ptr	functionpath_builtins(char *name, char **env);
+t_function_ptr	functionpath_builtins(char *name);
 t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
