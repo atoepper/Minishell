@@ -6,13 +6,13 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:24:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/19 16:06:18 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:01:47 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-t_token *ft_newquote(char **line)
+t_token	*ft_newquote(char **line)
 {
 	t_token	*new;
 	char	*line_ptr;
@@ -32,7 +32,7 @@ t_token *ft_newquote(char **line)
 	return (new); 
 }
 
-t_token *ft_newredirection(char **line)
+t_token	*ft_newredirection(char **line)
 {
 	t_token	*new;
 	char	*line_ptr;
@@ -57,7 +57,7 @@ t_token *ft_newredirection(char **line)
 	return (new); 
 }
 
-t_token *ft_newpipe(char **line)
+t_token	*ft_newpipe(char **line)
 {
 	t_token	*new;
 
@@ -68,7 +68,7 @@ t_token *ft_newpipe(char **line)
 	return (new); 
 }
 
-t_token *ft_newword(char **line)
+t_token	*ft_newword(char **line)
 {
 	t_token	*new;
 	char	*word;
@@ -86,7 +86,7 @@ t_token *ft_newword(char **line)
 }
 
 
-t_token *ft_linetolist(char *line, int *error)
+t_token	*ft_linetolist(char *line, int *error)
 {
 	t_token	*list;
 	t_token	*new;

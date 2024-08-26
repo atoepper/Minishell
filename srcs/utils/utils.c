@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:41:34 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/19 15:19:30 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:19:31 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ int	ft_nextchar(char *str, char c)
 	return (index);
 }
 
+int	ft_end_of_varname(char *str)
+{
+	int index;
+
+	index = 0;
+	if (ft_isalpha(str[0]) || str[0] == '_')
+	{
+		while (str[index] && (ft_isalnum(str[index])  || str[index] == '_'))
+			index++;		
+	}
+	return (index);
+}
+
 int	ft_wordlength(char *line)
 {
 	int	len;
@@ -50,4 +63,18 @@ bool	ft_isseparator(const char c)
 		return (true);
 	else
 		return (false);
+}
+
+bool	ft_iskeyword(char *str)
+{
+	if (*str && ft_isalpha(str[0]))
+		return (TRUE);
+	else if (*str && *str == '_')
+	{
+		while (*str == '_')
+			str++;
+		if (ft_isalnum(*str))
+			return (TRUE);
+	}
+	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:25:12 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/19 16:03:26 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:09:20 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	ft_clear_tokenlist(t_token	**tokenlist)
 	}
 	*tokenlist = NULL;
 }
+
+/* Tester */
 
 void ft_printtypes(int type)
 {
