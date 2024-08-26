@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 11:08:41 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:10:24 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,21 @@
 
 /* STRUCTURES */
 
+typedef struct s_token
+{
+	int					type;
+	char				*value;
+	struct s_token		*next;
+	struct s_token		*prev;
+}	t_token;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_shell
 {
 	char			*line;
@@ -82,17 +97,9 @@ typedef struct s_shell
 	// t_parse_err		parse_err;
 	// char			**environ;
 	// bool			heredoc_sigint;
-}	t_shell;
+} t_shell;
 
 typedef int	(*t_function_ptr)(char **argv);
-
-typedef struct s_token
-{
-	t_token_type		type;
-	char				*value;
-	struct s_token		*next;
-	struct s_token		*prev;
-}	t_token;
 
 typedef struct s_builtin
 {
