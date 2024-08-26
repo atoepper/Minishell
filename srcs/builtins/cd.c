@@ -3,21 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:57:51 by atoepper          #+#    #+#             */
-/*   Updated: 2024/07/02 17:08:36 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:14:58 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_cd(const char *path)
+int	ft_cd(char **argv)
 {
-	if (!path)
-		/* go home */
-	if (chdir(path) != EXIT_SUCCESS)
-		/* error msg, return 1 */	
-	/* update envp */
-	return(0);
+	int	return_value;
+
+	if (argv == NULL || argv[1] == NULL)
+		return (1);
+	return_value = chdir(argv[1]);
+	if (chdir(argv[1]) != EXIT_SUCCESS)
+		return(perror("chdir"), return_value);
+	printf("rv: %i\n", return_value);
+	return(return_value);
 }

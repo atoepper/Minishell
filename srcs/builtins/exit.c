@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:35:06 by atoepper          #+#    #+#             */
-/*   Updated: 2024/07/02 16:37:18 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:12:36 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_exit(int exitvalue)
+int	ft_exit(char **argv)
 {
-	/* garbage_collection */
+	int	exitvalue;
+
+	(void)argv;
+	exitvalue = 0;
 	exit(exitvalue);
 }
