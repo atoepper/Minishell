@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/26 12:31:34 by jweingar         ###   ########.fr        #
+#    Updated: 2024/08/26 16:06:58 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ LIBFT = libft
 
 ### SOURCE FILES ###
 SOURCES = main.c \
+			init.c \
 			builtins/cd.c \
 			builtins/echo.c \
 			builtins/env.c \

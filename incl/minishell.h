@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 13:13:23 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:06:29 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@
 # define RIGHT_JOIN		0b00000000000000000000000000010000
 # define WORD_JOIN		0b00000000000000000000000000110000
 
-typedef enum {
+typedef enum
+{
 	PROGRAM,
 	PIPELINE,
-	COMMAND_SECTION,
+	COMMAND_TERM,
 	COMMAND,
 	REDIR_ITER,
-	REDIRECTION,
+	REDIR_TERM,
 	REDIR,
 	EXEC_PATH,
 	FILE_PATH,
@@ -95,7 +96,7 @@ typedef struct s_env
 
 typedef struct s_ast_node
 {
-	ast_node_type			type;
+	ast_node_type		type;
 	char				*value;
 	char				**argv;
 	struct s_ast_node	*child;
@@ -161,6 +162,11 @@ void			free_lst_builtin(t_builtin	**lst_builtins);
 int				exec_function(char **argv);
 char			*read_fd_to_str(int fd);
 
+/* INIT */
+int		init_shell(t_shell *mshell, char **envp);
+void	create_prompt(t_shell *mshell);
+int		init_environment(t_shell *mshell, char **envp);
+
 /* EXPANDER */
 char	*ft_expand(char *value, t_shell *mshell);
 int		expander(t_shell *mshell);
@@ -177,11 +183,11 @@ int		ft_joinwords(t_token **list);
 
 /* PARSING */
 t_ast_node	*parse_program(t_token **current_token);
-t_ast_node	*parse_pipe_line(t_token **current_token);
+t_ast_node	*parse_pipe(t_token **current_token);
+t_ast_node	*parse_command_term(t_token **current_token);
 t_ast_node	*parse_command(t_token **current_token);
-t_ast_node	*parse_simple_command(t_token **current_token);
 t_ast_node	*parse_redir_iter(t_token **current_token);
-t_ast_node	*parse_redir_chunk(t_token **current_token);
+t_ast_node	*parse_redir_term(t_token **current_token);
 t_ast_node	*create_ast_node(ast_node_type type, char *value);
 void		add_child_node(t_ast_node *parent, t_ast_node *child);
 void		free_ast(t_ast_node *node);
