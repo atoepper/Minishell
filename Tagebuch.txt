@@ -5,3 +5,13 @@
 19.8.	Johannes	Ausfuehren einer Funktoin mittels execve und pipen der Ausgabe in ein str
 19.8.	Johannes	suchen einer Funktion in PATH und rueckgabe des Ordners wenn vorhanden sonst NULL
 19.8.	Johannes	Checken ob Funktion in buildin-Liste
+19.8.  Alexander  Zerlegung des Inputs in die tokens REDIRECTION, PIPE, WORD, QUOTES mit weiterer Qualifizierung.
+19.8.  Alexander  Verbindung von nicht getrennten WORDS wie abc"def" -> abcdef
+19.8.  Alexander  Erfolgreiche Tests der Tokenization mit entsprechender Ausgabe.
+20.8.  Alexander  Habe die Funktionsweise des $-expanders untersucht und eine moegliche Struktur in Pesudo-code notiert.
+21.8.  Alexander  Implementierung der Environment-Liste und des Expanders.
+22.8.  Alexander  Environment-Liste ist angelegt und wird zu Beginn des Programms initialisiert, allociert und am Ende freigegeben. Zwei verbleibende Memoryleaks.
+22.8.  Alexander  Expander funktioniert ueberwiegend. Segfault, wenn Keword nicht in der Environment-list -> In diesem Fall muss ein leerer String erzeugt werden.
+23.8.  Alexander  Segfault im Expander beseitigt.
+23.8.  Alexander  Recherche zu verschiedenen Parsertypen. Top-down parsing oder Bottom-up parsing?
+23.8.  Alexander  Recursive descendent Parser vorbereitet. 
