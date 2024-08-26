@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 10:50:40 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:06:53 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,11 @@ typedef struct s_token
 }	t_token;
 
 /* BUILTINS */
-int	ft_print_env(char **env);
-int	ft_exit(int exitvalue);
-int	ft_pwd(void);
+int		ft_echo(char **argv);
+int		ft_print_env(char **env);
+int		ft_exit(char **argv);
+int		ft_pwd(char **argv);
+int		ft_cd(char **argv);
 
 /* EXECUTION */
 int				exec_external(char **argv);
