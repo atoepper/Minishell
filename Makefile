@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
+#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/26 11:31:07 by atoepper         ###   ########.fr        #
+#    Updated: 2024/08/26 12:31:34 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,9 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)/$(NAME).h tmp
 	@$(CC) $(FLAGS) -c -o $@ $<
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(NOC)"
 
+run: all
+	@./$(NAME)
+
 clean:
 	@echo "$(GREEN)Supressing libraries files$(CYAN)"
 	@make clean -C $(LIBFT)
@@ -95,4 +98,4 @@ fclean:
 re: fclean 
 	@$(MAKE) all
 
-.PHONY: temporary, re, fclean, clean
+.PHONY: temporary, re, fclean, clean, run
