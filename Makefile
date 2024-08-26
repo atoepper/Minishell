@@ -6,7 +6,7 @@
 #    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/22 14:20:36 by atoepper         ###   ########.fr        #
+#    Updated: 2024/08/26 11:31:07 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,16 @@ LIBFT = libft
 
 ### SOURCE FILES ###
 SOURCES = main.c \
+			builtins/cd.c \
+			builtins/echo.c \
 			builtins/env.c \
 			builtins/exit.c \
 			builtins/pwd.c \
 			env/env.c \
 			env/envlist.c \
 			execution/execute.c \
+			execution/exec_builtin.c \
+			execution/exec_external.c \
 			expander/expand.c \
 			parsing/parse.c \
 			tokenizing/tokenize.c \
