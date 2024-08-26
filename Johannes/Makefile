@@ -6,7 +6,7 @@
 #    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/15 13:50:44 by jweingar         ###   ########.fr        #
+#    Updated: 2024/08/20 10:58:26 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,10 @@ LIBFT_A = $(LIBFT)/libft.a
 
 ### SOURCE FILES ###
 SOURCES = 	main_Johannes.c \
-			builtins/echo.c 
+			builtins/echo.c \
+			execution/exec_external.c \
+			execution/exec_builtin.c \
+			execution/execute.c
 #			builtins/exit.c \
 #			builtins/pwd.c \
 #			execution/execute.c \
@@ -66,7 +69,7 @@ $(NAME): $(LIBFT_A) $(OBJS)
 
 tmp:
 	@mkdir -p $(OBJ_PATH)/builtins
-#@mkdir -p $(OBJ_PATH)/execution
+	@mkdir -p $(OBJ_PATH)/execution
 #@mkdir -p $(OBJ_PATH)/expander
 #@mkdir -p $(OBJ_PATH)/parsing
 #@mkdir -p $(OBJ_PATH)/tokenizing
