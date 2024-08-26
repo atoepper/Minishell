@@ -1,0 +1,5 @@
+*.o
+mini_shell
+test_main
+*.a
+a.out
