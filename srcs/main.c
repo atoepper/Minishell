@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/22 15:02:54 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 12:00:04 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,27 @@ int	init_environment(t_shell *mshell, char **envp)
 	return(0);
 }
 
+void	create_prompt(t_shell *mshell)
+{
+	char	*cwd;
+	char	*tmp;
+
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
+	if (mshell->prompt)
+		free (mshell->prompt);
+	tmp = ft_strjoin ("minishell \033[1;34m", cwd);
+	mshell->prompt = ft_strjoin(tmp, "\033[0m % ");
+	free (cwd);
+	free (tmp);
+}
+
 int	init_shell(t_shell *mshell, char **envp)
 {
 	ft_memset(mshell, 0, sizeof(t_shell));
 	/* init environment */
 	init_environment(mshell, envp);
+	create_prompt(mshell);
 	mshell->in = dup(0);
 	mshell->out = dup(1);
 	/* tcgetattr */
@@ -65,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		/* init signals */
 		/* readline */
-		mshell.line = readline("\033[1;34mminishell>\033[0m ");
+		mshell.line = readline(mshell.prompt);
 		if (!mshell.line)
 			return(free(mshell.line), 0);
 		/* Testing */
@@ -80,6 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		/* parse */
 		/* handle errors */
 		/* execute parse tree */		
+		create_prompt(&mshell);
 		ft_clear_tokenlist(&mshell.token_list);
 		free(mshell.line);
 	}
