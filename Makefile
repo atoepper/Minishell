@@ -6,7 +6,7 @@
 #    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/07 14:26:14 by atoepper         ###   ########.fr        #
+#    Updated: 2024/08/22 14:20:36 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,15 @@ SOURCES = main.c \
 			builtins/env.c \
 			builtins/exit.c \
 			builtins/pwd.c \
+			env/env.c \
+			env/envlist.c \
 			execution/execute.c \
 			expander/expand.c \
 			parsing/parse.c \
-			tokenizing/tokenize.c
+			tokenizing/tokenize.c \
+			tokenizing/linetolist.c \
+			tokenizing/token_utils.c \
+			utils/utils.c 
 
 ### OBJECTS ###
 
@@ -60,11 +65,13 @@ $(NAME): $(OBJS)
 
 tmp:
 	@mkdir -p $(OBJ_PATH)/builtins
+	@mkdir -p $(OBJ_PATH)/env
 	@mkdir -p $(OBJ_PATH)/execution
 	@mkdir -p $(OBJ_PATH)/expander
 	@mkdir -p $(OBJ_PATH)/parsing
 	@mkdir -p $(OBJ_PATH)/tokenizing
 	@mkdir -p $(OBJ_PATH)/signals
+	@mkdir -p $(OBJ_PATH)/utils
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)/$(NAME).h tmp
 	@$(CC) $(FLAGS) -c -o $@ $<

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/20 13:26:08 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:50:40 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,53 @@
 
 /* ENUMS */
 
-typedef enum e_token_type
-{
-	T_IDENTIFIER,
-	T_LESS,
-	T_GREAT,
-	T_DLESS,
-	T_DGREAT,
-	T_PIPE,
-	T_O_PARENT,
-	T_C_PARENT,
-	T_AND,
-	T_OR,
-	T_NL,
-}	t_token_type;
+// token_type
+# define EXPANDER		0b10000000000000000000000000000000
+# define PIPE			0b01000000000000000000000000000000
+# define REDIRECT		0b00100000000000000000000000000000
+# define WORD			0b00010000000000000000000000000000
+
+// redirection
+# define READ			0b00000000100000000000000000000000
+# define HEREDOC		0b00000000010000000000000000000000
+# define WRITE			0b00000000001000000000000000000000
+# define WRITE_APPEND	0b00000000000100000000000000000000
+
+// word_type
+//  define PURE_WORD		0b00000000000000001000000000000000
+//  define EXPANDED		0b00000000000000000100000000000000
+# define DQUOTE			0b00000000000000000010000000000000
+# define SQUOTE			0b00000000000000000001000000000000
+//  define QUOTE			0b00000000000000000011000000000000
+
+// linked_word_status
+# define LEFT_IFS		0b00000000000000000000000010000000
+# define RIGHT_IFS		0b00000000000000000000000001000000
+# define LEFT_JOIN		0b00000000000000000000000000100000
+# define RIGHT_JOIN		0b00000000000000000000000000010000
+# define WORD_JOIN		0b00000000000000000000000000110000
 
 /* STRUCTURES */
+
+typedef struct s_shell
+{
+	char			*line;
+	int				in;
+	int				out;
+	int				exit_status;
+	int				error;
+	struct termios	startterm;	
+	t_token			*token_list;
+	t_token			*curr_token;
+	t_env			*envlst;
+	// t_node			*ast;
+	// bool			signint_child;
+	// t_parse_err		parse_err;
+	// char			**environ;
+	// bool			heredoc_sigint;
+}	t_shell;
+
+typedef int	(*t_function_ptr)(char **argv);
 
 typedef struct s_token
 {
@@ -63,37 +94,10 @@ typedef struct s_token
 	struct s_token		*prev;
 }	t_token;
 
-typedef struct s_shell
-{
-	char			*line;
-	int				in;
-	int				out;
-	int				exit_status;
-	struct termios	startterm;	
-	t_token			**token_list;
-	t_token			*curr_token;
-	// t_node			*ast;
-	// bool			signint_child;
-	// t_parse_err		parse_err;
-	// char			**environ;
-	// t_env			*envlst;
-	// bool			heredoc_sigint;
-}	t_shell;
-
-typedef int	(*t_function_ptr)(char **argv);
-
-typedef struct s_builtin
-{
-	char			*name;
-	t_function_ptr	func;
-}	t_builtin;
-
 /* BUILTINS */
-int		ft_echo(char **argv);
-int		ft_print_env(char **env);
-int		ft_exit(int exitvalue);
-int		ft_pwd(void);
-int		ft_cd(const char *path);
+int	ft_print_env(char **env);
+int	ft_exit(int exitvalue);
+int	ft_pwd(void);
 
 /* EXECUTION */
 int				exec_external(char **argv);
@@ -109,11 +113,29 @@ int				exec_function(char **argv);
 char			*read_fd_to_str(int fd);
 
 /* EXPANDER */
+char	*ft_expand(char *value, t_shell *mshell);
+int	expander(t_shell *mshell);
 
 /* TOKENIZING */
+t_token	*ft_newtoken(char *value, int type);
+void	ft_addtoken(t_token **tokenlist, t_token *newtoken);
+void	ft_clear_tokenlist(t_token	**tokenlist);
+void	ft_deltoken(t_token *token);
+void	ft_printlist(t_token **tokenlist);
+t_token *ft_linetolist(char *line, int *error);
+int		ft_tokenize(t_shell *mshell);
+int		ft_joinwords(t_token **list);
 
 /* PARSING */
 
 /* SIGNALS */
+
+/* UTILS */
+void	ft_skipspaces(char **line);
+int		ft_nextchar(char *str, char c);
+int		ft_wordlength(char *line);
+bool	ft_isseparator(const char c);
+int		ft_end_of_varname(char *str);
+bool	ft_iskeyword(char *str);
 
 #endif
