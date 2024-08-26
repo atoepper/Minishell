@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 16:02:45 by atoepper          #+#    #+#             */
-/*   Updated: 2024/01/30 13:59:55 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:06:42 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (join == NULL)
 		return (NULL);
 	i = 0;
-	while (s1[i] != '\0')
+	while (s1 != NULL && s1[i] != '\0')
 	{
 		join[i] = s1[i];
 		i++;
 	}
 	j = 0;
-	while (s2[j] != '\0')
+	while (s1 != NULL && s2[j] != '\0')
 	{
 		join[i + j] = s2[j];
 		j++;

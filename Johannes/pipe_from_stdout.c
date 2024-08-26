@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   pipe_from_stdout.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 13:29:53 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/19 16:13:26 by jweingar         ###   ########.fr       */
+/*   Created: 2024/08/20 12:54:07 by jweingar          #+#    #+#             */
+/*   Updated: 2024/08/20 12:54:30 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "../incl/minishell.h"
 
-int	ft_echo(char **argv)
+int	main(void)
 {
-	int		i;
+	int		pipefd[2];
+	int 	exit_status;
+	char	buf[1024];
+	int		saved_std_out;
 
-	i = 1;
-	if (argv == NULL || argv[1] == NULL)
-		return (0);
-	if (ft_strncmp(argv[1], "-n", 3) == 0)
-		i++;
-	if (argv[i] != NULL)
+	exit_status = 0;
+	if (pipe(pipefd) == -1)
 	{
-		printf("%s", argv[i]);
-		i++;
+		perror("pipe");
+		return (1);
 	}
-	while (argv[i] != NULL)
-	{
-		printf(" %s", argv[i]);
-		i++;
-	}
-	if (ft_strncmp(argv[1], "-n", 3) != 0)
-		printf("\n");
+	saved_std_out = dup(STDOUT_FILENO);
+	write(1, "test1", 5);
+	dup2(pipefd[1], 1);
+	write(1, "hello", 5);
+	read(pipefd[0], buf, 5);
+	buf[5] = '\0';
+	dup2(saved_std_out, 1);
+	printf(" tesst2: %s\n", buf);
 	return (0);
 }

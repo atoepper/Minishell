@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/08 14:04:17 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/20 13:26:08 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <string.h>
 # include <stdio.h>
+# include <stdarg.h>
 # include <sys/types.h>
 # include <sys/ioctl.h>
 # include <sys/stat.h>
@@ -54,6 +55,14 @@ typedef enum e_token_type
 
 /* STRUCTURES */
 
+typedef struct s_token
+{
+	t_token_type		type;
+	char				*value;
+	struct s_token		*next;
+	struct s_token		*prev;
+}	t_token;
+
 typedef struct s_shell
 {
 	char			*line;
@@ -69,22 +78,35 @@ typedef struct s_shell
 	// char			**environ;
 	// t_env			*envlst;
 	// bool			heredoc_sigint;
-} t_shell;
+}	t_shell;
 
-typedef struct s_token
+typedef int	(*t_function_ptr)(char **argv);
+
+typedef struct s_builtin
 {
-	t_token_type		type;
-	char				*value;
-	struct s_token		*next;
-	struct s_token		*prev;
-}	t_token;
+	char			*name;
+	t_function_ptr	func;
+}	t_builtin;
 
 /* BUILTINS */
-int	ft_print_env(char **env);
-int	ft_exit(int exitvalue);
-int	ft_pwd(void);
+int		ft_echo(char **argv);
+int		ft_print_env(char **env);
+int		ft_exit(int exitvalue);
+int		ft_pwd(void);
+int		ft_cd(const char *path);
 
 /* EXECUTION */
+int				exec_external(char **argv);
+char			*ft_join_path_and_name(char *path, char *name);
+char			*search_function_in_path(char *name);
+int				search_file_in_directory(const char *directory, char *name);
+int				exec_builtin(char **argv);
+t_function_ptr	functionpath_builtins(char *name);
+t_builtin		**fill_lst_builtins(void);
+t_builtin		**alloc_lst_builtins(void);
+void			free_lst_builtin(t_builtin	**lst_builtins);
+int				exec_function(char **argv);
+char			*read_fd_to_str(int fd);
 
 /* EXPANDER */
 

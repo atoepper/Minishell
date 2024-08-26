@@ -6,32 +6,50 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:29:53 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/19 16:13:26 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:26:33 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_echo(char **argv)
+int	ft_echo(int argc, ...)
 {
-	int		i;
+	va_list	args;
+	char	*flag;
+	char	*tmp_str;
 
-	i = 1;
-	if (argv == NULL || argv[1] == NULL)
-		return (0);
-	if (ft_strncmp(argv[1], "-n", 3) == 0)
-		i++;
-	if (argv[i] != NULL)
+	va_start(args, argc);
+	flag = ft_strdup(va_arg(args, char *));
+	if (flag == NULL)
+		return(-1);
+	if (ft_strncmp(flag, "-n", 3) == 0)
+		argc--;
+	else if (argc > 0)
 	{
-		printf("%s", argv[i]);
-		i++;
+		tmp_str = ft_strtrim(flag, "\'\"");
+		printf("%s", tmp_str);
+		free(tmp_str);
+		argc--;
+		if (argc > 0)
+			printf(" ");
 	}
-	while (argv[i] != NULL)
+	if (argc > 0)
 	{
-		printf(" %s", argv[i]);
-		i++;
+		tmp_str = ft_strtrim(va_arg(args, char *), "\'\"");
+		printf("%s", tmp_str);
+		free(tmp_str);
+		argc--;
 	}
-	if (ft_strncmp(argv[1], "-n", 3) != 0)
+	while (argc > 0)
+	{
+		tmp_str = ft_strtrim(va_arg(args, char *), "\'\"");
+		printf(" %s", tmp_str);
+		free(tmp_str);
+		argc--;
+	}
+	if (ft_strncmp(flag, "-n", 3) != 0)
 		printf("\n");
+	va_end(args);
+	free(flag);
 	return (0);
 }
