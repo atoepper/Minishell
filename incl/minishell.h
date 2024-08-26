@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 11:14:15 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 12:32:40 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,17 @@
 # define RIGHT_JOIN		0b00000000000000000000000000010000
 # define WORD_JOIN		0b00000000000000000000000000110000
 
+typedef enum {
+	PROGRAM,
+	PIPELINE,
+	COMMAND,
+	SIMPLE_COMMAND,
+	REDIR_ITER,
+	REDIR_CHUNK,
+	EXEC_PATH,
+	FILE_PATH,
+} ast_node_type;
+
 /* STRUCTURES */
 
 typedef struct s_token
@@ -81,9 +92,19 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_ast_node
+{
+	ast_node_type			type;
+	char				*value;
+	char				**argv;
+	struct s_ast_node	*child;
+	struct s_ast_node	*next;
+}	t_ast_node;
+
 typedef struct s_shell
 {
 	char			*line;
+	char			*prompt;
 	int				in;
 	int				out;
 	int				exit_status;
@@ -92,7 +113,7 @@ typedef struct s_shell
 	t_token			*token_list;
 	t_token			*curr_token;
 	t_env			*envlst;
-	// t_node			*ast;
+	t_ast_node		*ast;
 	// bool			signint_child;
 	// t_parse_err		parse_err;
 	// char			**environ;
@@ -141,7 +162,7 @@ char			*read_fd_to_str(int fd);
 
 /* EXPANDER */
 char	*ft_expand(char *value, t_shell *mshell);
-int	expander(t_shell *mshell);
+int		expander(t_shell *mshell);
 
 /* TOKENIZING */
 t_token	*ft_newtoken(char *value, int type);
@@ -154,6 +175,16 @@ int		ft_tokenize(t_shell *mshell);
 int		ft_joinwords(t_token **list);
 
 /* PARSING */
+t_ast_node	*parse_program(t_token **current_token);
+t_ast_node	*parse_pipe_line(t_token **current_token);
+t_ast_node	*parse_command(t_token **current_token);
+t_ast_node	*parse_simple_command(t_token **current_token);
+t_ast_node	*parse_redir_iter(t_token **current_token);
+t_ast_node	*parse_redir_chunk(t_token **current_token);
+t_ast_node	*create_ast_node(ast_node_type type, char *value);
+void		add_child_node(t_ast_node *parent, t_ast_node *child);
+void		print_ast(t_ast_node *node, int indent);
+void		free_ast(t_ast_node *node);
 
 /* SIGNALS */
 
