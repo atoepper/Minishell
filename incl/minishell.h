@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 11:10:24 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:14:15 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,18 @@ int		ft_print_env(char **env);
 int		ft_exit(char **argv);
 int		ft_pwd(char **argv);
 int		ft_cd(char **argv);
+
+/* ENVIRONMENT */
+char	*ft_find_value_by_key(t_env *list, char *keyword);
+char	*ft_getvalue(char *str);
+t_env	*ft_new_env(char *key, char *value);
+void	ft_add_env(t_env **envlist, t_env *new_env);
+void	ft_del_env(t_env *env);
+void	ft_clear_envlist(t_env **envlist);
+char	*ft_getkeyword(char *str);
+void	ft_change_envvalue(t_env *envlist, char *key, char *new_value);
+void	ft_remove_env(t_env **envlist, char *key);
+void	ft_printenvlist(t_shell *mshell);
 
 /* EXECUTION */
 int				exec_external(char **argv);
