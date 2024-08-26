@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 11:06:53 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:08:41 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,12 @@ typedef struct s_token
 	struct s_token		*next;
 	struct s_token		*prev;
 }	t_token;
+
+typedef struct s_builtin
+{
+	char			*name;
+	t_function_ptr	func;
+}	t_builtin;
 
 /* BUILTINS */
 int		ft_echo(char **argv);
