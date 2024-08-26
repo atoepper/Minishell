@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/26 11:16:43 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:31:14 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ t_function_ptr	functionpath_builtins(char *name)
 	return (0);
 }
 
-int	exec_builtin(char **argv)
+int	exec_builtin(char **argv, char **env)
 {
 	t_function_ptr	func;
 
 	func = functionpath_builtins(argv[0]);
 	if (func != NULL)
 	{
-		func(argv);
+		func(argv, env);
 		return (0);
 	}
 	else

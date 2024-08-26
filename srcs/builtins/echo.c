@@ -6,16 +6,17 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:29:53 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/19 16:13:26 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:41:07 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_echo(char **argv)
+int	ft_echo(char **argv, char **envp)
 {
 	int		i;
 
+	(void)envp;
 	i = 1;
 	if (argv == NULL || argv[1] == NULL)
 		return (0);

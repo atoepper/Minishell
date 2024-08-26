@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/08/26 16:06:29 by atoepper         ###   ########.fr       */
+=======
+/*   Updated: 2024/08/26 15:48:59 by jweingar         ###   ########.fr       */
+>>>>>>> 1c56f663f999d470319345e20662c0ba636f2890
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +126,7 @@ typedef struct s_shell
 	// bool			heredoc_sigint;
 } t_shell;
 
-typedef int	(*t_function_ptr)(char **argv);
+typedef int	(*t_function_ptr)(char **argv, char **envp);
 
 typedef struct s_builtin
 {
@@ -131,11 +135,14 @@ typedef struct s_builtin
 }	t_builtin;
 
 /* BUILTINS */
-int		ft_echo(char **argv);
-int		ft_print_env(char **env);
-int		ft_exit(char **argv);
-int		ft_pwd(char **argv);
-int		ft_cd(char **argv);
+int		ft_echo(char **argv, char **envp);
+int		ft_print_env(char **envp);
+int		ft_exit(char **argv, char **envp);
+int		ft_pwd(char **argv, char **envp);
+int		ft_cd(char **argv, char **envp);
+int		ft_env(char **argv, char **envp);
+int		ft_export(char **argv, char **envp);
+int		ft_unset(char **argv, char **envp);
 
 /* ENVIRONMENT */
 char	*ft_find_value_by_key(t_env *list, char *keyword);
@@ -150,16 +157,16 @@ void	ft_remove_env(t_env **envlist, char *key);
 void	ft_printenvlist(t_shell *mshell);
 
 /* EXECUTION */
-int				exec_external(char **argv);
+int				exec_external(char **argv, char **envp);
 char			*ft_join_path_and_name(char *path, char *name);
 char			*search_function_in_path(char *name);
 int				search_file_in_directory(const char *directory, char *name);
-int				exec_builtin(char **argv);
+int				exec_builtin(char **argv, char **envp);
 t_function_ptr	functionpath_builtins(char *name);
 t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
-int				exec_function(char **argv);
+int				exec_function(char **argv, char **envp);
 char			*read_fd_to_str(int fd);
 
 /* INIT */

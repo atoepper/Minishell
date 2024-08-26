@@ -1,0 +1,26 @@
+Minishell grammar
+<program>				->	{<pipe>}
+<pipe>					->	<command term> | 
+<command term>			->	[<command>] [<redirection iteration>]
+<command>				->	<execution path> <argv>
+<redirection iteration>	->	<redirection term> 
+<redirection term>		->	<redirection> <file path> | <heredoc> <delimiter>
+<redirection>			->	'<' | '>' | '>>'
+<heredoc>				->	'<<'
+<file path>				->	word
+<execution path>		->	word
+<delimiter>				->	word
+<argv>					->	word | word <argv>
+
+
+Minishell grammar
+<program>				->	{<pipe>}
+<pipe>					->	<command term> {'|' <command term>}
+<command term>			->	[<command>] [<redirection iteration>]
+<command>				->	<execution path> {<argv>}
+<redirection iteration>	->	<redirection term> {<redirection term>}
+<redirection term>		->	<redirection> <file path> 
+<redirection>			->	'<' | '>' | '>>' | '<<'
+<file path>				->	word
+<execution path>		->	word
+<argv>					->	word

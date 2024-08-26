@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:57:51 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 12:20:18 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:41:02 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,36 @@ int	ft_cd_relativ(char **argv)
 {
 	int				return_value;
 	DIR				*dir;
-	char			*pwd;
-	struct dirent	*entry;
 	char			*path;
+	struct dirent	*entry;
 
-	pwd = NULL;
+	path = NULL;
 	return_value = 0;
-	pwd = getcwd(pwd, 0);
-	if (!pwd)
+	path = getcwd(path, 0);
+	if (path == NULL)
 		return (1);
-	dir = opendir(pwd);
+	dir = opendir(path);
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
 		if (ft_strncmp(entry->d_name, argv[1], 1024) == 0)
 		{
-			path = ft_join_path_and_name(pwd, argv[1]);
+			path = ft_join_path_and_name(path, argv[1]);
 			if (path == NULL)
-				return (1);
+				return (closedir(dir), 1);
 			return_value = chdir(path);
-			if (return_value != EXIT_SUCCESS)
-				return(perror("cd"), free(path), return_value);
-			return(free(path), return_value);
+			return (free(path), closedir(dir), return_value);
 		}
 		entry = readdir(dir);
 	}
-	return (1);
+	return (closedir(dir), free(path), 1);
 }
 
-int	ft_cd(char **argv)
+int	ft_cd(char **argv, char **envp)
 {
 	int				return_value;
 
+	(void)envp;
 	if (argv == NULL || argv[1] == NULL)
 		return (1);
 	return_value = ft_cd_relativ(argv);
@@ -57,7 +55,7 @@ int	ft_cd(char **argv)
 	{
 		return_value = chdir(argv[1]);
 		if (return_value != EXIT_SUCCESS)
-			return(perror("cd absolute"), return_value);
-		return(return_value);
+			return (perror("cd"), return_value);
+		return (return_value);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/26 11:57:16 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:31:54 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*ft_join_path_and_name(char *path, char *name)
 	char	*path_full;
 
 	path_new = ft_strjoin(path, "/");
+	free(path);
 	if (path_new == NULL)
 		return (perror("ft_strjoin"), NULL);
 	path_full = ft_strjoin(path_new, name);
@@ -75,13 +76,11 @@ char	*ft_join_path_and_name(char *path, char *name)
 	return (path_full);
 }
 
-int	exec_external(char **argv)
+int	exec_external(char **argv, char **envp)
 {
 	char	*path;
 	int		exit_status;
-	char	*envp[1];
 
-	envp[0] = NULL;
 	exit_status = 0;
 	path = search_function_in_path(argv[0]);
 	if (path == NULL)
