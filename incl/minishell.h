@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 12:32:40 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 13:13:23 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@
 typedef enum {
 	PROGRAM,
 	PIPELINE,
+	COMMAND_SECTION,
 	COMMAND,
-	SIMPLE_COMMAND,
 	REDIR_ITER,
-	REDIR_CHUNK,
+	REDIRECTION,
+	REDIR,
 	EXEC_PATH,
 	FILE_PATH,
 } ast_node_type;
@@ -183,8 +184,8 @@ t_ast_node	*parse_redir_iter(t_token **current_token);
 t_ast_node	*parse_redir_chunk(t_token **current_token);
 t_ast_node	*create_ast_node(ast_node_type type, char *value);
 void		add_child_node(t_ast_node *parent, t_ast_node *child);
-void		print_ast(t_ast_node *node, int indent);
 void		free_ast(t_ast_node *node);
+void		print_ast(t_ast_node *node, int indent);
 
 /* SIGNALS */
 
@@ -195,5 +196,6 @@ int		ft_wordlength(char *line);
 bool	ft_isseparator(const char c);
 int		ft_end_of_varname(char *str);
 bool	ft_iskeyword(char *str);
+void	free_array(char **arr);
 
 #endif
