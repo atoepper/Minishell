@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:51:47 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 11:13:47 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:14:22 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_pwd(char **argv)
 {
 	char	*pwd;
 
+	(void)argv;
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (!pwd)
