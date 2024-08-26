@@ -6,7 +6,7 @@
 #    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/20 10:58:26 by jweingar         ###   ########.fr        #
+#    Updated: 2024/08/26 11:11:55 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,10 @@ SOURCES = 	main_Johannes.c \
 			builtins/echo.c \
 			execution/exec_external.c \
 			execution/exec_builtin.c \
-			execution/execute.c
-#			builtins/exit.c \
-#			builtins/pwd.c \
+			execution/execute.c \
+			builtins/exit.c \
+			builtins/pwd.c \
+			builtins/cd.c	
 #			execution/execute.c \
 #			expander/expand.c \
 #			parsing/parse.c \

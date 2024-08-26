@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/20 11:54:51 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:16:43 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ t_builtin	**fill_lst_builtins(void)
 		return (perror("malloc"), NULL);
 	lst_builtins[0]->name = "echo\0";
 	lst_builtins[0]->func = ft_echo;
-	lst_builtins[1]->name = NULL;
-	lst_builtins[1]->func = NULL;
-	// lst_builtins[1]->name = "cd\0";
-	// lst_builtins[1]->func = &ft_cd;
-	// lst_builtins[2]->name = "pwd\0";
-	// lst_builtins[2]->func = &ft_pwd;
+	lst_builtins[1]->name = "cd\0";
+	lst_builtins[1]->func = &ft_cd;
+	lst_builtins[2]->name = "pwd\0";
+	lst_builtins[2]->func = &ft_pwd;
+	lst_builtins[3]->name = NULL;
+	lst_builtins[3]->func = NULL;
 	// lst_builtins[3]->name = "export\0";
 	// lst_builtins[3]->func = &ft_export;
 	// lst_builtins[4]->name = "unset\0";
