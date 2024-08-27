@@ -6,7 +6,7 @@
 #    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/27 11:02:37 by jweingar         ###   ########.fr        #
+#    Updated: 2024/08/27 11:19:53 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,11 +40,12 @@ SOURCES = 	main_Johannes.c \
 			env/env.c \
 			env/envlist.c \
 			utils/utils.c \
-			garbage_collection/garbage_collection.c
+			garbage_collection/garbage_collection.c \
+			tokenizing/token_utils.c
 #			execution/execute.c \
 #			expander/expand.c \
 #			parsing/parse.c \
-#			tokenizing/tokenize.c
+#			tokenizing/token_utils.c
 
 
 ### OBJECTS ###
@@ -84,7 +85,7 @@ tmp:
 	@mkdir -p $(OBJ_PATH)/utils
 	@mkdir -p $(OBJ_PATH)/garbage_collection
 #@mkdir -p $(OBJ_PATH)/parsing
-#@mkdir -p $(OBJ_PATH)/tokenizing
+	@mkdir -p $(OBJ_PATH)/tokenizing
 #@mkdir -p $(OBJ_PATH)/signals
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)/minishell.h tmp
