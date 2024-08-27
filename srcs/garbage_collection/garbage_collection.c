@@ -6,21 +6,21 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 10:57:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/27 11:03:42 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:23:37 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	clear_garbage(t_shell mshell)
+int	clear_garbage(t_shell *mshell)
 {
 	free(mshell->line);
 	mshell->line = NULL;
 	free(mshell->prompt);
 	mshell->prompt = NULL;
-	free(ft_clear_tokenlist(mshell->token_list));
+	ft_clear_tokenlist(&mshell->token_list);
 	mshell->token_list = NULL;
-	free(ft_clear_envlist(mshell->envlst));
-	mshell->envlst = NULL
+	ft_clear_envlist(&mshell->envlst);
+	mshell->envlst = NULL;
 	return (0);
 }
