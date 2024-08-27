@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:14:23 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 16:57:42 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:57:51 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_getvalue(char *str)
 
 	value = ft_strchr(str, '=');
 	if (value == NULL)
-        return NULL;
+		return (NULL);
 	value++;
 	return (value);
 }
@@ -37,7 +37,7 @@ char	*ft_find_value_by_key(t_env *list, char *keyword)
 	{
 		if (!ft_strncmp(list->key, keyword, ft_strlen(keyword)))
 			return (list->value);
-		else 
+		else
 			list = list->next;
 	}
 	return (NULL);
@@ -52,7 +52,7 @@ void	ft_change_envvalue(t_env *envlist, char *key, char *new_value)
 		{
 			free(envlist->value);
 			envlist->value = new_value;
-			return;
+			return ;
 		}
 		envlist = envlist->next;
 	}
@@ -64,7 +64,7 @@ void	ft_remove_env(t_env **envlist, char *key)
 	t_env	*current;
 
 	if (!envlist || !*envlist)
-		return;
+		return ;
 	if (!ft_strncmp((*envlist)->key, key, ft_strlen(key) + 1))
 	{
 		tmp = *envlist;
@@ -80,7 +80,7 @@ void	ft_remove_env(t_env **envlist, char *key)
 			tmp = current->next;
 			current->next = tmp->next;
 			ft_del_env(tmp);
-			return;
+			return ;
 		}
 		current = current->next;
 	}
