@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:58:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 16:55:30 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 10:01:37 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_print_env(char **envp)
 	i = 0;
 	while (envp[i])
 		ft_printf("%s\n", envp[i++]);
-	return(0);	
+	return (0);	
 }
 
 int	ft_env(char **argv, t_env *envlst)
