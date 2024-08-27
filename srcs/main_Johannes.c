@@ -6,68 +6,34 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/26 12:26:12 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:35:50 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int	pipe_function(char *argvs[2][6], int in_fd)
+int	main(int argc, char **argv, char **envp)
 {
-	int		pipefd[2];
-	pid_t	pid;
-	int		exit_status;
+	t_shell	mshell;
+	char	*argv2[] = {"export", "test270824=new", "XDG_MENU_PREFIX=test", NULL};
+	char	*argv3[] = {"export", "test270824=old", "hallo=Johannes", NULL};
+	char	*argv4[] = {"unset", NULL};
+	char	*argv5[] = {"unset", "test270824", "dafsdfas", "hallo", NULL};
 
-	if (argvs[0][0] == NULL)
-		return (0);
-	if (pipe(pipefd) == -1)
-		return (perror("pipe"), 1);
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		return (EXIT_FAILURE);
-	}
-	if (pid == 0)
-	{
-		if (in_fd != 0)
-		{
-			dup2(in_fd, 0);
-			close(in_fd);
-		}
-		if (argvs[1][0] != NULL)
-			dup2(pipefd[1], 1);
-		close(pipefd[0]);
-		exec_function(argvs[0]);
-		exit(EXIT_SUCCESS);
-	}
-	else if (pid != 0)
-	{
-		wait(&exit_status);
-		close(pipefd[1]);
-		if (in_fd != 0)
-			close(in_fd);
-		pipe_function(argvs + 1, pipefd[0]);
-	}
-	return (0);
-}
-
-int	main(void)
-{
-	char *argvs[][6] = {
-		{"cd", "/home/jweingar/Documents/projects/minishell/exercises/Johannes/objs/", NULL},
-		{"cd", "/home/jweingar/Documents/projects/minishell/exercises/Johannes/", NULL},
-		{"cd", "objs", NULL},
-		{"pwd", NULL},
-		{NULL}
-	};
-
-	(void)argvs;
-	exec_function(argvs[0]);
-	exec_function(argvs[3]);
-	exec_function(argvs[1]);
-	exec_function(argvs[3]);
-	exec_function(argvs[2]);
-	exec_function(argvs[3]);
-
+	((void)argc, (void)argv, (void)envp); 
+	/* init data */
+	init_shell(&mshell, envp);
+	ft_env(argv, mshell.envlst);
+	printf("\n\n\n-----------------------------------------------------------------------\n\n\n");
+	ft_export(argv2, mshell.envlst);
+	ft_env(argv, mshell.envlst);
+	printf("\n\n\n-----------------------------------------------------------------------\n\n\n");
+	ft_export(argv3, mshell.envlst);
+	ft_env(argv, mshell.envlst);
+	printf("\n\n\n-----------------------------------------------------------------------\n\n\n");
+	ft_unset(argv4, mshell.envlst);
+	ft_unset(argv5, mshell.envlst);
+	ft_env(argv, mshell.envlst);
+	printf("\n\n\n-----------------------------------------------------------------------\n\n\n");
+	clear_garbage(&mshell);
 }
