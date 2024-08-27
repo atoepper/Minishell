@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 16:38:45 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:04:20 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void	ft_addtoken(t_token **tokenlist, t_token *newtoken);
 void	ft_clear_tokenlist(t_token	**tokenlist);
 void	ft_deltoken(t_token *token);
 void	ft_printlist(t_token **tokenlist);
-t_token *ft_linetolist(char *line, int *error);
+t_token	*ft_linetolist(char *line, int *error);
 int		ft_tokenize(t_shell *mshell);
 int		ft_joinwords(t_token **list);
 
@@ -195,6 +195,9 @@ t_ast_node	*create_ast_node(ast_node_type type, char *value);
 void		add_child_node(t_ast_node *parent, t_ast_node *child);
 void		free_ast(t_ast_node *node);
 void		print_ast(t_ast_node *node, int indent);
+
+/* GARBAGE_COLLECTION */
+int		clear_garbage(t_shell mshell)
 
 /* SIGNALS */
 
