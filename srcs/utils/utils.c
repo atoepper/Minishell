@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:41:34 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/22 14:19:31 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:14:10 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,14 @@ bool	ft_iskeyword(char *str)
 			return (TRUE);
 	}
 	return (FALSE);
+}
+
+void	free_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr); 
 }
