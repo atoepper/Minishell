@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/27 11:04:20 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:13:58 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ void		free_ast(t_ast_node *node);
 void		print_ast(t_ast_node *node, int indent);
 
 /* GARBAGE_COLLECTION */
-int		clear_garbage(t_shell mshell)
+int		clear_garbage(t_shell mshell);
 
 /* SIGNALS */
 
