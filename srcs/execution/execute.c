@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 15:30:46 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:50:07 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*read_fd_to_str(int fd)
 	return (str);
 }
 
-int	pipe_function(char *argvs[2][6], int in_fd)
+int	pipe_function(char *argvs[2][6], char **envp, int in_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -66,7 +66,7 @@ int	pipe_function(char *argvs[2][6], int in_fd)
 		if (argvs[1][0] != NULL)
 			dup2(pipefd[1], 1);
 		close(pipefd[0]);
-		exec_function(argvs[0]);
+		exec_function(argvs[0], envp);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid != 0)
@@ -75,7 +75,7 @@ int	pipe_function(char *argvs[2][6], int in_fd)
 		close(pipefd[1]);
 		if (in_fd != 0)
 			close(in_fd);
-		pipe_function(argvs + 1, pipefd[0]);
+		pipe_function(argvs + 1, envp, pipefd[0]);
 	}
 	return (0);
 }
