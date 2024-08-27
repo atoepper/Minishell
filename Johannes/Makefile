@@ -6,7 +6,7 @@
 #    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/26 11:11:55 by jweingar         ###   ########.fr        #
+#    Updated: 2024/08/27 11:02:37 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,17 +26,26 @@ LIBFT_A = $(LIBFT)/libft.a
 
 ### SOURCE FILES ###
 SOURCES = 	main_Johannes.c \
+			init.c \
 			builtins/echo.c \
 			execution/exec_external.c \
 			execution/exec_builtin.c \
 			execution/execute.c \
 			builtins/exit.c \
 			builtins/pwd.c \
-			builtins/cd.c	
+			builtins/env.c \
+			builtins/export.c \
+			builtins/unset.c \
+			builtins/cd.c	\
+			env/env.c \
+			env/envlist.c \
+			utils/utils.c \
+			garbage_collection/garbage_collection.c
 #			execution/execute.c \
 #			expander/expand.c \
 #			parsing/parse.c \
 #			tokenizing/tokenize.c
+
 
 ### OBJECTS ###
 
@@ -71,7 +80,9 @@ $(NAME): $(LIBFT_A) $(OBJS)
 tmp:
 	@mkdir -p $(OBJ_PATH)/builtins
 	@mkdir -p $(OBJ_PATH)/execution
-#@mkdir -p $(OBJ_PATH)/expander
+	@mkdir -p $(OBJ_PATH)/env
+	@mkdir -p $(OBJ_PATH)/utils
+	@mkdir -p $(OBJ_PATH)/garbage_collection
 #@mkdir -p $(OBJ_PATH)/parsing
 #@mkdir -p $(OBJ_PATH)/tokenizing
 #@mkdir -p $(OBJ_PATH)/signals
