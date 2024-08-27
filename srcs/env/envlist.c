@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envlist.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:08:38 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/22 15:24:45 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/27 10:21:01 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_env	*ft_new_env(char *key, char *value)
 	new->key = key;
 	new->value = value;
 	new->next = NULL;
-	return(new);
+	return (new);
 }
 
 void	ft_add_env(t_env **envlist, t_env *new_env)
