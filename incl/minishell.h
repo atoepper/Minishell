@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/27 12:16:31 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:35:19 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_shell
 	// bool			heredoc_sigint;
 } t_shell;
 
-typedef int	(*t_function_ptr)(char **argv, char **envp);
+typedef int	(*t_function_ptr)(char **argv, t_env *envlst);
 
 typedef struct s_builtin
 {
@@ -131,11 +131,11 @@ typedef struct s_builtin
 }	t_builtin;
 
 /* BUILTINS */
-int		ft_echo(char **argv, char **envp);
+int		ft_echo(char **argv, t_env *envlst);
 int		ft_print_env(char **envp);
-int		ft_exit(char **argv, char **envp);
-int		ft_pwd(char **argv, char **envp);
-int		ft_cd(char **argv, char **envp);
+int		ft_exit(char **argv, t_env *envlst);
+int		ft_pwd(char **argv, t_env *envlst);
+int		ft_cd(char **argv, t_env *envlst);
 int		ft_env(char **argv, t_env *envlst);
 int		ft_export(char **argv, t_env *envlst);
 int		ft_unset(char **argv, t_env *envlst);
@@ -153,17 +153,18 @@ void	ft_remove_env(t_env **envlist, char *key);
 void	ft_printenvlist(t_shell *mshell);
 
 /* EXECUTION */
-int				exec_external(char **argv, char **envp);
+int				exec_external(char **argv, t_env *envlst);
 char			*ft_join_path_and_name(char *path, char *name);
 char			*search_function_in_path(char *name);
 int				search_file_in_directory(const char *directory, char *name);
-int				exec_builtin(char **argv, char **envp);
+int				exec_builtin(char **argv, t_env *envlst);
 t_function_ptr	functionpath_builtins(char *name);
 t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
-int				exec_function(char **argv, char **envp);
+int				exec_function(char **argv, t_env *envlst);
 char			*read_fd_to_str(int fd);
+int				pipe_function(char *argvs[][6], t_env *envlst, int in_fd);
 
 /* INIT */
 int		init_shell(t_shell *mshell, char **envp);

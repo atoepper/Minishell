@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/27 10:51:16 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:59:19 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int	ft_export(char **argv, t_env *envlst)
 	char	*key;
 	char	*value;
 
+	if (argv[1] == NULL)
+	{
+		//ft_env ausfuehren in alphabetisch geordneter Reihenfolge)
+	}
 	i = 1;
 	while (argv[i] != NULL)
 	{

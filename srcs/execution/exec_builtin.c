@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/26 15:31:14 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:54:02 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,23 @@ t_builtin	**alloc_lst_builtins(void)
 t_builtin	**fill_lst_builtins(void)
 {
 	t_builtin	**lst_builtins;
-
 	lst_builtins = alloc_lst_builtins();
 	if (lst_builtins == NULL)
 		return (perror("malloc"), NULL);
 	lst_builtins[0]->name = "echo\0";
 	lst_builtins[0]->func = ft_echo;
 	lst_builtins[1]->name = "cd\0";
-	lst_builtins[1]->func = &ft_cd;
+	lst_builtins[1]->func = ft_cd;
 	lst_builtins[2]->name = "pwd\0";
-	lst_builtins[2]->func = &ft_pwd;
-	lst_builtins[3]->name = NULL;
-	lst_builtins[3]->func = NULL;
-	// lst_builtins[3]->name = "export\0";
-	// lst_builtins[3]->func = &ft_export;
-	// lst_builtins[4]->name = "unset\0";
-	// lst_builtins[4]->func = &ft_unset;
-	// lst_builtins[5]->name = "env\0";
-	// lst_builtins[5]->func = &ft_env;
-	// lst_builtins[6]->name = "exit\0";
-	// lst_builtins[6]->func = &ft_exit;
-	// lst_builtins[7]->name = NULL;
-	// lst_builtins[7]->func = NULL;
+	lst_builtins[2]->func = ft_pwd;
+	lst_builtins[3]->name = "export\0";
+	lst_builtins[3]->func = ft_export;
+	lst_builtins[4]->name = "unset\0";
+	lst_builtins[4]->func = ft_unset;
+	lst_builtins[5]->name = "env\0";
+	lst_builtins[5]->func = ft_env;
+	lst_builtins[6]->name = "exit\0";
+	lst_builtins[6]->func = ft_exit;
 	return (lst_builtins);
 }
 
@@ -96,14 +91,14 @@ t_function_ptr	functionpath_builtins(char *name)
 	return (0);
 }
 
-int	exec_builtin(char **argv, char **env)
+int	exec_builtin(char **argv, t_env *envlst)
 {
 	t_function_ptr	func;
 
 	func = functionpath_builtins(argv[0]);
 	if (func != NULL)
 	{
-		func(argv, env);
+		func(argv, envlst);
 		return (0);
 	}
 	else
