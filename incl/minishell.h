@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/27 11:15:36 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:33:11 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int		ft_pwd(char **argv, char **envp);
 int		ft_cd(char **argv, char **envp);
 int		ft_env(char **argv, t_env *envlst);
 int		ft_export(char **argv, t_env *envlst);
-int		ft_unset(char **argv, char **envp);
+int		ft_unset(char **argv, t_env *envlst);
 
 /* ENVIRONMENT */
 char	*ft_find_value_by_key(t_env *list, char *keyword);
