@@ -1,6 +1,6 @@
 
 Minishell grammar, version I - LL(1) grammar, recursive descent parser (RDP) optimized 
-<program>				->	{<pipe>}
+<program>				->	<command term> | <command term> <pipe>
 <pipe>					->	<command term> {'|' <command term>}
 <command term>			->	[<command>] [<redirection iteration>]
 <command>				->	<execution path> {<argv>}
