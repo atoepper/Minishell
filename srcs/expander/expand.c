@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:31 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/23 13:12:35 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:06:41 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	expander(t_shell *mshell)
 	char	*tmp;
 
 	current = mshell->token_list;
+	/* check for HEREDOC delimiter and delete EXPANDER flag */
 	while (current)
 	{
 		if (current->type & EXPANDER)
