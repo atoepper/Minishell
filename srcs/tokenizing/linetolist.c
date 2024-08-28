@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:24:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/22 13:01:47 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:02:55 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_token	*ft_newredirection(char **line)
 		(*line) += 2;
 	else
 		(*line) += 1;
-	// printf("value test: %s, %d\n", new->value, new->type);
 	return (new); 
 }
 

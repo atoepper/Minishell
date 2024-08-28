@@ -6,13 +6,13 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 12:06:57 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 17:01:45 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:28:32 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-t_ast_node *create_ast_node(ast_node_type type, char *value)
+t_ast_node *create_ast_node(int type, char *value)
 {
     t_ast_node *node = malloc(sizeof(t_ast_node));
     node->type = type;
@@ -20,6 +20,7 @@ t_ast_node *create_ast_node(ast_node_type type, char *value)
     	node->value = strdup(value);
 	else
 		node->value = NULL;
+	node->argv = NULL;
     node->child = NULL;
     node->next = NULL;
     return node;
@@ -54,25 +55,23 @@ void free_ast(t_ast_node *node)
 }
 
 /* ONLY FOR DEBUG */
-void print_ast(t_ast_node *node, int indent)
-{
-	if (!node) return;
-	for (int i = 0; i < indent; i++) printf("  ");
+// void print_ast(t_ast_node *node, int indent)
+// {
+// 	if (!node) return;
+// 	for (int i = 0; i < indent; i++) printf("  ");
 
-	switch (node->type)
-	{
-		case PROGRAM: printf("Program\n"); break;
-		case PIPELINE: printf("Pipeline\n"); break;
-		case COMMAND_TERM: printf("Command term\n"); break;
-		case COMMAND: printf("Command\n"); break;
-		case REDIR_ITER: printf("Redirection Iteration\n"); break;
-		case REDIR_TERM: printf("Redirection term\n"); break;
-		case REDIR: printf("Redirection\n"); break;
-		case EXEC_PATH: printf("Exec Path: %s\n", node->value); break;
-		case FILE_PATH: printf("File Path: %s\n", node->value); break;
-	}
-	if (node->child)
-		print_ast(node->child, indent + 1);
-	if (node->next)
-		print_ast(node->next, indent);
-}
+// 	switch (node->type)
+// 	{
+// 		case PROGRAM: printf("Program\n"); break;
+// 		case PIPE: printf("Pipeline\n"); break;
+// 		case COMMAND_TERM: printf("Command term\n"); break;
+// 		case COMMAND: printf("Command\n"); break;
+// 		case REDIR_ITER: printf("Redirection Iteration\n"); break;
+// 		case REDIR_TERM: printf("Redirection term\n"); break;
+// 		case REDIRECT: printf("Redirection\n"); break;
+// 	}
+// 	if (node->child)
+// 		print_ast(node->child, indent + 1);
+// 	if (node->next)
+// 		print_ast(node->next, indent);
+// }
