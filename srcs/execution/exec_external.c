@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/26 15:31:54 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:43:36 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,44 +76,19 @@ char	*ft_join_path_and_name(char *path, char *name)
 	return (path_full);
 }
 
-int	exec_external(char **argv, char **envp)
+int	exec_external(char **argv, t_env *envlst)
 {
 	char	*path;
 	int		exit_status;
+	char *env[] = { NULL };
 
+	(void)envlst;
 	exit_status = 0;
 	path = search_function_in_path(argv[0]);
 	if (path == NULL)
 		return (1);
-	if (execve(path, argv, envp) == -1)
+	if (execve(path, argv, env) == -1)
 		exit(EXIT_FAILURE);
 	free(path);
 	return (exit_status);
 }
-
-// int	exec_external(char **argv)
-// {
-// 	char	*path;
-// 	pid_t	pid;
-// 	int		exit_status;
-// 	char	*envp[1];
-
-// 	envp[0] = NULL;
-// 	exit_status = 0;
-// 	path = search_function_in_path(argv[0]);
-// 	//printf("%s\n", path);
-// 	if (path == NULL)
-// 		return (1);
-// 	pid = fork();
-// 	if (pid < 0)
-// 		return (1);
-// 	if (pid == 0)
-// 	{
-// 		if (execve(path, argv, envp) == -1)
-// 			exit(EXIT_FAILURE);
-// 		free(path);
-// 	}
-// 	else
-// 		wait(&exit_status);
-// 	return (exit_status);
-// }

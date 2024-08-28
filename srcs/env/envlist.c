@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:08:38 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/22 15:24:45 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:28:17 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_env	*ft_new_env(char *key, char *value)
 	new->key = key;
 	new->value = value;
 	new->next = NULL;
-	return(new);
+	return (new);
 }
 
 void	ft_add_env(t_env **envlist, t_env *new_env)
@@ -62,7 +62,7 @@ void	ft_clear_envlist(t_env **envlist)
 		ft_del_env(current);
 		current = tmp;
 	}
-	// free(*envlist);
+		// free(*envlist);
 	*envlist = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/27 13:44:17 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:27:03 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_shell
 	// bool			heredoc_sigint;
 } t_shell;
 
-typedef int	(*t_function_ptr)(char **argv, char **envp);
+typedef int	(*t_function_ptr)(char **argv, t_env *envlst);
 
 typedef struct s_builtin
 {
@@ -131,14 +131,14 @@ typedef struct s_builtin
 }	t_builtin;
 
 /* BUILTINS */
-int		ft_echo(char **argv, char **envp);
+int		ft_echo(char **argv, t_env *envlst);
 int		ft_print_env(char **envp);
-int		ft_exit(char **argv, char **envp);
-int		ft_pwd(char **argv, char **envp);
-int		ft_cd(char **argv, char **envp);
-int		ft_env(char **argv, char **envp);
-int		ft_export(char **argv, char **envp);
-int		ft_unset(char **argv, char **envp);
+int		ft_exit(char **argv, t_env *envlst);
+int		ft_pwd(char **argv, t_env *envlst);
+int		ft_cd(char **argv, t_env *envlst);
+int		ft_env(char **argv, t_env *envlst);
+int		ft_export(char **argv, t_env *envlst);
+int		ft_unset(char **argv, t_env *envlst);
 
 /* ENVIRONMENT */
 char	*ft_find_value_by_key(t_env *list, char *keyword);
@@ -153,17 +153,18 @@ void	ft_remove_env(t_env **envlist, char *key);
 void	ft_printenvlist(t_shell *mshell);
 
 /* EXECUTION */
-int				exec_external(char **argv, char **envp);
+int				exec_external(char **argv, t_env *envlst);
 char			*ft_join_path_and_name(char *path, char *name);
 char			*search_function_in_path(char *name);
 int				search_file_in_directory(const char *directory, char *name);
-int				exec_builtin(char **argv, char **envp);
+int				exec_builtin(char **argv, t_env *envlst);
 t_function_ptr	functionpath_builtins(char *name);
 t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
-int				exec_function(char **argv, char **envp);
+int				exec_function(char **argv, t_env *envlst);
 char			*read_fd_to_str(int fd);
+int				pipe_function(char *argvs[][6], t_env *envlst, int in_fd);
 
 /* INIT */
 int		init_shell(t_shell *mshell, char **envp);
@@ -180,7 +181,7 @@ void	ft_addtoken(t_token **tokenlist, t_token *newtoken);
 void	ft_clear_tokenlist(t_token	**tokenlist);
 void	ft_deltoken(t_token *token);
 void	ft_printlist(t_token **tokenlist);
-t_token *ft_linetolist(char *line, int *error);
+t_token	*ft_linetolist(char *line, int *error);
 int		ft_tokenize(t_shell *mshell);
 int		ft_joinwords(t_token **list);
 
@@ -195,6 +196,9 @@ t_ast_node	*create_ast_node(int type, char *value);
 void		add_child_node(t_ast_node *parent, t_ast_node *child);
 void		free_ast(t_ast_node *node);
 void		print_ast(t_ast_node *node, int indent);
+
+/* GARBAGE_COLLECTION */
+int		clear_garbage(t_shell *mshell);
 
 /* SIGNALS */
 

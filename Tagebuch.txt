@@ -16,3 +16,5 @@
 23.8.	Alexander	Recherche zu verschiedenen Parsertypen. Top-down parsing oder Bottom-up parsing?
 23.8.	Alexander	Recursive descent Parser vorbereitet.
 24.8.	Alexander	Grammatik fuer Parser geschrieben. Structures (Abstract syntax tree)fuer Parser eingerichtet.
+27.8.	Johannes	builtins: env, export und unset fertig
+27.8.	Johannes	cleaning garbage in garbage_collection angefangen

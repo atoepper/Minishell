@@ -1,5 +1,6 @@
 *.o
 mini_shell
+test_minishell
 test_main
 *.a
 a.out

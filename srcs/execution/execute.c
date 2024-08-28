@@ -6,20 +6,26 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 15:30:46 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:54:27 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	exec_function(char **argv, char **env)
+int	exec_function(char **argv, t_env *envlst)
 {
+	int	exit_status;
+
 	if (argv == NULL)
 		return (0);
-	if (exec_builtin(argv, env))
-		if (exec_external(argv, env))
+	exit_status = exec_builtin(argv, envlst);
+	if (exit_status)
+	{
+		exit_status = exec_external(argv, envlst);
+		if (exit_status)
 			printf("command not found: %s\n", argv[0]);
-	return (0);
+	}
+	return (exit_status);
 }
 
 char	*read_fd_to_str(int fd)
@@ -40,7 +46,7 @@ char	*read_fd_to_str(int fd)
 	return (str);
 }
 
-int	pipe_function(char *argvs[2][6], int in_fd)
+int	pipe_function(char *argvs[][6], t_env *envlst, int in_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -66,7 +72,7 @@ int	pipe_function(char *argvs[2][6], int in_fd)
 		if (argvs[1][0] != NULL)
 			dup2(pipefd[1], 1);
 		close(pipefd[0]);
-		exec_function(argvs[0]);
+		exec_function(argvs[0], envlst);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid != 0)
@@ -75,7 +81,7 @@ int	pipe_function(char *argvs[2][6], int in_fd)
 		close(pipefd[1]);
 		if (in_fd != 0)
 			close(in_fd);
-		pipe_function(argvs + 1, pipefd[0]);
+		pipe_function(argvs + 1, envlst, pipefd[0]);
 	}
 	return (0);
 }

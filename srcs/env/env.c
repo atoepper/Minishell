@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:14:23 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/22 16:10:11 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/08/27 10:44:33 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,10 @@ char	*ft_getvalue(char *str)
 {
 	char	*value;
 
-	value = ft_strchr(str, '=');
-	if (value == NULL || *(value + 1) == '\0')
-        return NULL;
-	value++;
+	value = ft_strdup(ft_strchr(str, '=') + 1);
+	if (value == NULL)
+		return (NULL);
 	return (value);
-}
-
-char	*ft_find_value_by_key(t_env *list, char *keyword)
-{
-	while (list)
-	{
-		if (!ft_strncmp(list->key, keyword, ft_strlen(keyword)))
-			return (list->value);
-		else 
-			list = list->next;
-	}
-	return (NULL);
 }
 
 char	*ft_getkeyword(char *str)
@@ -43,15 +30,28 @@ char	*ft_getkeyword(char *str)
 	return (key);
 }
 
+char	*ft_find_value_by_key(t_env *list, char *keyword)
+{
+	while (list)
+	{
+		if (!ft_strncmp(list->key, keyword, ft_strlen(keyword)))
+			return (list->value);
+		else
+			list = list->next;
+	}
+	return (NULL);
+}
+
+
 void	ft_change_envvalue(t_env *envlist, char *key, char *new_value)
 {
-	while (envlist)
+	while (envlist != NULL)
 	{
 		if (!ft_strncmp(envlist->key, key, ft_strlen(key) + 1))
 		{
 			free(envlist->value);
 			envlist->value = new_value;
-			return;
+			return ;
 		}
 		envlist = envlist->next;
 	}
@@ -63,7 +63,7 @@ void	ft_remove_env(t_env **envlist, char *key)
 	t_env	*current;
 
 	if (!envlist || !*envlist)
-		return;
+		return ;
 	if (!ft_strncmp((*envlist)->key, key, ft_strlen(key) + 1))
 	{
 		tmp = *envlist;
@@ -79,7 +79,7 @@ void	ft_remove_env(t_env **envlist, char *key)
 			tmp = current->next;
 			current->next = tmp->next;
 			ft_del_env(tmp);
-			return;
+			return ;
 		}
 		current = current->next;
 	}

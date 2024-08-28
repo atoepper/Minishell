@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   garbage_collection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/27 11:37:00 by jweingar         ###   ########.fr       */
+/*   Created: 2024/08/27 10:57:41 by jweingar          #+#    #+#             */
+/*   Updated: 2024/08/27 11:23:37 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_unset(char **argv, t_env *envlst)
+int	clear_garbage(t_shell *mshell)
 {
-	int	i;
-
-	i = 1;
-	if (argv == NULL)
-		return (1);
-	if (argv[1] == NULL)
-		return (printf("unset: not enough arguments\n"), 1);
-	while (argv[i] != NULL)
-	{
-		if (ft_find_value_by_key(envlst, argv[i]) != NULL)
-			ft_remove_env(&envlst, argv[i]);
-		i++;
-	}
+	free(mshell->line);
+	mshell->line = NULL;
+	free(mshell->prompt);
+	mshell->prompt = NULL;
+	ft_clear_tokenlist(&mshell->token_list);
+	mshell->token_list = NULL;
+	ft_clear_envlist(&mshell->envlst);
+	mshell->envlst = NULL;
 	return (0);
 }
