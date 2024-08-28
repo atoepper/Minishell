@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/26 16:06:29 by atoepper         ###   ########.fr       */
-=======
-/*   Updated: 2024/08/26 15:48:59 by jweingar         ###   ########.fr       */
->>>>>>> 1c56f663f999d470319345e20662c0ba636f2890
+/*   Updated: 2024/08/27 13:44:17 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,39 +43,39 @@
 # define PIPE			0b01000000000000000000000000000000
 # define REDIRECT		0b00100000000000000000000000000000
 # define WORD			0b00010000000000000000000000000000
+# define DQUOTE			0b00001000000000000000000000000000
+# define SQUOTE			0b00000100000000000000000000000000
 
 // redirection
-# define READ			0b00000000100000000000000000000000
-# define HEREDOC		0b00000000010000000000000000000000
-# define WRITE			0b00000000001000000000000000000000
-# define WRITE_APPEND	0b00000000000100000000000000000000
+# define READ			0b00000010000000000000000000000000
+# define HEREDOC		0b00000001000000000000000000000000
+# define WRITE			0b00000000100000000000000000000000
+# define WRITE_APPEND	0b00000000010000000000000000000000
 
-// word_type
-//  define PURE_WORD		0b00000000000000001000000000000000
-//  define EXPANDED		0b00000000000000000100000000000000
-# define DQUOTE			0b00000000000000000010000000000000
-# define SQUOTE			0b00000000000000000001000000000000
-//  define QUOTE			0b00000000000000000011000000000000
+// word linking
+# define RIGHT_JOIN		0b00000000001000000000000000000000
 
-// linked_word_status
-# define LEFT_IFS		0b00000000000000000000000010000000
-# define RIGHT_IFS		0b00000000000000000000000001000000
-# define LEFT_JOIN		0b00000000000000000000000000100000
-# define RIGHT_JOIN		0b00000000000000000000000000010000
-# define WORD_JOIN		0b00000000000000000000000000110000
+// additional grammar flags
+# define PROGRAM		0b00000000000100000000000000000000
+# define COMMAND_TERM	0b00000000000010000000000000000000
+# define COMMAND		0b00000000000001000000000000000000
+# define REDIR_ITER		0b00000000000000100000000000000000
+# define REDIR_TERM		0b00000000000000010000000000000000
+# define EXEC_PATH		0b00000000000000001000000000000000
+# define FILE_PATH		0b00000000000000000100000000000000
 
-typedef enum
-{
-	PROGRAM,
-	PIPELINE,
-	COMMAND_TERM,
-	COMMAND,
-	REDIR_ITER,
-	REDIR_TERM,
-	REDIR,
-	EXEC_PATH,
-	FILE_PATH,
-} ast_node_type;
+// typedef enum
+// {
+// 	PROGRAM,
+// 	PIPELINE,
+// 	COMMAND_TERM,
+// 	COMMAND,
+// 	REDIR_ITER,
+// 	REDIR_TERM,
+// 	REDIR,
+// 	EXEC_PATH,
+// 	FILE_PATH,
+// } ast_node_type;
 
 /* STRUCTURES */
 
@@ -100,7 +96,7 @@ typedef struct s_env
 
 typedef struct s_ast_node
 {
-	ast_node_type		type;
+	int					type;
 	char				*value;
 	char				**argv;
 	struct s_ast_node	*child;
@@ -195,7 +191,7 @@ t_ast_node	*parse_command_term(t_token **current_token);
 t_ast_node	*parse_command(t_token **current_token);
 t_ast_node	*parse_redir_iter(t_token **current_token);
 t_ast_node	*parse_redir_term(t_token **current_token);
-t_ast_node	*create_ast_node(ast_node_type type, char *value);
+t_ast_node	*create_ast_node(int type, char *value);
 void		add_child_node(t_ast_node *parent, t_ast_node *child);
 void		free_ast(t_ast_node *node);
 void		print_ast(t_ast_node *node, int indent);
