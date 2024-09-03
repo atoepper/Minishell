@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
+#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/09 14:20:11 by atoepper          #+#    #+#              #
-#    Updated: 2024/04/18 09:27:55 by atoepper         ###   ########.fr        #
+#    Updated: 2024/09/03 15:08:17 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ AR = ar -rcs
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		$(AR) $(NAME) $(OBJS)
+		@$(AR) $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)
