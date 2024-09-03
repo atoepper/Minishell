@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/28 12:27:03 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/03 13:15:43 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,6 @@
 # define COMMAND		0b00000000000001000000000000000000
 # define REDIR_ITER		0b00000000000000100000000000000000
 # define REDIR_TERM		0b00000000000000010000000000000000
-# define EXEC_PATH		0b00000000000000001000000000000000
-# define FILE_PATH		0b00000000000000000100000000000000
-
-// typedef enum
-// {
-// 	PROGRAM,
-// 	PIPELINE,
-// 	COMMAND_TERM,
-// 	COMMAND,
-// 	REDIR_ITER,
-// 	REDIR_TERM,
-// 	REDIR,
-// 	EXEC_PATH,
-// 	FILE_PATH,
-// } ast_node_type;
 
 /* STRUCTURES */
 
@@ -187,7 +172,6 @@ int		ft_joinwords(t_token **list);
 
 /* PARSING */
 t_ast_node	*parse_program(t_token **current_token);
-t_ast_node	*parse_pipe(t_token **current_token);
 t_ast_node	*parse_command_term(t_token **current_token);
 t_ast_node	*parse_command(t_token **current_token);
 t_ast_node	*parse_redir_iter(t_token **current_token);
@@ -196,6 +180,8 @@ t_ast_node	*create_ast_node(int type, char *value);
 void		add_child_node(t_ast_node *parent, t_ast_node *child);
 void		free_ast(t_ast_node *node);
 void		print_ast(t_ast_node *node, int indent);
+int			ft_count_args(t_token **current);
+char		**ft_create_argv(t_token **current, int argc);
 
 /* GARBAGE_COLLECTION */
 int		clear_garbage(t_shell *mshell);
