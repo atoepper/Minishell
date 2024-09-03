@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 16:19:53 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/03 12:27:26 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_tokenize(&mshell);
 		ft_printlist(&mshell.token_list);
 		/* parse */
+		mshell.ast = parse_program(&mshell.token_list);
+		print_ast(mshell.ast, 0);
 		/* handle errors */
 		/* execute parse tree */		
 		create_prompt(&mshell);
