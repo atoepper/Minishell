@@ -6,7 +6,7 @@
 #    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/08/26 16:06:58 by atoepper         ###   ########.fr        #
+#    Updated: 2024/09/03 12:22:25 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ SOURCES = main.c \
 			builtins/echo.c \
 			builtins/env.c \
 			builtins/exit.c \
+			builtins/export.c \
+			builtins/unset.c \
 			builtins/pwd.c \
 			env/env.c \
 			env/envlist.c \
@@ -37,7 +39,9 @@ SOURCES = main.c \
 			execution/exec_builtin.c \
 			execution/exec_external.c \
 			expander/expand.c \
+			parsing/ast.c \
 			parsing/parse.c \
+			parsing/parse_utils.c \
 			tokenizing/tokenize.c \
 			tokenizing/linetolist.c \
 			tokenizing/token_utils.c \
