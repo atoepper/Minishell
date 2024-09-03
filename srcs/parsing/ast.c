@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 12:06:57 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/28 11:28:32 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/03 13:04:10 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,38 @@ void free_ast(t_ast_node *node)
 }
 
 /* ONLY FOR DEBUG */
-// void print_ast(t_ast_node *node, int indent)
-// {
-// 	if (!node) return;
-// 	for (int i = 0; i < indent; i++) printf("  ");
+void print_ast(t_ast_node *node, int indent)
+{
+	if (!node) return;
+	for (int i = 0; i < indent; i++) printf("  ");
 
-// 	switch (node->type)
-// 	{
-// 		case PROGRAM: printf("Program\n"); break;
-// 		case PIPE: printf("Pipeline\n"); break;
-// 		case COMMAND_TERM: printf("Command term\n"); break;
-// 		case COMMAND: printf("Command\n"); break;
-// 		case REDIR_ITER: printf("Redirection Iteration\n"); break;
-// 		case REDIR_TERM: printf("Redirection term\n"); break;
-// 		case REDIRECT: printf("Redirection\n"); break;
-// 	}
-// 	if (node->child)
-// 		print_ast(node->child, indent + 1);
-// 	if (node->next)
-// 		print_ast(node->next, indent);
-// }
+	if (node->type & PROGRAM)
+		printf("Program\n");
+	else if (node->type & COMMAND_TERM)
+		printf("Command term\n");
+	else if (node->type & COMMAND)
+	{
+		printf("Command: %s, ", node->argv[0]);
+		for (int i = 0; node->argv[i]; i++) printf("argv[%d]: %s, ", i, node->argv[i]);
+		printf("\n");
+	}
+	else if (node->type & REDIR_ITER)	
+		printf("Redicection iteration\n");
+	else if (node->type & REDIRECT)
+	{
+		printf("Redirecton:");
+		if (node->type & READ)
+			printf("type: read");
+		else if (node->type & WRITE)
+			printf("type: write");
+		else if (node->type & WRITE_APPEND)
+			printf("type: write/append");
+		else if (node->type & HEREDOC)
+			printf("type: heredoc");
+		printf(", filepath/delimiter: %s\n", node->value);
+	}
+	if (node->child)
+		print_ast(node->child, indent + 1);
+	if (node->next)
+		print_ast(node->next, indent);
+}
