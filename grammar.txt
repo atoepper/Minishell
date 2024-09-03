@@ -1,6 +1,6 @@
 
 Minishell grammar, version I - LL(1) grammar, recursive descent parser (RDP) optimized 
-<program>				->	<command term> | <command term> <pipe>
+<program>				->	
 <pipe>					->	<command term> {'|' <command term>}
 <command term>			->	[<command>] [<redirection iteration>]
 <command>				->	<execution path> {<argv>}
@@ -24,3 +24,14 @@ Minishell grammar, version II - using left recursion, thus leading to infite rec
 <execution path>		->	word
 <delimiter>				->	word
 <argv>					->	word | word <argv>
+
+Minishell grammar, version III - LL(1) grammar, recursive descent parser (RDP) optimized 
+<program>				->	<command term> {'|' <command term>}
+<command term>			->	[<redirection iteration>] [<command>] [<redirection iteration>]
+<command>				->	<execution path> {<argv>}
+<redirection iteration>	->	<redirection term> {<redirection term>}
+<redirection term>		->	<redirection> <file path> 
+<redirection>			->	'<' | '>' | '>>' | '<<'
+<file path>				->	word
+<execution path>		->	word
+<argv>					->	word
