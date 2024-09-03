@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/28 12:05:45 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:17:33 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_tokenize(t_shell *mshell)
 		/* Set error */
 		return (1);
 	}
-	printf("tokenizing succeeded\n");
+	//printf("tokenizing succeeded\n");
 	expander(mshell);
 	ft_joinwords(&mshell->token_list);
 	return (0);
