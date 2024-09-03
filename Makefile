@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
+#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/09/03 12:22:25 by atoepper         ###   ########.fr        #
+#    Updated: 2024/09/03 16:14:55 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,11 +65,11 @@ WHITE       = \033[1;37m
 all: lib tmp $(NAME)
 
 lib:
-	@echo "$(GREEN)Creating lib files$(CYAN)"
+#	@echo "$(GREEN)Creating lib files$(CYAN)"
 	@make -C $(LIBFT)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -L $(LIBFT) -o $@ $^ -lft -lreadline
+	@$(CC) $(FLAGS) -L $(LIBFT) -o $@ $^ -lft -lreadline
 	@echo "$(GREEN)Project successfully compiled"
 
 tmp:
@@ -84,9 +84,10 @@ tmp:
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)/$(NAME).h tmp
 	@$(CC) $(FLAGS) -c -o $@ $<
-	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(NOC)"
+#	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(NOC)"
 
 run: all
+	@echo "\n"
 	@./$(NAME)
 
 clean:
