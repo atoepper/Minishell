@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/03 13:15:43 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:34:45 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct s_shell
 	// bool			heredoc_sigint;
 } t_shell;
 
-typedef int	(*t_function_ptr)(char **argv, t_env *envlst);
+typedef int	(*t_function_ptr)(char **argv, t_shell *mshell);
 
 typedef struct s_builtin
 {
@@ -116,14 +116,14 @@ typedef struct s_builtin
 }	t_builtin;
 
 /* BUILTINS */
-int		ft_echo(char **argv, t_env *envlst);
+int		ft_echo(char **argv, t_shell *mshell);
 int		ft_print_env(char **envp);
-int		ft_exit(char **argv, t_env *envlst);
-int		ft_pwd(char **argv, t_env *envlst);
-int		ft_cd(char **argv, t_env *envlst);
-int		ft_env(char **argv, t_env *envlst);
-int		ft_export(char **argv, t_env *envlst);
-int		ft_unset(char **argv, t_env *envlst);
+int		ft_exit(char **argv, t_shell *mshell);
+int		ft_pwd(char **argv, t_shell *mshell);
+int		ft_cd(char **argv, t_shell *mshell);
+int		ft_env(char **argv, t_shell *mshell);
+int		ft_export(char **argv, t_shell *mshell);
+int		ft_unset(char **argv, t_shell *mshell);
 
 /* ENVIRONMENT */
 char	*ft_find_value_by_key(t_env *list, char *keyword);
@@ -138,18 +138,21 @@ void	ft_remove_env(t_env **envlist, char *key);
 void	ft_printenvlist(t_shell *mshell);
 
 /* EXECUTION */
-int				exec_external(char **argv, t_env *envlst);
+int				exec_external(char **argv, t_shell *mshell);
 char			*ft_join_path_and_name(char *path, char *name);
 char			*search_function_in_path(char *name);
 int				search_file_in_directory(const char *directory, char *name);
-int				exec_builtin(char **argv, t_env *envlst);
+int				exec_builtin(char **argv, t_shell *mshell);
 t_function_ptr	functionpath_builtins(char *name);
 t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
-int				exec_function(char **argv, t_env *envlst);
+int				exec_function(char **argv, t_shell *mshell);
 char			*read_fd_to_str(int fd);
-int				pipe_function(char *argvs[][6], t_env *envlst, int in_fd);
+int				pipe_function(char *argvs[][6], t_shell *mshell, int in_fd);
+int				execute_programm(t_shell *mshell);
+int				execute_command_term(t_shell *mshell, t_ast_node *node_command_term, int in_fd);
+int				execute_command(t_shell *mshell, t_ast_node *node_command);
 
 /* INIT */
 int		init_shell(t_shell *mshell, char **envp);
