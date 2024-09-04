@@ -6,7 +6,7 @@
 #    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/09/03 12:22:25 by atoepper         ###   ########.fr        #
+#    Updated: 2024/09/04 09:48:50 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SOURCES = main.c \
 			builtins/pwd.c \
 			env/env.c \
 			env/envlist.c \
+			error/error.c \
 			execution/execute.c \
 			execution/exec_builtin.c \
 			execution/exec_external.c \
@@ -75,6 +76,7 @@ $(NAME): $(OBJS)
 tmp:
 	@mkdir -p $(OBJ_PATH)/builtins
 	@mkdir -p $(OBJ_PATH)/env
+	@mkdir -p $(OBJ_PATH)/error
 	@mkdir -p $(OBJ_PATH)/execution
 	@mkdir -p $(OBJ_PATH)/expander
 	@mkdir -p $(OBJ_PATH)/parsing
