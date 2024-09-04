@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/03 13:15:43 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/04 09:45:53 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,9 @@ int		init_shell(t_shell *mshell, char **envp);
 void	create_prompt(t_shell *mshell);
 int		init_environment(t_shell *mshell, char **envp);
 
+/* ERROR */
+void	ft_set_error(t_shell *mshell, int errno, char *msg);
+
 /* EXPANDER */
 char	*ft_expand(char *value, t_shell *mshell);
 int		expander(t_shell *mshell);
@@ -171,11 +174,11 @@ int		ft_tokenize(t_shell *mshell);
 int		ft_joinwords(t_token **list);
 
 /* PARSING */
-t_ast_node	*parse_program(t_token **current_token);
-t_ast_node	*parse_command_term(t_token **current_token);
-t_ast_node	*parse_command(t_token **current_token);
-t_ast_node	*parse_redir_iter(t_token **current_token);
-t_ast_node	*parse_redir_term(t_token **current_token);
+t_ast_node	*parse_program(t_shell *mshell);
+t_ast_node	*parse_command_term(t_shell *mshell);
+t_ast_node	*parse_command(t_shell *mshell);
+t_ast_node	*parse_redir_iter(t_shell *mshell);
+t_ast_node	*parse_redir_term(t_shell *mshell);
 t_ast_node	*create_ast_node(int type, char *value);
 void		add_child_node(t_ast_node *parent, t_ast_node *child);
 void		free_ast(t_ast_node *node);
