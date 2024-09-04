@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/28 12:05:45 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/04 10:29:46 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ int	ft_tokenize(t_shell *mshell)
 	mshell->line = NULL;
 	if (!mshell->token_list)
 	{
-		printf("Tokenizing failed\n");
 		/* Set error */
+		ft_set_error(mshell, 1, "Tokenizing failed\n");
 		return (1);
 	}
-	printf("tokenizing succeeded\n");
 	expander(mshell);
 	ft_joinwords(&mshell->token_list);
 	return (0);
