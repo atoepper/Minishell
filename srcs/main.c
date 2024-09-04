@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/03 12:27:26 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:55:09 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,20 @@ int	main(int argc, char **argv, char **envp)
 		if (!mshell.line)
 			return(free(mshell.line), 0);
 		/* Testing */
-		printf("%s\n", mshell.line);
+		//printf("%s\n", mshell.line);
 		if (!ft_strncmp(mshell.line, "exit", 5))
 			return(free(mshell.line), 0);
 		/* update history */
 		add_history(mshell.line);
 		/* tokenize */
 		ft_tokenize(&mshell);
-		ft_printlist(&mshell.token_list);
+		//ft_printlist(&mshell.token_list);
 		/* parse */
 		mshell.ast = parse_program(&mshell.token_list);
 		print_ast(mshell.ast, 0);
 		/* handle errors */
-		/* execute parse tree */		
+		/* execute parse tree */
+		execute_programm(&mshell);	
 		create_prompt(&mshell);
 		ft_clear_tokenlist(&mshell.token_list);
 		free(mshell.line);

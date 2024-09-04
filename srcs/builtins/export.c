@@ -6,13 +6,13 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/27 14:59:19 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:07:36 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_export(char **argv, t_env *envlst)
+int	ft_export(char **argv, t_shell *mshell)
 {
 	int		i;
 	char	*key;
@@ -32,14 +32,13 @@ int	ft_export(char **argv, t_env *envlst)
 			printf("key:%s, value:%s\n", key, value);
 			if (key == NULL || value == NULL)
 				return (1);
-			printf("search:%p, value:%s\n", ft_find_value_by_key(envlst, key), ft_find_value_by_key(envlst, key));
-			if (ft_find_value_by_key(envlst, key) != NULL)
+			if (ft_find_value_by_key(mshell->envlst, key) != NULL)
 			{
-				ft_change_envvalue(envlst, key, value);
+				ft_change_envvalue(mshell->envlst, key, value);
 				free(key);
 			}
 			else
-				ft_add_env(&envlst, ft_new_env(key, value));
+				ft_add_env(&(mshell->envlst), ft_new_env(key, value));
 		}
 		i++;
 	}

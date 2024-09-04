@@ -18,3 +18,5 @@
 24.8.	Alexander	Grammatik fuer Parser geschrieben. Structures (Abstract syntax tree)fuer Parser eingerichtet.
 27.8.	Johannes	builtins: env, export und unset fertig
 27.8.	Johannes	cleaning garbage in garbage_collection angefangen
+03.9.	Johannes	erster versuche mit ausfuehrung von ast geklappt, mit pipes noch nicht (es wird nichts ausgegeben)
+03.9.	Johannes	redirection klappt mit allen 4 Varianten inkl. heredoc

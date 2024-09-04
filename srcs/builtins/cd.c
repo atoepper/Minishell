@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:57:51 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/27 12:53:08 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:07:28 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int	ft_cd_relativ(char **argv)
 	return (closedir(dir), free(path), 1);
 }
 
-int	ft_cd(char **argv, t_env *envlst)
+int	ft_cd(char **argv, t_shell *mshell)
 {
 	int				return_value;
 
-	(void)envlst;
+	(void)mshell;
 	if (argv == NULL || argv[1] == NULL)
 		return (1);
 	return_value = ft_cd_relativ(argv);

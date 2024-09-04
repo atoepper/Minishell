@@ -6,17 +6,17 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:35:06 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/27 13:50:48 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:07:33 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_exit(char **argv, t_env *envlst)
+int	ft_exit(char **argv, t_shell *mshell)
 {
 	int	exitvalue;
 
-	(void)envlst;
+	(void)mshell;
 	exitvalue = 0;
 	if (argv[1] != NULL)
 		if (argv[2] != NULL)
