@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/04 10:53:53 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:31:38 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_tokenize(t_shell *mshell)
 	mshell->line = NULL;
 	if (!mshell->token_list)
 	{
-		/* Set error */
 		ft_set_error(mshell, 1, "Tokenizing failed\n");
 		return (1);
 	}
