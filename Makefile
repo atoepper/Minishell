@@ -6,7 +6,7 @@
 #    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/09/04 10:54:42 by atoepper         ###   ########.fr        #
+#    Updated: 2024/09/06 11:45:26 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SOURCES = main.c \
 			parsing/ast.c \
 			parsing/parse.c \
 			parsing/parse_utils.c \
+			signals/signals.c \
 			tokenizing/tokenize.c \
 			tokenizing/linetolist.c \
 			tokenizing/token_utils.c \
