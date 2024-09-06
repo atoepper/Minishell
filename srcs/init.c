@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 16:58:59 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:40:13 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,21 @@ void	create_prompt(t_shell *mshell)
 int	init_shell(t_shell *mshell, char **envp)
 {
 	ft_memset(mshell, 0, sizeof(t_shell));
-	/* init environment */
 	init_environment(mshell, envp);
 	create_prompt(mshell);
 	mshell->in = dup(0);
 	mshell->out = dup(1);
-	/* tcgetattr */
+	tcgetattr(STDIN_FILENO, &(mshell->startterm));
+	sigtermset(0);
 	return (1);
+}
+
+void	ft_renewshell(t_shell *mshell)
+{
+		create_prompt(mshell);
+		ft_clear_tokenlist(&(mshell->token_list));
+		free_ast(mshell->ast);
+		mshell->exit_status = mshell->error;
+		mshell->error = 0;
+		free(mshell->line);
 }

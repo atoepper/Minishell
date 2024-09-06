@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/04 10:54:15 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:39:24 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct s_shell
 	t_ast_node		*ast;
 	// bool			signint_child;
 	// t_parse_err		parse_err;
-	// char			**environ;
 	// bool			heredoc_sigint;
 } t_shell;
 
@@ -158,6 +157,7 @@ int				execute_command(t_shell *mshell, t_ast_node *node_command);
 int		init_shell(t_shell *mshell, char **envp);
 void	create_prompt(t_shell *mshell);
 int		init_environment(t_shell *mshell, char **envp);
+void	ft_renewshell(t_shell *mshell);
 
 /* ERROR */
 void	ft_set_error(t_shell *mshell, int errno, char *msg);
@@ -193,6 +193,10 @@ char		**ft_create_argv(t_token **current, int argc);
 int		clear_garbage(t_shell *mshell);
 
 /* SIGNALS */
+void	sigtermset(int mode);
+void	sigint_handler(int signo);
+void	sigint_handler_print_newline(int signo);
+void	set_signal(int mode);
 
 /* UTILS */
 void	ft_skipspaces(char **line);

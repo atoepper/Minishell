@@ -6,22 +6,12 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/05 11:31:51 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:39:08 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 #include <readline/readline.h>
-
-void	ft_renewshell(t_shell *mshell)
-{
-		create_prompt(mshell);
-		ft_clear_tokenlist(&(mshell->token_list));
-		free_ast(mshell->ast);
-		mshell->exit_status = mshell->error;
-		mshell->error = 0;
-		free(mshell->line);
-}
 
 int	main(int argc, char **argv, char **envp)
 {
