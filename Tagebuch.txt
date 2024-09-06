@@ -25,3 +25,5 @@
 04.9.	Alexander	Argumente fuer parsing functions ausgetauscht. Es wird jetzt mshell uebergeben, sodass der error code direkt gespeichert werden kann.
 04.9.	Alexander	ft_refresh_shell setzt am Ende der Loop in der Main alle erforderlichen Werte auf Null und gibt allocierten Speicher frei. 
 04.9.	Alexander	ft_unexpand_heredoc setzt EXPANDER-flags im heredoc delimiter auf 0.
+05.9.	Alexander	Segmentation faults im parser beseitigt. Error handling etwas angepasst. Noch nicht optimal. -> Evtl keine direkte Nachricht, sondern Stelle und Fehlerart abspeichern
+06.9.	Alexander	Signalhandler fuer den Parent process definiert. Fuer child processes und heredocs gelten andere Regeln. Ausserdem muss termios-Verhalten uberprueft werden: ctrl-c soll nicht ausgegeben werden
