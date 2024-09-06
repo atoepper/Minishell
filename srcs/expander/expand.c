@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:31 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/28 12:06:41 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/04 12:01:11 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,36 @@ char	*ft_expand(char *value, t_shell *mshell)
 	return (expanded);
 }
 
+void	ft_unexpand_heredoc(t_token **token_list)
+{
+	t_token	*current;
+
+	current = *token_list;
+	while (current)
+	{
+		if (current->type & HEREDOC)
+		{
+			current = current->next;
+			while (current && current->type & WORD)
+			{
+				current->type &= ~EXPANDER;
+				if (current->type & RIGHT_JOIN)
+					current = current->next;
+				else
+					break;
+			}
+		}
+		current = current->next;
+	}
+}
+
 int	expander(t_shell *mshell)
 {
 	t_token	*current;
 	char	*tmp;
 
 	current = mshell->token_list;
-	/* check for HEREDOC delimiter and delete EXPANDER flag */
+	ft_unexpand_heredoc(&(mshell->token_list));
 	while (current)
 	{
 		if (current->type & EXPANDER)
