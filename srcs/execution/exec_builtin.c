@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/03 16:16:22 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/09 10:23:49 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_lst_builtin(t_builtin	**lst_builtins)
 	i = 0;
 	if (lst_builtins == NULL)
 		return ;
-	while (lst_builtins[i] != NULL)
+	while (lst_builtins[i]->name != NULL)
 	{
 		free(lst_builtins[i]);
 		i++;
@@ -36,20 +36,20 @@ t_builtin	**alloc_lst_builtins(void)
 	if (lst_builtins == NULL)
 		return (perror("malloc"), NULL);
 	i = 0;
-	while (i < 7)
+	while (i < 8)
 	{
 		lst_builtins[i] = malloc(sizeof(t_builtin));
 		if (lst_builtins[i] == NULL)
 			return (perror("malloc"), NULL);
 		i++;
 	}
-	lst_builtins[7] = NULL;
 	return (lst_builtins);
 }
 
 t_builtin	**fill_lst_builtins(void)
 {
 	t_builtin	**lst_builtins;
+
 	lst_builtins = alloc_lst_builtins();
 	if (lst_builtins == NULL)
 		return (perror("malloc"), NULL);
@@ -67,6 +67,8 @@ t_builtin	**fill_lst_builtins(void)
 	lst_builtins[5]->func = ft_env;
 	lst_builtins[6]->name = "exit\0";
 	lst_builtins[6]->func = ft_exit;
+	lst_builtins[7]->name = NULL;
+	lst_builtins[7]->func = NULL;
 	return (lst_builtins);
 }
 
@@ -87,6 +89,7 @@ t_function_ptr	functionpath_builtins(char *name)
 		}
 		i++;
 	}
+
 	free_lst_builtin(lst_builtins);
 	return (0);
 }

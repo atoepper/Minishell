@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/03 16:59:12 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/09 10:27:42 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	execute_command_term(t_shell *mshell, t_ast_node *node_command_term, int in_
 		if (node_command_term->next != NULL)
 			dup2(pipefd[1], 1);
 		close(pipefd[0]);
-		execute_command(mshell, node_command_term);
+		execute_command(mshell, node_command_term->child);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid != 0)
