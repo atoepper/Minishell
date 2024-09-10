@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 16:02:45 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/19 11:06:42 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:13:56 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	j = 0;
-	while (s1 != NULL && s2[j] != '\0')
+	while (s2 != NULL && s2[j] != '\0')
 	{
 		join[i + j] = s2[j];
 		j++;
