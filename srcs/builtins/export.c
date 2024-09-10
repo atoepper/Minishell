@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/03 16:07:36 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:45:40 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	ft_export(char **argv, t_shell *mshell)
 		{
 			key = ft_getkeyword(argv[i]);
 			value = ft_getvalue(argv[i]);
-			printf("key:%s, value:%s\n", key, value);
 			if (key == NULL || value == NULL)
 				return (1);
 			if (ft_find_value_by_key(mshell->envlst, key) != NULL)
