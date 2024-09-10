@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/06 11:39:08 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:36:45 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	main(int argc, char **argv, char **envp)
 		add_history(mshell.line);
 		ft_tokenize(&mshell);
 		mshell.ast = parse_program(&mshell);
-		print_ast(mshell.ast, 0);
-		/* execute parse tree */
+		//print_ast(mshell.ast, 0);
+		execute_programm(&mshell);
 		ft_renewshell(&mshell);
 	}
 	ft_clear_envlist(&mshell.envlst);
