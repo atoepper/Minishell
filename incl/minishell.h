@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/06 11:39:24 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:36:25 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,19 @@ t_function_ptr	functionpath_builtins(char *name);
 t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
-int				exec_function(char **argv, t_shell *mshell);
-char			*read_fd_to_str(int fd);
+int				exec_function(t_ast_node *node_command_term, t_shell *mshell);
 int				pipe_function(char *argvs[][6], t_shell *mshell, int in_fd);
 int				execute_programm(t_shell *mshell);
-int				execute_command_term(t_shell *mshell, t_ast_node *node_command_term, int in_fd);
-int				execute_command(t_shell *mshell, t_ast_node *node_command);
+int				execute_command_term(t_shell *mshell, t_ast_node *node_command_term, char *str);
+int				execute_command(t_shell *mshell, t_ast_node *node_command, int in_fd);
+char			*input_read(char *input, char *str);
+char			*input_heredoc(char *input, char *str);
+int				ouput_write(char *path, char *str);
+int				ouput_write_append(char *path, char *str);
+char			*read_fd_to_str(int fd);
+int				write_str_to_fd(char *str, int fd);
+int				add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int fd);
+int				add_str_to_redirections(t_ast_node *node_command_term, char *str);
 
 /* INIT */
 int		init_shell(t_shell *mshell, char **envp);
