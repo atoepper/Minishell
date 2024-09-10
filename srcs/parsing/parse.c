@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:37 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/06 10:04:09 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/09 12:18:55 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ t_ast_node	*parse_command_term(t_shell *mshell)
 		command_note = parse_command(mshell);
 		redir_iter_post_node = parse_redir_iter(mshell);		
 		if (redir_iter_pre_node != NULL)
-			add_child_node(command_term_node, redir_iter_pre_node);
+			add_child_node(command_term_node, redir_iter_pre_node->child);
 		if (redir_iter_post_node != NULL)
-			add_child_node(command_term_node, redir_iter_post_node);
+			add_child_node(command_term_node, redir_iter_post_node->child);
 		if (command_note != NULL)
 			add_child_node(command_term_node, command_note);
 	}
