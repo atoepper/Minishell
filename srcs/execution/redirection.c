@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/16 11:53:13 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:52:55 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,12 @@ int	write_str_to_fd(char *str, int fd)
 	return (0);
 }
 
-int	add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int fd)
+int	add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int *fd_input, int *fd_output)
 {
 	t_ast_node	*node_command;
 
+	close(fd_input[0]);
+	close(fd_output[1]);
 	node_command = node_command_term->child;
 	while ((node_command != NULL))
 	{
@@ -128,8 +130,9 @@ int	add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int fd)
 		node_command = node_command->next;
 	}
 	if (str != NULL)
-		write_str_to_fd(str, fd);
+		ft_putstr_fd(str, fd_input[1]);
 	free(str);
+	close(fd_input[1]);
 	return (0);
 }
 
