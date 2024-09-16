@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/10 16:45:03 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:38:18 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	exec_function(t_ast_node *node_command_term, t_shell *mshell)
 				exit_status = exec_external(node_command->argv, mshell);
 				if (exit_status)
 				{
-					printf("command not found: %s\n", node_command->argv[0]);
-					exit_status = 1;
+					ft_putstr_fd("command not found\n", 1);
+					exit_status = 127;
 				}
 			}
 		}
@@ -41,50 +41,58 @@ int	exec_function(t_ast_node *node_command_term, t_shell *mshell)
 	return (exit_status);
 }
 
-int	execute_command_term(t_shell *mshell, t_ast_node *node_command_term, char *str)
+int	exe_child(int *pipefd_input, int *pipefd_output,
+			t_ast_node *node_command_term, t_shell *mshell)
 {
-	int			pipefd[2];
-	int			pipefd2[2];
+	int	exit_status;
+
+	close(pipefd_input[1]);
+	close(pipefd_output[0]);
+	dup2(pipefd_input[0], 0);
+	close(pipefd_input[0]);
+	dup2(pipefd_output[1], 1);
+	close(pipefd_output[1]);
+	exit_status = exec_function(node_command_term, mshell);
+	return (exit_status);
+}
+
+
+int	execute_command_term(t_shell *mshell,
+			t_ast_node *node_command_term, char *str)
+{
+	int			pipefd_input[2];
+	int			pipefd_output[2];
 	pid_t		pid;
 	int			exit_status;
 	int			output;
-	int			result;
 
-	((void)mshell, (void)node_command_term);
-	if (pipe(pipefd) == -1 || pipe(pipefd2) == -1)
+
+	if (pipe(pipefd_input) == -1 || pipe(pipefd_output) == -1)
 		return (perror("pipe"), 1);
-	result = 0;
-	exit_status = 0;
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), EXIT_FAILURE);
 	if (pid == 0)
 	{
-		close(pipefd2[0]);
-		add_redirection_to_pipe(node_command_term, str, pipefd[1]);
-		if (str != NULL)
-			dup2(pipefd[0], 0);
-		close(pipefd[0]);
-		dup2(pipefd2[1], 1);
-		close(pipefd2[1]);
-		exec_function(node_command_term, mshell);
+		exit_status = exe_child(pipefd_input, pipefd_output,
+				node_command_term, mshell);
 		exit(exit_status);
 	}
 	else if (pid != 0)
 	{
+		close(pipefd_input[0]);
+		close(pipefd_output[1]);
+		add_redirection_to_pipe(node_command_term, str, pipefd_input[1]);
+		close(pipefd_input[1]);
 		wait(&exit_status);
-		close(pipefd[0]);
-		close(pipefd[1]);
-		close(pipefd2[1]);
-		str = read_fd_to_str(pipefd2[0]);
+		str = read_fd_to_str(pipefd_output[0]);
 		output = add_str_to_redirections(node_command_term, str);
 		if (node_command_term->next != NULL)
-			execute_command_term(mshell, node_command_term->next, str);
+			exit_status = execute_command_term(mshell, node_command_term->next, str);
 		else if (output != 0)
-			result = write(1, str, ft_strlen(str));
+			ft_putstr_fd(str, 1);
 	}
-	result++;
-    return (0);
+    return (exit_status);
 }
 
 int	execute_programm(t_shell *mshell)
@@ -93,6 +101,7 @@ int	execute_programm(t_shell *mshell)
 
 	node_command_term = mshell->ast->child;
 	if (node_command_term != NULL)
-		execute_command_term(mshell, node_command_term, NULL);
+		mshell->exit_status = execute_command_term(mshell, 
+				node_command_term, NULL);
 	return (0);
 }

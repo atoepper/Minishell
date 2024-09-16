@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/10 16:39:39 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 11:53:13 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int	add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int fd)
 	if (str != NULL)
 		write_str_to_fd(str, fd);
 	free(str);
-	close(fd);
 	return (0);
 }
 
