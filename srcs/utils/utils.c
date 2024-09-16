@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:41:34 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/26 16:14:10 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:42:59 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,14 @@ void	free_array(char **arr)
 	while (arr[i])
 		free(arr[i++]);
 	free(arr); 
+}
+
+void	print2errorfile(char *str)
+{
+	int	fd_output;
+	int	write_return;
+
+	fd_output = open("errorfile.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
+	write_return = write(fd_output, str, ft_strlen(str));
+	write_return++;
 }
