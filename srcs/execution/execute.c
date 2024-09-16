@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/16 13:24:24 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:54:29 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,24 @@ int	exe_child(int *pipefd_input, int *pipefd_output,
 int	execute_command_term(t_shell *mshell,
 			t_ast_node *node_command_term, char *str)
 {
-	int			pipefd_input[2];
-	int			pipefd_output[2];
+	int			pipefd_in[2];
+	int			pipefd_out[2];
 	pid_t		pid;
 	int			output;
 	int			exit_status;
 
-	if (pipe(pipefd_input) == -1 || pipe(pipefd_output) == -1)
+	if (pipe(pipefd_in) == -1 || pipe(pipefd_out) == -1)
 		return (perror("pipe"), 1);
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), EXIT_FAILURE);
 	if (pid == 0)
-	{
-		exit(exe_child(pipefd_input, pipefd_output, node_command_term, mshell));
-	}
+		exit(exe_child(pipefd_in, pipefd_out, node_command_term, mshell));
 	else if (pid != 0)
 	{
-		close(pipefd_input[0]);
-		close(pipefd_output[1]);
-		add_redirection_to_pipe(node_command_term, str, pipefd_input[1]);
-		close(pipefd_input[1]);
+		add_redirection_to_pipe(node_command_term, str, pipefd_in, pipefd_out);
 		wait(&exit_status);
-		str = read_fd_to_str(pipefd_output[0]);
+		str = read_fd_to_str(pipefd_out[0]);
 		output = add_str_to_redirections(node_command_term, str);
 		if (node_command_term->next != NULL)
 			execute_command_term(mshell, node_command_term->next, str);
