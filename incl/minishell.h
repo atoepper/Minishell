@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/16 12:23:55 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:31:33 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ typedef struct s_shell
 	// bool			signint_child;
 	// t_parse_err		parse_err;
 	// bool			heredoc_sigint;
-} t_shell;
+}	t_shell;
 
 typedef int	(*t_function_ptr)(char **argv, t_shell *mshell);
 
@@ -115,26 +115,26 @@ typedef struct s_builtin
 }	t_builtin;
 
 /* BUILTINS */
-int		ft_echo(char **argv, t_shell *mshell);
-int		ft_print_env(char **envp);
-int		ft_exit(char **argv, t_shell *mshell);
-int		ft_pwd(char **argv, t_shell *mshell);
-int		ft_cd(char **argv, t_shell *mshell);
-int		ft_env(char **argv, t_shell *mshell);
-int		ft_export(char **argv, t_shell *mshell);
-int		ft_unset(char **argv, t_shell *mshell);
+int				ft_echo(char **argv, t_shell *mshell);
+int				ft_print_env(char **envp);
+int				ft_exit(char **argv, t_shell *mshell);
+int				ft_pwd(char **argv, t_shell *mshell);
+int				ft_cd(char **argv, t_shell *mshell);
+int				ft_env(char **argv, t_shell *mshell);
+int				ft_export(char **argv, t_shell *mshell);
+int				ft_unset(char **argv, t_shell *mshell);
 
 /* ENVIRONMENT */
-char	*ft_find_value_by_key(t_env *list, char *keyword);
-char	*ft_getvalue(char *str);
-t_env	*ft_new_env(char *key, char *value);
-void	ft_add_env(t_env **envlist, t_env *new_env);
-void	ft_del_env(t_env *env);
-void	ft_clear_envlist(t_env **envlist);
-char	*ft_getkeyword(char *str);
-void	ft_change_envvalue(t_env *envlist, char *key, char *new_value);
-void	ft_remove_env(t_env **envlist, char *key);
-void	ft_printenvlist(t_shell *mshell);
+char			*ft_find_value_by_key(t_env *list, char *keyword);
+char			*ft_getvalue(char *str);
+t_env			*ft_new_env(char *key, char *value);
+void			ft_add_env(t_env **envlist, t_env *new_env);
+void			ft_del_env(t_env *env);
+void			ft_clear_envlist(t_env **envlist);
+char			*ft_getkeyword(char *str);
+void			ft_change_envvalue(t_env *envlist, char *key, char *new_value);
+void			ft_remove_env(t_env **envlist, char *key);
+void			ft_printenvlist(t_shell *mshell);
 
 /* EXECUTION */
 int				exec_external(char **argv, t_shell *mshell);
@@ -149,70 +149,76 @@ void			free_lst_builtin(t_builtin	**lst_builtins);
 int				exec_function(t_ast_node *node_command_term, t_shell *mshell);
 int				pipe_function(char *argvs[][6], t_shell *mshell, int in_fd);
 int				execute_programm(t_shell *mshell);
-int				execute_command_term(t_shell *mshell, t_ast_node *node_command_term, char *str);
-int				execute_command(t_shell *mshell, t_ast_node *node_command, int in_fd);
+int				execute_command_term(t_shell *mshell, t_ast_node
+					*node_command_term, char *str);
+int				execute_command(t_shell *mshell,
+					t_ast_node *node_command, int in_fd);
 char			*input_read(char *input, char *str);
 char			*input_heredoc(char *input, char *str);
 int				ouput_write(char *path, char *str);
 int				ouput_write_append(char *path, char *str);
 char			*read_fd_to_str(int fd);
 int				write_str_to_fd(char *str, int fd);
-int				add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int fd);
-int				add_str_to_redirections(t_ast_node *node_command_term, char *str);
-int				exe_child(int *pipefd_input, int *pipefd_output, t_ast_node *node_command_term, t_shell *mshell);
+int				add_redirection_to_pipe(t_ast_node *node_command_term,
+					char *str, int *fd_input, int *fd_output);
+int				add_str_to_redirections(t_ast_node *node_command_term,
+					char *str);
+int				exe_child(int *pipefd_input, int *pipefd_output,
+					t_ast_node *node_command_term, t_shell *mshell);
 
 /* INIT */
-int		init_shell(t_shell *mshell, char **envp);
-void	create_prompt(t_shell *mshell);
-int		init_environment(t_shell *mshell, char **envp);
-void	ft_renewshell(t_shell *mshell);
+int				init_shell(t_shell *mshell, char **envp);
+void			create_prompt(t_shell *mshell);
+int				init_environment(t_shell *mshell, char **envp);
+void			ft_renewshell(t_shell *mshell);
 
 /* ERROR */
-void	ft_set_error(t_shell *mshell, int errno, char *msg);
+void			ft_set_error(t_shell *mshell, int errno, char *msg);
 
 /* EXPANDER */
-char	*ft_expand(char *value, t_shell *mshell);
-int		expander(t_shell *mshell);
+char			*ft_expand(char *value, t_shell *mshell);
+int				expander(t_shell *mshell);
 
 /* TOKENIZING */
-t_token	*ft_newtoken(char *value, int type);
-void	ft_addtoken(t_token **tokenlist, t_token *newtoken);
-void	ft_clear_tokenlist(t_token	**tokenlist);
-void	ft_deltoken(t_token *token);
-void	ft_printlist(t_token **tokenlist);
-t_token	*ft_linetolist(char *line, int *error);
-int		ft_tokenize(t_shell *mshell);
-int		ft_joinwords(t_token **list);
+t_token			*ft_newtoken(char *value, int type);
+void			ft_addtoken(t_token **tokenlist, t_token *newtoken);
+void			ft_clear_tokenlist(t_token	**tokenlist);
+void			ft_deltoken(t_token *token);
+void			ft_printlist(t_token **tokenlist);
+t_token			*ft_linetolist(char *line, int *error);
+int				ft_tokenize(t_shell *mshell);
+int				ft_joinwords(t_token **list);
 
 /* PARSING */
-t_ast_node	*parse_program(t_shell *mshell);
-t_ast_node	*parse_command_term(t_shell *mshell);
-t_ast_node	*parse_command(t_shell *mshell);
-t_ast_node	*parse_redir_iter(t_shell *mshell);
-t_ast_node	*parse_redir_term(t_shell *mshell);
-t_ast_node	*create_ast_node(int type, char *value);
-void		add_child_node(t_ast_node *parent, t_ast_node *child);
-void		free_ast(t_ast_node *node);
-void		print_ast(t_ast_node *node, int indent);
-int			ft_count_args(t_token **current);
-char		**ft_create_argv(t_token **current, int argc);
+t_ast_node		*parse_program(t_shell *mshell);
+t_ast_node		*parse_command_term(t_shell *mshell);
+t_ast_node		*parse_command(t_shell *mshell);
+t_ast_node		*parse_redir_iter(t_shell *mshell);
+t_ast_node		*parse_redir_term(t_shell *mshell);
+t_ast_node		*create_ast_node(int type, char *value);
+void			add_child_node(t_ast_node *parent, t_ast_node *child);
+void			free_ast(t_ast_node *node);
+void			print_ast(t_ast_node *node, int indent);
+int				ft_count_args(t_token **current);
+char			**ft_create_argv(t_token **current, int argc);
 
 /* GARBAGE_COLLECTION */
-int		clear_garbage(t_shell *mshell);
+int				clear_garbage(t_shell *mshell);
 
 /* SIGNALS */
-void	sigtermset(int mode);
-void	sigint_handler(int signo);
-void	sigint_handler_print_newline(int signo);
-void	set_signal(int mode);
+void			sigtermset(int mode);
+void			sigint_handler(int signo);
+void			sigint_handler_print_newline(int signo);
+void			set_signal(int mode);
 
 /* UTILS */
-void	ft_skipspaces(char **line);
-int		ft_nextchar(char *str, char c);
-int		ft_wordlength(char *line);
-bool	ft_isseparator(const char c);
-int		ft_end_of_varname(char *str);
-bool	ft_iskeyword(char *str);
-void	free_array(char **arr);
+void			ft_skipspaces(char **line);
+int				ft_nextchar(char *str, char c);
+int				ft_wordlength(char *line);
+bool			ft_isseparator(const char c);
+int				ft_end_of_varname(char *str);
+bool			ft_iskeyword(char *str);
+void			free_array(char **arr);
+void			print2errorfile(char *str);
 
 #endif
