@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/03 16:09:43 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:47:05 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,19 @@ char	*ft_join_path_and_name(char *path, char *name)
 }
 
 int	exec_external(char **argv, t_shell *mshell)
-{	
+{
 	char	*path;
 	int		exit_status;
-	char *env[] = { NULL };
+	char	*env[1];
 
 	(void)mshell;
+	env[0] = NULL;
 	exit_status = 0;
 	path = search_function_in_path(argv[0]);
 	if (path == NULL)
-		return (1);
+		return (127);
 	if (execve(path, argv, env) == -1)
-		exit(EXIT_FAILURE);
+		exit(127);
 	free(path);
 	return (exit_status);
 }
