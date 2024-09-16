@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/16 12:47:05 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:51:35 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*search_function_in_path(char *name)
 	str = ft_join_path_and_name(lst_path[i], name);
 	if (str == NULL)
 		return (perror("ft_join_path_and_name"), NULL);
+	print2errorfile("return search_function_in_path\n");
 	return (str);
 }
 
@@ -87,9 +88,13 @@ int	exec_external(char **argv, t_shell *mshell)
 	exit_status = 0;
 	path = search_function_in_path(argv[0]);
 	if (path == NULL)
+	{
+		print2errorfile("path == NULL\n");
 		return (127);
-	if (execve(path, argv, env) == -1)
-		exit(127);
+	}
+	exit_status = execve(path, argv, env);
+	if (exit_status == -1)
+		exit(EXIT_FAILURE);
 	free(path);
 	return (exit_status);
 }

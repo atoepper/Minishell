@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/16 12:52:22 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:40:29 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	exec_builtin(char **argv, t_shell *mshell)
 	func = functionpath_builtins(argv[0]);
 	if (func != NULL)
 	{
-		func(argv, mshell);
+		mshell->error = func(argv, mshell);
 		return (0);
 	}
 	else

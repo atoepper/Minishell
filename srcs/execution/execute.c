@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/16 13:54:29 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:33:46 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int	exec_function(t_ast_node *node_command_term, t_shell *mshell)
 			exit_status = exec_builtin(node_command->argv, mshell);
 			if (exit_status)
 				exit_status = exec_external(node_command->argv, mshell);
-			mshell->exit_status = exit_status;
+			if (exit_status == 127)
+				perror("command not found");
+			mshell->error = exit_status;
 		}
 		node_command = node_command->next;
 	}
@@ -63,7 +65,6 @@ int	execute_command_term(t_shell *mshell,
 	int			pipefd_out[2];
 	pid_t		pid;
 	int			output;
-	int			exit_status;
 
 	if (pipe(pipefd_in) == -1 || pipe(pipefd_out) == -1)
 		return (perror("pipe"), 1);
@@ -75,7 +76,7 @@ int	execute_command_term(t_shell *mshell,
 	else if (pid != 0)
 	{
 		add_redirection_to_pipe(node_command_term, str, pipefd_in, pipefd_out);
-		wait(&exit_status);
+		wait(NULL);
 		str = read_fd_to_str(pipefd_out[0]);
 		output = add_str_to_redirections(node_command_term, str);
 		if (node_command_term->next != NULL)
@@ -92,7 +93,6 @@ int	execute_programm(t_shell *mshell)
 
 	node_command_term = mshell->ast->child;
 	if (node_command_term != NULL)
-		mshell->exit_status = execute_command_term(mshell, 
-				node_command_term, NULL);
+		execute_command_term(mshell, node_command_term, NULL);
 	return (0);
 }
