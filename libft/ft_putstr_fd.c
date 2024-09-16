@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:21:53 by atoepper          #+#    #+#             */
-/*   Updated: 2023/11/20 13:16:52 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:04:27 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
+	if (s == NULL)
+		return ;
 	while (*s != '\0')
 		write(fd, s++, 1);
 }
