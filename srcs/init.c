@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/06 11:40:13 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:06:59 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_environment(t_shell *mshell, char **envp)
 {
-	int i;
+	int		i;
 	char	*key;
 	char	*value;
 	t_env	*new_env;
@@ -25,21 +25,19 @@ int	init_environment(t_shell *mshell, char **envp)
 		value = ft_getvalue(envp[i]);
 		key = ft_getkeyword(envp[i++]);
 		if (!key || !value)
-		{	
+		{
 			free(key);
-			free(value);
-			return (-1);
+			return (free(value), -1);
 		}
 		new_env = ft_new_env(key, value);
 		if (!new_env)
 		{
 			free(key);
-			free(value);
-			return (-1);
+			return (free(value), -1);
 		}
 		ft_add_env(&mshell->envlst, new_env);
 	}
-	return(0);
+	return (0);
 }
 
 void	create_prompt(t_shell *mshell)
@@ -71,10 +69,10 @@ int	init_shell(t_shell *mshell, char **envp)
 
 void	ft_renewshell(t_shell *mshell)
 {
-		create_prompt(mshell);
-		ft_clear_tokenlist(&(mshell->token_list));
-		free_ast(mshell->ast);
-		mshell->exit_status = mshell->error;
-		mshell->error = 0;
-		free(mshell->line);
+	create_prompt(mshell);
+	ft_clear_tokenlist(&(mshell->token_list));
+	free_ast(mshell->ast);
+	mshell->exit_status = mshell->error;
+	mshell->error = 0;
+	free(mshell->line);
 }
