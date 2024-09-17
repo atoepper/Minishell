@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 10:42:52 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:47:38 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	main(int argc, char **argv, char **envp)
 		execute_programm(&mshell);
 		ft_renewshell(&mshell);
 	}
-	clear_garbage(t_shell *mshell);
-	return (mshell->exit_prog_val);
+	clear_garbage(&mshell);
+	return (mshell.exit_prog_val);
 }
 
 
