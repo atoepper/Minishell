@@ -6,16 +6,17 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/03 16:07:41 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:17:54 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_unset(char **argv, t_shell *mshell)
+int	ft_unset(char **argv, t_shell *mshell, int fd)
 {
 	int	i;
 
+	(void)fd;
 	i = 1;
 	if (argv == NULL)
 		return (1);

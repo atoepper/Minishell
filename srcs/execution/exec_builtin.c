@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/16 15:40:29 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:20:00 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ void	free_lst_builtin(t_builtin	**lst_builtins)
 	i = 0;
 	if (lst_builtins == NULL)
 		return ;
-	while (lst_builtins[i]->name != NULL)
+	while (i < 8)
 	{
-		free(lst_builtins[i]);
+		if (lst_builtins[i] != NULL)
+		{
+			free(lst_builtins[i]->name);
+			free(lst_builtins[i]);
+		}
 		i++;
 	}
 	free(lst_builtins);
@@ -53,55 +57,52 @@ t_builtin	**fill_lst_builtins(void)
 	lst_builtins = alloc_lst_builtins();
 	if (lst_builtins == NULL)
 		return (perror("malloc"), NULL);
-	lst_builtins[0]->name = "echo\0";
+	lst_builtins[0]->name = ft_strdup("echo\0");
 	lst_builtins[0]->func = ft_echo;
-	lst_builtins[1]->name = "cd\0";
+	lst_builtins[1]->name = ft_strdup("cd\0");
 	lst_builtins[1]->func = ft_cd;
-	lst_builtins[2]->name = "pwd\0";
+	lst_builtins[2]->name = ft_strdup("pwd\0");
 	lst_builtins[2]->func = ft_pwd;
-	lst_builtins[3]->name = "export\0";
+	lst_builtins[3]->name = ft_strdup("export\0");
 	lst_builtins[3]->func = ft_export;
-	lst_builtins[4]->name = "unset\0";
+	lst_builtins[4]->name = ft_strdup("unset\0");
 	lst_builtins[4]->func = ft_unset;
-	lst_builtins[5]->name = "env\0";
+	lst_builtins[5]->name = ft_strdup("env\0");
 	lst_builtins[5]->func = ft_env;
-	lst_builtins[6]->name = "exit\0";
+	lst_builtins[6]->name = ft_strdup("exit\0");
 	lst_builtins[6]->func = ft_exit;
 	lst_builtins[7]->name = NULL;
 	lst_builtins[7]->func = NULL;
 	return (lst_builtins);
 }
 
-t_function_ptr	functionpath_builtins(char *name)
+t_function_ptr	functionpath_builtins(char *name, t_shell *mshell)
 {
 	t_builtin		**lst_builtins;
 	int				i;
 	t_function_ptr	func;
 
-	lst_builtins = fill_lst_builtins();
+	lst_builtins = mshell->lst_builtins;
 	i = 0;
 	while (lst_builtins[i]->name != NULL)
 	{
 		if (ft_strncmp(lst_builtins[i]->name, name, ft_strlen(name) + 1) == 0)
 		{
 			func = lst_builtins[i]->func;
-			return (free_lst_builtin(lst_builtins), func);
+			return (func);
 		}
 		i++;
 	}
-
-	free_lst_builtin(lst_builtins);
 	return (0);
 }
 
-int	exec_builtin(char **argv, t_shell *mshell)
+int	exec_builtin(char **argv, t_shell *mshell, int fd)
 {
 	t_function_ptr	func;
-
-	func = functionpath_builtins(argv[0]);
+	func = functionpath_builtins(argv[0], mshell);
 	if (func != NULL)
 	{
-		mshell->error = func(argv, mshell);
+		mshell->error = func(argv, mshell, fd);
 		return (0);
 	}
 	else

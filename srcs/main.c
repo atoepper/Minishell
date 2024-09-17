@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 11:39:23 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:21:40 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main(int argc, char **argv, char **envp)
 		mshell.ast = parse_program(&mshell);
 		//print_ast(mshell.ast, 0);
 		execute_programm(&mshell);
+		// if (is_output_without_nl(&mshell))
+		// 	printf("%%\n");
 		ft_renewshell(&mshell);
 	}
 	clear_garbage(&mshell);

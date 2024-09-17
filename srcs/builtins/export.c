@@ -6,13 +6,13 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/10 16:58:08 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:23:23 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_export(char **argv, t_shell *mshell)
+int	ft_export(char **argv, t_shell *mshell, int fd)
 {
 	int		i;
 	char	*key;
@@ -20,7 +20,7 @@ int	ft_export(char **argv, t_shell *mshell)
 
 	if (argv[1] == NULL)
 	{
-		ft_env(argv, mshell);
+		ft_env(argv, mshell, fd);
 		return (0);
 	}
 	i = 1;
@@ -36,7 +36,6 @@ int	ft_export(char **argv, t_shell *mshell)
 			{
 				ft_change_envvalue(mshell->envlst, key, value);
 				free(key);
-				ft_env(argv, mshell);
 			}
 			else
 				ft_add_env(&(mshell->envlst), ft_new_env(key, value));

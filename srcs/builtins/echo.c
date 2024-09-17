@@ -6,15 +6,16 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:29:53 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/03 16:07:30 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:11:28 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_echo(char **argv, t_shell *mshell)
+int	ft_echo(char **argv, t_shell *mshell, int fd)
 {
-	int		i;
+	int	i;
+	int	return_val;
 
 	(void)mshell;
 	i = 1;
@@ -24,15 +25,17 @@ int	ft_echo(char **argv, t_shell *mshell)
 		i++;
 	if (argv[i] != NULL)
 	{
-		printf("%s", argv[i]);
+		return_val = write(fd, argv[i], ft_strlen(argv[i]));
 		i++;
 	}
 	while (argv[i] != NULL)
 	{
-		printf(" %s", argv[i]);
+		return_val = write(fd, " ", 1);
+		return_val = write(fd, argv[i], ft_strlen(argv[i]));
 		i++;
 	}
 	if (ft_strncmp(argv[1], "-n", 3) != 0)
-		printf("\n");
+		return_val = write(fd, "\n", 1);
+	return_val++;
 	return (0);
 }
