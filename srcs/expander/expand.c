@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:31 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/04 12:01:11 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:30:07 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_unexpand_heredoc(t_token **token_list)
 				if (current->type & RIGHT_JOIN)
 					current = current->next;
 				else
-					break;
+					break ;
 			}
 		}
 		current = current->next;
@@ -115,7 +115,7 @@ int	expander(t_shell *mshell)
 		if (current->type & EXPANDER)
 		{
 			tmp = current->value;
-			current->value = ft_expand(current->value, mshell); 
+			current->value = ft_expand(current->value, mshell);
 			free(tmp);
 		}
 		current = current->next;
