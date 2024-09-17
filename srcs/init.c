@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 10:40:31 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:06:44 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,11 @@ int	init_shell(t_shell *mshell, char **envp)
 	tcgetattr(STDIN_FILENO, &(mshell->startterm));
 	sigtermset(0);
 	mshell->is_exit_prog = FALSE;
+	mshell->lst_builtins = fill_lst_builtins();
 	return (1);
 }
+
+
 
 void	ft_renewshell(t_shell *mshell)
 {
@@ -76,4 +79,6 @@ void	ft_renewshell(t_shell *mshell)
 	mshell->exit_status = mshell->error;
 	mshell->error = 0;
 	free(mshell->line);
+	free(mshell->last_output);
+	mshell->last_output = NULL;
 }

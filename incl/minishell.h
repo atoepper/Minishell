@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 10:50:53 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:15:46 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,16 @@ typedef struct s_ast_node
 	struct s_ast_node	*next;
 }	t_ast_node;
 
+struct s_shell;
+
+typedef int	(*t_function_ptr)(char **argv, struct s_shell *mshell, int fd);
+
+typedef struct s_builtin
+{
+	char			*name;
+	t_function_ptr	func;
+}	t_builtin;
+
 typedef struct s_shell
 {
 	char			*line;
@@ -98,33 +108,27 @@ typedef struct s_shell
 	int				error;
 	bool			is_exit_prog;
 	bool			exit_prog_val;
+	char			*last_output;
 	struct termios	startterm;	
 	t_token			*token_list;
 	t_token			*curr_token;
 	t_env			*envlst;
 	t_ast_node		*ast;
+	t_builtin		**lst_builtins;
 	// bool			signint_child;
 	// t_parse_err		parse_err;
 	// bool			heredoc_sigint;
 }	t_shell;
 
-typedef int	(*t_function_ptr)(char **argv, t_shell *mshell);
-
-typedef struct s_builtin
-{
-	char			*name;
-	t_function_ptr	func;
-}	t_builtin;
-
 /* BUILTINS */
-int				ft_echo(char **argv, t_shell *mshell);
+int				ft_echo(char **argv, t_shell *mshell, int fd);
 int				ft_print_env(char **envp);
-int				ft_exit(char **argv, t_shell *mshell);
-int				ft_pwd(char **argv, t_shell *mshell);
-int				ft_cd(char **argv, t_shell *mshell);
-int				ft_env(char **argv, t_shell *mshell);
-int				ft_export(char **argv, t_shell *mshell);
-int				ft_unset(char **argv, t_shell *mshell);
+int				ft_exit(char **argv, t_shell *mshell, int fd);
+int				ft_pwd(char **argv, t_shell *mshell, int fd);
+int				ft_cd(char **argv, t_shell *mshell, int fd);
+int				ft_env(char **argv, t_shell *mshell, int fd);
+int				ft_export(char **argv, t_shell *mshell, int fd);
+int				ft_unset(char **argv, t_shell *mshell, int fd);
 
 /* ENVIRONMENT */
 char			*ft_find_value_by_key(t_env *list, char *keyword);
@@ -139,17 +143,16 @@ void			ft_remove_env(t_env **envlist, char *key);
 void			ft_printenvlist(t_shell *mshell);
 
 /* EXECUTION */
-int				exec_external(char **argv, t_shell *mshell);
+int				exec_external(char **argv, t_shell *mshell, int *pipefd_in, int *pipefd_out);
 char			*ft_join_path_and_name(char *path, char *name);
-char			*search_function_in_path(char *name);
+char			*search_function_in_path(char *name, t_shell *mshell);
 int				search_file_in_directory(const char *directory, char *name);
-int				exec_builtin(char **argv, t_shell *mshell);
-t_function_ptr	functionpath_builtins(char *name);
+int				exec_builtin(char **argv, t_shell *mshell, int fd);
+t_function_ptr	functionpath_builtins(char *name, t_shell *mshell);
 t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
-int				exec_function(t_ast_node *node_command_term, t_shell *mshell);
-int				pipe_function(char *argvs[][6], t_shell *mshell, int in_fd);
+int				exec_function(t_ast_node *node_command_term, t_shell *mshell, int *pipefd_in, int *pipefd_out);
 int				execute_programm(t_shell *mshell);
 int				execute_command_term(t_shell *mshell, t_ast_node
 					*node_command_term, char *str);
@@ -162,7 +165,7 @@ int				ouput_write_append(char *path, char *str);
 char			*read_fd_to_str(int fd);
 int				write_str_to_fd(char *str, int fd);
 int				add_redirection_to_pipe(t_ast_node *node_command_term,
-					char *str, int *fd_input, int *fd_output);
+					char *str, int fd);
 int				add_str_to_redirections(t_ast_node *node_command_term,
 					char *str);
 int				exe_child(int *pipefd_input, int *pipefd_output,
@@ -173,6 +176,7 @@ int				init_shell(t_shell *mshell, char **envp);
 void			create_prompt(t_shell *mshell);
 int				init_environment(t_shell *mshell, char **envp);
 void			ft_renewshell(t_shell *mshell);
+
 
 /* ERROR */
 void			ft_set_error(t_shell *mshell, int errno, char *msg);
@@ -222,5 +226,6 @@ bool			ft_string_is_empty(char *str);
 int				ft_end_of_varname(char *str);
 bool			ft_iskeyword(char *str);
 void			free_array(char **arr);
+bool			is_output_without_nl(t_shell *mshell);
 
 #endif
