@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 10:44:16 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:50:53 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void			ft_renewshell(t_shell *mshell);
 
 /* ERROR */
 void			ft_set_error(t_shell *mshell, int errno, char *msg);
+void			print2errorfile(char *str);
 
 /* EXPANDER */
 char			*ft_expand(char *value, t_shell *mshell);
@@ -194,15 +195,14 @@ int				ft_joinwords(t_token **list);
 /* PARSING */
 t_ast_node		*parse_program(t_shell *mshell);
 t_ast_node		*parse_command_term(t_shell *mshell);
-t_ast_node		*parse_command(t_shell *mshell);
-t_ast_node		*parse_redir_iter(t_shell *mshell);
-t_ast_node		*parse_redir_term(t_shell *mshell);
+t_ast_node		*parse_element(t_shell *mshell);
 t_ast_node		*create_ast_node(int type, char *value);
 void			add_child_node(t_ast_node *parent, t_ast_node *child);
+void			add_branch(t_ast_node *parent, t_ast_node *child);
 void			free_ast(t_ast_node *node);
 void			print_ast(t_ast_node *node, int indent);
-int				ft_count_args(t_token **current);
-char			**ft_create_argv(t_token **current, int argc);
+int				ft_count_args(t_ast_node **command);
+int				ft_create_argv(t_ast_node *command);
 
 /* GARBAGE_COLLECTION */
 int				clear_garbage(t_shell *mshell);
@@ -218,9 +218,9 @@ void			ft_skipspaces(char **line);
 int				ft_nextchar(char *str, char c);
 int				ft_wordlength(char *line);
 bool			ft_isseparator(const char c);
+bool			ft_string_is_empty(char *str);
 int				ft_end_of_varname(char *str);
 bool			ft_iskeyword(char *str);
 void			free_array(char **arr);
-void			print2errorfile(char *str);
 
 #endif
