@@ -6,29 +6,32 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 12:06:57 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/03 13:04:10 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/09 12:22:00 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-t_ast_node *create_ast_node(int type, char *value)
+t_ast_node	*create_ast_node(int type, char *value)
 {
-    t_ast_node *node = malloc(sizeof(t_ast_node));
-    node->type = type;
+	t_ast_node	*node;
+
+	node = malloc(sizeof(t_ast_node));
+	node->type = type;
 	if (value)
-    	node->value = strdup(value);
+		node->value = strdup(value);
 	else
-		node->value = NULL;
-	node->argv = NULL;
-    node->child = NULL;
-    node->next = NULL;
-    return node;
+		node->value = (NULL);
+	node->argv = (NULL);
+	node->child = (NULL);
+	node->next = (NULL);
+	return (node);
 }
 
-void add_child_node(t_ast_node *parent, t_ast_node *child)
+void	add_child_node(t_ast_node *parent, t_ast_node *child)
 {
 	t_ast_node	*current;
+
 	if (!parent->child)
 		parent->child = child;
 	else
@@ -40,9 +43,26 @@ void add_child_node(t_ast_node *parent, t_ast_node *child)
 	}
 }
 
-void free_ast(t_ast_node *node)
+void	add_branch(t_ast_node *parent, t_ast_node *child)
 {
-	if (!node) return;
+	t_ast_node	*current;
+
+	if (!parent->child)
+		parent->child = child->child;
+	else
+	{
+		current = parent->child;
+		while (current->next)
+			current = current->next;
+		current->next = child->child;
+	}
+	free(child);
+}
+
+void	free_ast(t_ast_node *node)
+{
+	if (!node)
+		return ;
 	if (node->child)
 		free_ast(node->child);
 	if (node->next)
@@ -55,7 +75,7 @@ void free_ast(t_ast_node *node)
 }
 
 /* ONLY FOR DEBUG */
-void print_ast(t_ast_node *node, int indent)
+void	print_ast(t_ast_node *node, int indent)
 {
 	if (!node) return;
 	for (int i = 0; i < indent; i++) printf("  ");
