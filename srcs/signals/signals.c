@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:17:07 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/06 11:40:55 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:54:22 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	sigint_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		write(2, "\n", 1);
+		if (write(2, "\n", 1) != 1)
+			perror("write");
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();
@@ -32,7 +33,8 @@ void	sigint_handler(int signo)
 void	sigint_handler_print_newline(int signo)
 {
 	if (signo == SIGINT)
-		write(2, "\n", 1);
+		if (write(2, "\n", 1) != 1)
+			perror("write");
 }
 
 void	set_signal(int mode)
