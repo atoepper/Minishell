@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:24:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/28 12:02:55 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:11:07 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,20 @@ t_token	*ft_newquote(char **line)
 	int		len;
 
 	line_ptr = *line;
-	if ((*line_ptr == '\"' && !ft_strchr(line_ptr + 1, '\"')) ||  
-		(*line_ptr == '\'' && !ft_strchr(line_ptr + 1, '\'')))
-			return (/* error */ printf("open quotes\n"), NULL);
+	if ((*line_ptr == '\"' && !ft_strchr(line_ptr + 1, '\"'))
+		|| (*line_ptr == '\'' && !ft_strchr(line_ptr + 1, '\'')))
+		return (/* error */ printf("open quotes\n"), NULL);
 	len = ft_nextchar(line_ptr + 1, (*line_ptr == '\'') * '\''
-		+ (*line_ptr == '\"') * '\"');
+			+ (*line_ptr == '\"') * '\"');
 	new = ft_newtoken(ft_substr(line_ptr, 1, len),
-		((*line_ptr == '\'') * SQUOTE | (*line_ptr == '\"') * DQUOTE | WORD));
+			((*line_ptr == '\'') * SQUOTE
+				| (*line_ptr == '\"') * DQUOTE | WORD));
+	if (new == NULL)
+		return (NULL);
 	if (ft_strchr(new->value, '$') && new->type & DQUOTE)
 		new->type |= EXPANDER;
-	(*line)+= len + 2;
-	return (new); 
+	(*line) += len + 2;
+	return (new);
 }
 
 t_token	*ft_newredirection(char **line)
@@ -40,7 +43,7 @@ t_token	*ft_newredirection(char **line)
 	line_ptr = *line;
 	new = ft_newtoken(NULL, REDIRECT);
 	if (!new)
-		return(/* malloc error */NULL);
+		return (/* malloc error */ NULL);
 	if (!ft_strncmp(line_ptr, "<<", 2))
 		new->type |= HEREDOC;
 	else if (!ft_strncmp(line_ptr, ">>", 2))
@@ -48,12 +51,12 @@ t_token	*ft_newredirection(char **line)
 	else if (*line_ptr == '<')
 		new->type |= READ;
 	else if (*line_ptr == '>')
-		new->type |= WRITE;	
+		new->type |= WRITE;
 	if (new->type & (HEREDOC | WRITE_APPEND))
 		(*line) += 2;
 	else
 		(*line) += 1;
-	return (new); 
+	return (new);
 }
 
 t_token	*ft_newpipe(char **line)
@@ -62,9 +65,9 @@ t_token	*ft_newpipe(char **line)
 
 	new = ft_newtoken(NULL, PIPE);
 	if (!new)
-		return (/* error malloc */ NULL);
+		return (/* malloc error */ NULL);
 	(*line)++;
-	return (new); 
+	return (new);
 }
 
 t_token	*ft_newword(char **line)
@@ -81,9 +84,8 @@ t_token	*ft_newword(char **line)
 	if (ft_strchr(new->value, '$'))
 		new->type |= EXPANDER;
 	(*line) += ft_wordlength(line_ptr);
-	return(new);
+	return (new);
 }
-
 
 t_token	*ft_linetolist(char *line, int *error)
 {
@@ -104,39 +106,11 @@ t_token	*ft_linetolist(char *line, int *error)
 		else
 			new = ft_newword(&line);
 		if (!new)
-			return(ft_clear_tokenlist(&list), NULL);
+			return (ft_clear_tokenlist(&list), NULL);
 		if (new->type & WORD && !ft_isseparator(*line))
 			new->type |= RIGHT_JOIN;
 		ft_skipspaces(&line);
 		ft_addtoken(&list, new);
 	}
 	return (list);
-}
-
-int	ft_joinwords(t_token **list)
-{
-	t_token *current;
-	t_token	*tmp;
-	char	*joint;
- 	
-	current = *list;
-	while (current->next != NULL)
-	{
-		if (current->type & RIGHT_JOIN)
-		{
-			joint = ft_strjoin(current->value, current->next->value);
-			if (!joint)
-				return (/* handle error */ 1);
-			free(current->value);
-			current->value = joint;
-			if (!(current->next->type & RIGHT_JOIN))
-				current->type &= ~RIGHT_JOIN;
-			tmp = current->next;
-			current->next = current->next->next;
-			ft_deltoken(tmp);
-		}
-		else 
-			current = current->next;	
-	}
-	return (0);
 }

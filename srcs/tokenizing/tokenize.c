@@ -6,25 +6,54 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/06 10:26:50 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/09 18:00:46 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+int	ft_joinwords(t_token **list)
+{
+	t_token	*current;
+	t_token	*tmp;
+	char	*joint;
+
+	current = *list;
+	while (current->next != NULL)
+	{
+		if (current->type & RIGHT_JOIN)
+		{
+			joint = ft_strjoin(current->value, current->next->value);
+			if (!joint)
+				return (/* handle error */ 1);
+			free(current->value);
+			current->value = joint;
+			if (!(current->next->type & RIGHT_JOIN))
+				current->type &= ~RIGHT_JOIN;
+			tmp = current->next;
+			current->next = current->next->next;
+			ft_deltoken(tmp);
+		}
+		else
+			current = current->next;
+	}
+	return (0);
+}
+
 int	ft_tokenize(t_shell *mshell)
 {
-	if(ft_strlen(mshell->line) == 0) /* eigentlich : wenn line nur whitespaces hat*/
+	if (ft_string_is_empty(mshell->line))
 		return (0);
 	mshell->token_list = ft_linetolist(mshell->line, &mshell->error);
+	if (mshell->error != 0)
+		return (1);
+	// ft_set_error(mshell, 1, "Tokenizing failed\n"); /* error */
+	if (mshell->token_list)
+	{
+		expander(mshell);
+		ft_joinwords(&mshell->token_list); /* error */		
+	}	
 	free(mshell->line);
 	mshell->line = NULL;
-	if (!mshell->token_list)
-	{
-		ft_set_error(mshell, 1, "Tokenizing failed\n");
-		return (1);
-	}
-	expander(mshell);
-	ft_joinwords(&mshell->token_list);
 	return (0);
 }

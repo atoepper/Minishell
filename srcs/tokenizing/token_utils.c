@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:25:12 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/22 12:09:20 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:10:15 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ t_token	*ft_newtoken(char *value, int type)
 {
 	t_token	*newtoken;
 
-	newtoken = (t_token*)malloc(sizeof(t_token));
+	newtoken = (t_token *)malloc(sizeof(t_token));
 	if (!newtoken)
 		return (NULL);
 	newtoken->value = value;
 	newtoken->type = type;
 	newtoken->next = NULL;
 	newtoken->prev = NULL;
-	return(newtoken);
+	return (newtoken);
 }
 
 void	ft_addtoken(t_token **tokenlist, t_token *newtoken)
@@ -68,7 +68,7 @@ void	ft_clear_tokenlist(t_token	**tokenlist)
 
 /* Tester */
 
-void ft_printtypes(int type)
+void	ft_printtypes(int type)
 {
 	if (type & DQUOTE)
 		printf("DQUOTE ");
@@ -112,5 +112,4 @@ void	ft_printlist(t_token **tokenlist)
 		ft_printtypes(current->type);
 		current = current->next;
 	}
-	
 }
