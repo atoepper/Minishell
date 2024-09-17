@@ -3,24 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:41:34 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/16 14:42:59 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:03:06 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	ft_skipspaces(char **line)
-{
-	while (*line && (**line == ' ' || **line == '\t' || **line == '\n'))
-		(*line)++;
-}
-
 int	ft_nextchar(char *str, char c)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (str[index] && str[index] != c)
@@ -32,13 +26,13 @@ int	ft_nextchar(char *str, char c)
 
 int	ft_end_of_varname(char *str)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	if (ft_isalpha(str[0]) || str[0] == '_')
 	{
-		while (str[index] && (ft_isalnum(str[index])  || str[index] == '_'))
-			index++;		
+		while (str[index] && (ft_isalnum(str[index]) || str[index] == '_'))
+			index++;
 	}
 	return (index);
 }
@@ -56,15 +50,6 @@ int	ft_wordlength(char *line)
 	return (len);
 }
 
-bool	ft_isseparator(const char c)
-{
-	if (c == ' ' || c == '\0' || c == '\t' || c == '\n' \
-	|| c == '|' || c == '<' || c == '>')
-		return (true);
-	else
-		return (false);
-}
-
 bool	ft_iskeyword(char *str)
 {
 	if (*str && ft_isalpha(str[0]))
@@ -77,24 +62,4 @@ bool	ft_iskeyword(char *str)
 			return (TRUE);
 	}
 	return (FALSE);
-}
-
-void	free_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr); 
-}
-
-void	print2errorfile(char *str)
-{
-	int	fd_output;
-	int	write_return;
-
-	fd_output = open("errorfile.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
-	write_return = write(fd_output, str, ft_strlen(str));
-	write_return++;
 }
