@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/16 15:31:33 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:44:16 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ typedef struct s_shell
 	int				out;
 	int				exit_status;
 	int				error;
+	bool			is_exit_prog;
+	bool			exit_prog_val;
 	struct termios	startterm;	
 	t_token			*token_list;
 	t_token			*curr_token;

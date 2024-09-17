@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/09 11:06:59 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:40:31 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	init_shell(t_shell *mshell, char **envp)
 	mshell->out = dup(1);
 	tcgetattr(STDIN_FILENO, &(mshell->startterm));
 	sigtermset(0);
+	mshell->is_exit_prog = FALSE;
 	return (1);
 }
 
