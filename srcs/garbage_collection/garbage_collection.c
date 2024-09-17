@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 10:57:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/08/27 11:23:37 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:09:25 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	clear_garbage(t_shell *mshell)
 	mshell->token_list = NULL;
 	ft_clear_envlist(&mshell->envlst);
 	mshell->envlst = NULL;
+	free_lst_builtin(mshell->lst_builtins);
 	return (0);
 }

@@ -27,3 +27,11 @@
 04.9.	Alexander	ft_unexpand_heredoc setzt EXPANDER-flags im heredoc delimiter auf 0.
 05.9.	Alexander	Segmentation faults im parser beseitigt. Error handling etwas angepasst. Noch nicht optimal. -> Evtl keine direkte Nachricht, sondern Stelle und Fehlerart abspeichern
 06.9.	Alexander	Signalhandler fuer den Parent process definiert. Fuer child processes und heredocs gelten andere Regeln. Ausserdem muss termios-Verhalten uberprueft werden: ctrl-c soll nicht ausgegeben werden
+16.9.	Johannes	execute_programm soweit fertig, Fehlercode-Darstellung noch fragwuerdig
+16.9.	Johannes	exit_status von $? noch nicht korrekt
+16.9.	Johannes	export und unset funktionieren abgekapselt, aber NICHT in minishell :(
+17.9.	Johannes	cd ohne argument implementiert
+17.9.	Johannes	leider wieder einen fehler beim aufrufen einer externen Funktion:
+					execvp: No such file or directory
+					malloc_consolidate(): invalid chunk size
+					make: *** [Makefile:98: run] Aborted (core dumped) :(
