@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/09/17 10:59:37 by jweingar         ###   ########.fr        #
+#    Updated: 2024/09/17 11:09:56 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,6 @@ SOURCES = main.c \
 			execution/execute.c \
 			execution/exec_builtin.c \
 			execution/exec_external.c \
-			execution/redirection.c \
 			expander/expand.c \
 			garbage_collection/garbage_collection.c \
 			parsing/ast.c \
@@ -49,7 +48,8 @@ SOURCES = main.c \
 			tokenizing/tokenize.c \
 			tokenizing/linetolist.c \
 			tokenizing/token_utils.c \
-			utils/utils.c 
+			utils/utils.c \
+			utils/utils_2.c
 
 ### OBJECTS ###
 
