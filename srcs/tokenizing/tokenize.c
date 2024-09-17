@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/09 18:00:46 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:18:14 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_tokenize(t_shell *mshell)
 	{
 		expander(mshell);
 		ft_joinwords(&mshell->token_list); /* error */		
-	}	
+	}
 	free(mshell->line);
 	mshell->line = NULL;
 	return (0);

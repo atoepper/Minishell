@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:37 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/10 17:07:24 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:20:45 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_ast_node	*parse_command_term(t_shell *mshell)
 
 	command_term_node = create_ast_node(COMMAND_TERM, NULL);
 	element_node = parse_element(mshell);
-	command_node = create_ast_node(COMMAND, NULL);;
+	command_node = create_ast_node(COMMAND, NULL);
 	while (mshell->error == 0 && element_node != NULL)
 	{
 		if (element_node->type & REDIRECT)
@@ -79,7 +79,7 @@ t_ast_node	*parse_element(t_shell *mshell)
 	{
 		element_node = create_ast_node(COMMAND, mshell->curr_token->value);
 		mshell->curr_token = mshell->curr_token->next;
-		return(element_node);
+		return (element_node);
 	}
 	else if (mshell->curr_token != NULL && mshell->curr_token->type & REDIRECT)
 	{
@@ -89,7 +89,7 @@ t_ast_node	*parse_element(t_shell *mshell)
 			element_node = create_ast_node(mshell->curr_token->type,
 					ft_strdup(mshell->curr_token->next->value));
 			mshell->curr_token = mshell->curr_token->next->next;
-			return(element_node);
+			return (element_node);
 		}
 		else
 			ft_set_error(mshell, 1, "minishell: syntax error near unexpected token\n");
