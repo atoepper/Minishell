@@ -6,7 +6,7 @@
 #    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/09/09 10:55:58 by jweingar         ###   ########.fr        #
+#    Updated: 2024/09/17 10:59:37 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SOURCES = main.c \
 			execution/exec_external.c \
 			execution/redirection.c \
 			expander/expand.c \
+			garbage_collection/garbage_collection.c \
 			parsing/ast.c \
 			parsing/parse.c \
 			parsing/parse_utils.c \
@@ -81,6 +82,7 @@ tmp:
 	@mkdir -p $(OBJ_PATH)/error
 	@mkdir -p $(OBJ_PATH)/execution
 	@mkdir -p $(OBJ_PATH)/expander
+	@mkdir -p $(OBJ_PATH)/garbage_collection
 	@mkdir -p $(OBJ_PATH)/parsing
 	@mkdir -p $(OBJ_PATH)/tokenizing
 	@mkdir -p $(OBJ_PATH)/signals
