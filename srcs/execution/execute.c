@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/16 15:33:46 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:26:54 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int	execute_command_term(t_shell *mshell,
 int	execute_programm(t_shell *mshell)
 {
 	t_ast_node	*node_command_term;
-
+	if (mshell->ast == NULL)
+		return (1);
 	node_command_term = mshell->ast->child;
 	if (node_command_term != NULL)
 		execute_command_term(mshell, node_command_term, NULL);

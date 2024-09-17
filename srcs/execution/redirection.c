@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/16 13:52:55 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:51:36 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*input_read(char *input, char *str)
 
 	buf[1] = '\0';
 	fd_input = open(input, O_RDONLY);
+	if (fd_input == -1)
+		perror("minishell");
 	while (read(fd_input, buf, 1) == 1)
 	{
 		new_str = ft_strjoin(str, buf);
