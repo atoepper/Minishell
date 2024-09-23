@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 10:18:14 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:35:08 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_joinwords(t_token **list)
 		{
 			joint = ft_strjoin(current->value, current->next->value);
 			if (!joint)
-				return (/* handle error */ 1);
+				return (1);
 			free(current->value);
 			current->value = joint;
 			if (!(current->next->type & RIGHT_JOIN))
@@ -47,11 +47,10 @@ int	ft_tokenize(t_shell *mshell)
 	mshell->token_list = ft_linetolist(mshell->line, &mshell->error);
 	if (mshell->error != 0)
 		return (1);
-	// ft_set_error(mshell, 1, "Tokenizing failed\n"); /* error */
 	if (mshell->token_list)
 	{
 		expander(mshell);
-		ft_joinwords(&mshell->token_list); /* error */		
+		ft_joinwords(&mshell->token_list);
 	}
 	free(mshell->line);
 	mshell->line = NULL;
