@@ -6,13 +6,13 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/17 14:39:27 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:43:44 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-char	*input_read(char *input, char *str)
+char	*input_read(char *input, char *str, t_shell *mshell)
 {
 	int		fd_input;
 	char	buf[2];
@@ -21,7 +21,7 @@ char	*input_read(char *input, char *str)
 	buf[1] = '\0';
 	fd_input = open(input, O_RDONLY);
 	if (fd_input == -1)
-		perror("minishell");
+		ft_set_error(mshell, 1, "minishell: No such file or directory\n");
 	while (read(fd_input, buf, 1) == 1)
 	{
 		new_str = ft_strjoin(str, buf);
@@ -59,26 +59,58 @@ char	*input_heredoc(char *input, char *str)
 	return (str);
 }
 
-int	ouput_write(char *path, char *str)
+int	check_redirection_output(t_ast_node *node_command_term, t_shell *mshell)
+{
+	t_ast_node	*node_command;
+
+	node_command = node_command_term->child;
+	while ((node_command != NULL))
+	{
+		if ((node_command->type & WRITE || node_command->type & WRITE_APPEND))
+		{
+			if (access(node_command->value, F_OK))
+				if (!access(node_command->value, W_OK))
+				{
+					mshell->error = 1;
+					perror("minishell");
+					return (1);
+				}
+		}
+		node_command = node_command->next;
+	}
+	return (0);
+}
+
+bool	ouput_write(char *path, char *str, t_shell *mshell)
 {
 	int	fd_output;
 	int	write_return;
 
 	fd_output = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd_output == -1)
+	{
+		perror("minishell");
+		mshell->error = 1;
+	}
 	write_return = write(fd_output, str, ft_strlen(str));
 	if (write_return != -1)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
-int	ouput_write_append(char *path, char *str)
+bool	ouput_write_append(char *path, char *str, t_shell *mshell)
 {
 	int	fd_output;
 
 	fd_output = open(path, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd_output == -1)
+	{
+		perror("minishell");
+		mshell->error = 1;
+	}
 	if (write(fd_output, str, ft_strlen(str)) != -1)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 char	*read_fd_to_str(int fd)
@@ -115,8 +147,7 @@ int	write_str_to_fd(char *str, int fd)
 	result++;
 	return (0);
 }
-
-int	add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int fd)
+int	add_redirection_to_pipe(t_ast_node *node_command_term, t_shell *mshell, char *str, int fd)
 {
 	t_ast_node	*node_command;
 
@@ -124,7 +155,7 @@ int	add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int fd)
 	while ((node_command != NULL))
 	{
 		if ((node_command->type & READ))
-			str = input_read(node_command->value, str);
+			str = input_read(node_command->value, str, mshell);
 		else if ((node_command->type & HEREDOC))
 			str = input_heredoc(node_command->value, str);
 		node_command = node_command->next;
@@ -136,60 +167,20 @@ int	add_redirection_to_pipe(t_ast_node *node_command_term, char *str, int fd)
 	return (0);
 }
 
-int	add_str_to_redirections(t_ast_node *node_command_term, char *str)
+bool	add_str_to_redirections(t_ast_node *node_command_term, char *str, t_shell *mshell)
 {
 	t_ast_node	*node_command;
 	int			output;
 
 	node_command = node_command_term->child;
-	output = 1;
+	output = 0;
 	while ((node_command != NULL))
 	{
 		if ((node_command->type & WRITE))
-			output = ouput_write(node_command->value, str);
+			output = ouput_write(node_command->value, str, mshell);
 		if ((node_command->type & WRITE_APPEND))
-			output = ouput_write_append(node_command->value, str);
+			output = ouput_write_append(node_command->value, str, mshell);
 		node_command = node_command->next;
 	}
 	return (output);
 }
-
-// int	redirection_test(int input_typ, char *input, int output_typ, char *output)
-// {
-// 	int		fd_input;
-// 	int		fd_output;
-// 	char	buf[1];
-// 	int		count_read;
-
-// 	fd_input = -1;
-// 	fd_output = -1;
-// 	ft_bzero(buf, ft_strlen(buf));
-// 	if (input_typ == 0)
-// 		fd_input = input_redirection(input);
-// 	else if (input_typ == 1)
-// 		fd_input = here_document(input);
-// 	if (fd_input == -1)
-// 		return(perror("fd_input"), 1);
-// 	fd_output = ouput_redirection(output_typ, output);
-// 	if (fd_output == -1)
-// 		return(perror("fd_output"), 1);
-// 	count_read = read(fd_input, buf, 1);
-// 	while (count_read != 0)
-// 	{
-// 		ft_putstr_fd(buf, fd_output);
-// 		count_read = read(fd_input, buf, 1);
-// 	}
-// 	close(fd_input);
-// 	close(fd_output);
-// 	return (0);
-// }
-
-// int	main(void)
-// {
-
-// 	redirection_test(0, "../../testing/test.txt", 0, "../../testing/test1.txt");
-// 	redirection_test(0, "../../testing/test.txt", 1, "../../testing/test2.txt");
-// 	redirection_test(1, "EOF", 0, "../../testing/test3.txt");
-// 	redirection_test(1, "EOF", 1, "../../testing/test4.txt");
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:02:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 15:21:32 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:06:55 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	free_array(char **arr)
 
 	i = 0;
 	while (arr[i])
-		free(arr[i++]);
+	{
+		free(arr[i]);
+		i++;
+	}
 	free(arr);
 }
 
@@ -59,7 +62,7 @@ bool	is_output_without_nl(t_shell *mshell)
 		return(FALSE);
 	while (*str != '\0')
 		str++;
-	if (--*str == '\n')
+	if (*(--str) == '\n')
 		return(FALSE);
 	else
 		return(TRUE);
