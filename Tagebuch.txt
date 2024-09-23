@@ -40,3 +40,4 @@
 					Ich kann mit isatty und tcgetattr das umstellen. Dann gehen aber die inaktiven Programm nicht mehr.
 					Da bin ich noch ratlos. 
 23.9.	Johannes	!!! leaks bei parse.c->ft_strdup
+23.9.	Johannes	Norminette korrekturen.
