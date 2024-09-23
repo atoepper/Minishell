@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/09/17 11:12:56 by jweingar         ###   ########.fr        #
+#    Updated: 2024/09/23 09:44:27 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ### COMPILATION ###
-CC      = gcc -O2
+CC      = gcc
 FLAGS  = -Wall -Wextra -Werror -g
 
 ### EXECUTABLE ###

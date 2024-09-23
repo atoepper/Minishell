@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 16:15:46 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:43:00 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 /* INCLUDES */
 
 # include "../libft/libft.h"
-
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
@@ -61,6 +60,20 @@
 # define COMMAND		0b00000000000001000000000000000000
 # define REDIR_ITER		0b00000000000000100000000000000000
 # define REDIR_TERM		0b00000000000000010000000000000000
+
+
+# ifndef ECHOCTL
+#  define ECHOCTL 0x00000040
+# endif
+
+enum e_process_mode
+{
+	NO_CHILD,
+	WITH_CHILD,
+	EXECUTE_CHILD,
+	HEREDOC_CHILD,
+	HEREDOC_PARENT
+};
 
 /* STRUCTURES */
 
@@ -212,10 +225,11 @@ int				ft_create_argv(t_ast_node *command);
 int				clear_garbage(t_shell *mshell);
 
 /* SIGNALS */
-void			sigtermset(int mode);
+void			set_sig_term(int mode);
 void			sigint_handler(int signo);
-void			sigint_handler_print_newline(int signo);
+void			sigint_handler_newline(int signo);
 void			set_signal(int mode);
+void			set_termios(int mode);
 
 /* UTILS */
 void			ft_skipspaces(char **line);
