@@ -35,3 +35,8 @@
 					execvp: No such file or directory
 					malloc_consolidate(): invalid chunk size
 					make: *** [Makefile:98: run] Aborted (core dumped) :(
+23.9.	Johannes	innerhalb einen Pipe wird vor dem Ausfuehren abgebrochen, wenn einer der Redirection nicht funktioniert
+23.9.	Johannes	vim z.B. ist ein aktives Programm, und braucht eine verbindung zu einem Terminal. Das Problem ist aber, dass man anhand eines Befehls nicht rausfinden kann ob er aktiv oder inaktiv ist. :(
+					Ich kann mit isatty und tcgetattr das umstellen. Dann gehen aber die inaktiven Programm nicht mehr.
+					Da bin ich noch ratlos. 
+23.9.	Johannes	!!! leaks bei parse.c->ft_strdup
