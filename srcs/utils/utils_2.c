@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:02:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 12:06:55 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:34:31 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ bool	is_output_without_nl(t_shell *mshell)
 
 	str = mshell->last_output;
 	if (str == NULL)
-		return(FALSE);
+		return (FALSE);
 	while (*str != '\0')
 		str++;
 	if (*(--str) == '\n')
-		return(FALSE);
+		return (FALSE);
 	else
-		return(TRUE);
+		return (TRUE);
 }

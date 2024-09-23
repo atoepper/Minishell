@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:31:31 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:40:39 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	mshell;
-	((void)argc, (void)argv, (void)envp); 
+	((void)argc, (void)argv);
 	init_shell(&mshell, envp);
-	while(!mshell.is_exit_prog)
+	while (!mshell.is_exit_prog)
 	{
 		mshell.line = readline(mshell.prompt);
 		if (!mshell.line)
-			return(free(mshell.line), 0);
+			return (free(mshell.line), 0);
 		add_history(mshell.line);
 		ft_tokenize(&mshell);
 		mshell.ast = parse_program(&mshell);
@@ -34,42 +34,3 @@ int	main(int argc, char **argv, char **envp)
 	clear_garbage(&mshell);
 	return (mshell.exit_prog_val);
 }
-
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_shell	mshell;
-// 	((void)argc, (void)argv, (void)envp); 
-// 	/* init data */
-// 	init_shell(&mshell, envp);
-// 	// ft_printenvlist(&mshell);
-// 	while(1)
-// 	{
-// 		/* init signals */
-// 		/* readline */
-// 		mshell.line = readline(mshell.prompt);
-// 		if (!mshell.line)
-// 			return(free(mshell.line), 0);
-// 		/* Testing */
-// 		//printf("%s\n", mshell.line);
-// 		if (!ft_strncmp(mshell.line, "exit", 5))
-// 			return(free(mshell.line), 0);
-// 		/* update history */
-// 		add_history(mshell.line);
-// 		/* tokenize */
-// 		ft_tokenize(&mshell);
-// 		ft_printlist(&mshell.token_list);
-// 		/* parse */
-// 		mshell.ast = parse_program(&mshell);
-		
-// 		print_ast(mshell.ast, 0);
-// 		/* handle errors */
-// 		/* execute parse tree */
-// 		// execute_programm(&mshell);	
-// 		create_prompt(&mshell);
-// 		ft_clear_tokenlist(&mshell.token_list);
-// 		free(mshell.line);
-// 	}
-// 	ft_clear_envlist(&mshell.envlst);
-// 	return (0);
-// }

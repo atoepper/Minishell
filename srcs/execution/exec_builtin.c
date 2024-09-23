@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/23 11:28:33 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:42:57 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ t_function_ptr	functionpath_builtins(char *name, t_shell *mshell)
 int	exec_builtin(char **argv, t_shell *mshell, int fd)
 {
 	t_function_ptr	func;
+
 	func = functionpath_builtins(argv[0], mshell);
 	if (func != NULL)
 	{

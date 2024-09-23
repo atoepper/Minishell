@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:57:51 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 11:30:22 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:40:53 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_cd(char **argv, t_shell *mshell, int fd)
 			return_value = ft_cd_relativ(argv);
 	}
 	if (return_value != EXIT_SUCCESS)
-			ft_set_error(mshell, return_value,
-				"cd: no such directory or file\n");
+		ft_set_error(mshell, return_value,
+			"cd: no such directory or file\n");
 	return (return_value);
 }

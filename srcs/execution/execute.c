@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 15:41:41 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:38:30 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ int	exec_function(t_ast_node *node_command_term, t_shell *mshell, int *pipefd_in
 		{
 			if (node_command->argv == NULL)
 				return (1);
-			exit_status = exec_builtin(node_command->argv, mshell, pipefd_out[1]);
+			exit_status = exec_builtin(node_command->argv,
+				 mshell, pipefd_out[1]);
 			if (exit_status)
-				exit_status = exec_external(node_command->argv, mshell, pipefd_in, pipefd_out);
+				exit_status = exec_external(node_command->argv,
+					mshell, pipefd_in, pipefd_out);
 			if (exit_status == 127)
 			{
 				ft_putstr_fd("command not found: ", 2);
@@ -84,13 +86,14 @@ int	execute_command_term(t_shell *mshell,
 		mshell->last_output = str;
 		ft_putstr_fd(str, 1);
 	}
-    return (0);
+	return (0);
 }
 
 
 int	execute_programm(t_shell *mshell)
 {
 	t_ast_node	*node_command_term;
+
 	if (mshell->ast == NULL)
 		return (1);
 	node_command_term = mshell->ast->child;

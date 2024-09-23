@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 15:15:20 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:43:11 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int	init_shell(t_shell *mshell, char **envp)
 	mshell->error = 0;
 	return (0);
 }
-
-
 
 void	ft_renewshell(t_shell *mshell)
 {

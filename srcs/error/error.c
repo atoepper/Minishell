@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:53:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 11:19:48 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:42:47 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	set_error_exe(t_shell *mshell, int errno)
 {
 	mshell->error = errno;
-	return(errno);
+	return (errno);
 }
 
 void	ft_set_error(t_shell *mshell, int errno, char *msg)

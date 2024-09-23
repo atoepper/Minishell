@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envlist.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:08:38 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/28 12:28:17 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:42:35 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_clear_envlist(t_env **envlist)
 		ft_del_env(current);
 		current = tmp;
 	}
-		// free(*envlist);
 	*envlist = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 15:52:57 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:39:44 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,10 @@ typedef struct s_ast_node
 	struct s_ast_node	*next;
 }	t_ast_node;
 
-struct s_shell;
+struct	s_shell;
 
-typedef int	(*t_function_ptr)(char **argv, struct s_shell *mshell, int fd);
+typedef int			(*t_function_ptr)(char **argv,
+	struct s_shell *mshell, int fd);
 
 typedef struct s_builtin
 {

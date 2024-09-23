@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:14:23 by atoepper          #+#    #+#             */
-/*   Updated: 2024/08/27 10:44:33 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:41:52 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*ft_find_value_by_key(t_env *list, char *keyword)
 	}
 	return (NULL);
 }
-
 
 void	ft_change_envvalue(t_env *envlist, char *key, char *new_value)
 {
