@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/17 16:59:29 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:26:07 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ char	*search_function_in_path(char *name, t_shell *mshell)
 	(void)mshell;
 	if (!access(name, F_OK))
 		return (ft_strdup(name));
-	path = getenv("PATH");
+	path = ft_find_value_by_key(mshell->envlst, "PATH");
 	if (path == NULL)
 		return (NULL);
 	lst_path = ft_split(path, ':');
-	i = 0;
-	while (lst_path[i] != NULL)
-		if (search_file_in_directory(lst_path[i++], name) == 1)
+	i = -1;
+	while (lst_path[++i] != NULL)
+		if (search_file_in_directory(lst_path[i], name) == 1)
 			break ;
 	if (lst_path[i] == NULL)
 		return (free_array(lst_path), NULL);
@@ -67,7 +67,6 @@ char	*ft_join_path_and_name(char *path, char *name)
 	char	*path_full;
 
 	path_new = ft_strjoin(path, "/");
-	free(path);
 	if (path_new == NULL)
 		return (perror("ft_strjoin"), NULL);
 	path_full = ft_strjoin(path_new, name);
@@ -101,7 +100,8 @@ int	exec_external(char **argv, t_shell *mshell, int *pipefd_in, int *pipefd_out)
 		close(pipefd_out[1]);
 		exit_status = execve(path, argv, env);
 		perror("execvp");
-        exit(exit_status);
+		free(path);
+		exit(exit_status);
 	}
 	else
 	{
@@ -109,7 +109,8 @@ int	exec_external(char **argv, t_shell *mshell, int *pipefd_in, int *pipefd_out)
 		close(pipefd_in[1]);
 		close(pipefd_out[1]);
 		wait(&exit_status);
+		free(path);
 	}
-	free(path);
+	
 	return (exit_status);
 }

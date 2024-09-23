@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 09:43:00 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:33:04 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ typedef struct s_shell
 	int				exit_status;
 	int				error;
 	bool			is_exit_prog;
-	bool			exit_prog_val;
+	int				exit_prog_val;
 	char			*last_output;
 	struct termios	startterm;	
 	t_token			*token_list;
@@ -171,18 +171,18 @@ int				execute_command_term(t_shell *mshell, t_ast_node
 					*node_command_term, char *str);
 int				execute_command(t_shell *mshell,
 					t_ast_node *node_command, int in_fd);
-char			*input_read(char *input, char *str);
+char			*input_read(char *input, char *str, t_shell *mshell);
 char			*input_heredoc(char *input, char *str);
-int				ouput_write(char *path, char *str);
-int				ouput_write_append(char *path, char *str);
+bool			ouput_write(char *path, char *str, t_shell *mshell);
+bool			ouput_write_append(char *path, char *str, t_shell *mshell);
 char			*read_fd_to_str(int fd);
 int				write_str_to_fd(char *str, int fd);
-int				add_redirection_to_pipe(t_ast_node *node_command_term,
-					char *str, int fd);
-int				add_str_to_redirections(t_ast_node *node_command_term,
-					char *str);
+int				add_redirection_to_pipe(t_ast_node *node_command_term, t_shell *mshell, char *str, int fd);
+bool			add_str_to_redirections(t_ast_node *node_command_term,
+					char *str, t_shell *mshell);
 int				exe_child(int *pipefd_input, int *pipefd_output,
 					t_ast_node *node_command_term, t_shell *mshell);
+int				check_redirection_output(t_ast_node *node_command_term, t_shell *mshell);
 
 /* INIT */
 int				init_shell(t_shell *mshell, char **envp);
@@ -194,6 +194,7 @@ void			ft_renewshell(t_shell *mshell);
 /* ERROR */
 void			ft_set_error(t_shell *mshell, int errno, char *msg);
 void			print2errorfile(char *str);
+int				set_error_exe(t_shell *mshell, int errno);
 
 /* EXPANDER */
 char			*ft_expand(char *value, t_shell *mshell);

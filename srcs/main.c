@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 15:21:40 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:09:14 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ int	main(int argc, char **argv, char **envp)
 	init_shell(&mshell, envp);
 	while(!mshell.is_exit_prog)
 	{
-		/* init signals */
 		mshell.line = readline(mshell.prompt);
 		if (!mshell.line)
 			return(free(mshell.line), 0);
 		add_history(mshell.line);
 		ft_tokenize(&mshell);
 		mshell.ast = parse_program(&mshell);
-		//print_ast(mshell.ast, 0);
 		execute_programm(&mshell);
 		// if (is_output_without_nl(&mshell))
 		// 	printf("%%\n");

@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:35:06 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 13:15:53 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:03:07 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 int	ft_exit(char **argv, t_shell *mshell, int fd)
 {
-	int	exitvalue;
-
-	((void)mshell, (void)fd);
-	exitvalue = 0;
+	(void)fd;
 	if (argv[1] != NULL)
 	{
 		if (argv[2] != NULL)
-			return (perror("exit: too many arguments"), 1);
-		exitvalue = ft_atoi(argv[1]);
+			return (ft_set_error(mshell, 1, "exit: too many arguments\n"), 1);
+		else
+			mshell->exit_prog_val = ft_atoi(argv[1]);		
 	}
+	else
+		mshell->exit_prog_val = 0;
 	mshell->is_exit_prog = TRUE;
-	mshell->exit_prog_val = exitvalue;
 	return (0);
 }

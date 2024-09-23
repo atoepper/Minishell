@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:57:51 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 16:59:43 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:30:22 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,36 @@ int	ft_cd_relativ(char **argv)
 	return (closedir(dir), free(path), 1);
 }
 
-int	ft_cd(char **argv, t_shell *mshell, int fd)
+int	go_to_home(t_shell *mshell)
 {
 	int		return_value;
 	char	*ptr_home;
 
-	((void)mshell, (void)fd);
-	if (argv == NULL || argv[1] == NULL)
+	ptr_home = ft_find_value_by_key(mshell->envlst, "HOME");
+	if (ptr_home == NULL)
+		return (1);
+	return_value = chdir(ptr_home);
+	return (return_value);
+}
+
+int	ft_cd(char **argv, t_shell *mshell, int fd)
+{
+	int		return_value;
+
+	((void)fd);
+	if (argv == NULL)
 		return (1);
 	if (argv[1] == NULL)
-	{
-		ptr_home = getenv("HOME");
-		if (ptr_home != NULL)
-		{
-			return_value = chdir(ptr_home);
-			if (return_value != EXIT_SUCCESS)
-				return (perror("cd"), return_value);
-		}
-	}
-	return_value = ft_cd_relativ(argv);
-	if (return_value == EXIT_SUCCESS)
-		return (return_value);
+		return_value = go_to_home(mshell);
 	else
 	{
-		return_value = chdir(argv[1]);
-		if (return_value != EXIT_SUCCESS)
-			return (perror("cd"), return_value);
-		return (return_value);
+		if (!access(argv[1], F_OK))
+			return_value = chdir(argv[1]);
+		else
+			return_value = ft_cd_relativ(argv);
 	}
+	if (return_value != EXIT_SUCCESS)
+			ft_set_error(mshell, return_value,
+				"cd: no such directory or file\n");
+	return (return_value);
 }

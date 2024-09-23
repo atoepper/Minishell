@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:53:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 10:07:27 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:19:48 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+int	set_error_exe(t_shell *mshell, int errno)
+{
+	mshell->error = errno;
+	return(errno);
+}
 
 void	ft_set_error(t_shell *mshell, int errno, char *msg)
 {

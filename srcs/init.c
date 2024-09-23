@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 09:41:17 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:15:20 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int	init_shell(t_shell *mshell, char **envp)
 	set_sig_term(NO_CHILD);
 	mshell->is_exit_prog = FALSE;
 	mshell->lst_builtins = fill_lst_builtins();
-	return (1);
+	mshell->error = 0;
+	return (0);
 }
 
 
