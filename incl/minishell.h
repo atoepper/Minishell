@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 15:33:04 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:52:57 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <termcap.h>
 # include <termios.h>
 # include <unistd.h>
+# include <stdlib.h>
 
 /* ENUMS */
 
