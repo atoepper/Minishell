@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/17 16:06:44 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:41:17 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	create_prompt(t_shell *mshell)
 	cwd = getcwd(cwd, 0);
 	if (mshell->prompt)
 		free (mshell->prompt);
-	tmp = ft_strjoin ("minishell \033[1;34m", cwd);
+	tmp = ft_strjoin ("\033[0mminishell \033[1;34m", cwd);
 	mshell->prompt = ft_strjoin(tmp, "\033[0m % ");
 	free (cwd);
 	free (tmp);
@@ -63,7 +63,7 @@ int	init_shell(t_shell *mshell, char **envp)
 	mshell->in = dup(0);
 	mshell->out = dup(1);
 	tcgetattr(STDIN_FILENO, &(mshell->startterm));
-	sigtermset(0);
+	set_sig_term(NO_CHILD);
 	mshell->is_exit_prog = FALSE;
 	mshell->lst_builtins = fill_lst_builtins();
 	return (1);
