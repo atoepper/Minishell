@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:58:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:41:05 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:32:46 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ft_env(char **argv, t_shell *mshell, int fd)
 	t_env	*envlst;
 	int		return_val;
 
+	(void)fd;
 	if (argv[1] != NULL)
 		return (ft_putstr_fd("env: too many arguments\n", 2), 1);
 	envlst = mshell->envlst;
@@ -34,10 +35,13 @@ int	ft_env(char **argv, t_shell *mshell, int fd)
 		return (1);
 	while (envlst != NULL)
 	{
-		return_val = write(fd, envlst->key, ft_strlen(envlst->key));
-		return_val = write(fd, "=", 1);
-		return_val = write(fd, envlst->value, ft_strlen(envlst->value));
-		return_val = write(fd, "\n", 1);
+		if (ft_strncmp(envlst->value, "''", 3) != 0)
+		{
+			return_val = write(fd, envlst->key, ft_strlen(envlst->key));
+			return_val = write(fd, "=", 1);
+			return_val = write(fd, envlst->value, ft_strlen(envlst->value));
+			return_val = write(fd, "\n", 1);
+		}
 		envlst = envlst->next;
 		return_val++;
 	}
