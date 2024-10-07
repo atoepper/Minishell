@@ -6,21 +6,15 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/07 09:58:39 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/07 10:44:24 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	exec_function(t_ast_node *node_command_term, t_shell *mshell, int *pipefd_in, int *pipefd_out)
+int	exec_function2(t_ast_node	*node_command, t_shell *mshell,
+		int *pipefd_in, int *pipefd_out, int exit_status)
 {
-	int			exit_status;
-	t_ast_node	*node_command;
-	char		buf[2];
-
-	buf[1] = '\0';
-	exit_status = 111;
-	node_command = node_command_term->child;
 	while ((node_command != NULL))
 	{
 		if ((node_command->type & COMMAND))
@@ -28,10 +22,10 @@ int	exec_function(t_ast_node *node_command_term, t_shell *mshell, int *pipefd_in
 			if (node_command->argv == NULL)
 				return (1);
 			exit_status = exec_builtin(node_command->argv,
-				 mshell, pipefd_out[1]);
+					mshell, pipefd_out[1]);
 			if (exit_status)
 				exit_status = exec_external(node_command->argv,
-					mshell, pipefd_in, pipefd_out);
+						mshell, pipefd_in, pipefd_out);
 			if (exit_status == 127)
 			{
 				ft_putstr_fd("command not found: ", 2);
@@ -42,6 +36,21 @@ int	exec_function(t_ast_node *node_command_term, t_shell *mshell, int *pipefd_in
 		}
 		node_command = node_command->next;
 	}
+	return (exit_status);
+}
+
+int	exec_function(t_ast_node *node_command_term,
+			t_shell *mshell, int *pipefd_in, int *pipefd_out)
+{
+	int			exit_status;
+	t_ast_node	*node_command;
+	char		buf[2];
+
+	buf[1] = '\0';
+	exit_status = 111;
+	node_command = node_command_term->child;
+	exit_status = exec_function2(node_command,
+			mshell, pipefd_in, pipefd_out, exit_status);
 	close(pipefd_in[1]);
 	if (exit_status == 111)
 	{
@@ -50,8 +59,15 @@ int	exec_function(t_ast_node *node_command_term, t_shell *mshell, int *pipefd_in
 		exit_status = 0;
 	}
 	close(pipefd_in[0]);
+	close(pipefd_out[1]);
 	mshell->error = exit_status;
 	return (exit_status);
+}
+
+void	print_and_save_str(t_shell *mshell, char *str)
+{
+	mshell->last_output = str;
+	ft_putstr_fd(str, 1);
 }
 
 int	execute_command_term(t_shell *mshell,
@@ -68,7 +84,6 @@ int	execute_command_term(t_shell *mshell,
 	if (mshell->error == 0)
 	{
 		exec_function(node_command_term, mshell, pipefd_in, pipefd_out);
-		close(pipefd_out[1]);
 		str = read_fd_to_str(pipefd_out[0]);
 		red_out = add_str_to_redirections(node_command_term, str, mshell);
 	}
@@ -81,10 +96,7 @@ int	execute_command_term(t_shell *mshell,
 	if (node_command_term->next != NULL)
 		execute_command_term(mshell, node_command_term->next, str);
 	else if (red_out != TRUE)
-	{
-		mshell->last_output = str;
-		ft_putstr_fd(str, 1);
-	}
+		print_and_save_str(mshell, str);
 	return (0);
 }
 
