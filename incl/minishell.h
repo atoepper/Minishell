@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:39:44 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/07 10:41:57 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
 int				exec_function(t_ast_node *node_command_term, t_shell *mshell, int *pipefd_in, int *pipefd_out);
+int				exec_function2(t_ast_node	*node_command, t_shell *mshell, int *pipefd_in, int *pipefd_out, int exit_status);
 int				execute_programm(t_shell *mshell);
 int				execute_command_term(t_shell *mshell, t_ast_node
 					*node_command_term, char *str);
@@ -185,6 +186,7 @@ bool			add_str_to_redirections(t_ast_node *node_command_term,
 int				exe_child(int *pipefd_input, int *pipefd_output,
 					t_ast_node *node_command_term, t_shell *mshell);
 int				check_redirection_output(t_ast_node *node_command_term, t_shell *mshell);
+void			print_and_save_str(t_shell *mshell, char *str);
 
 /* INIT */
 int				init_shell(t_shell *mshell, char **envp);
