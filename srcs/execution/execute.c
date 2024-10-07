@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:38:30 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/07 09:58:39 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	execute_command_term(t_shell *mshell,
 		return (perror("pipe"), 1);
 	add_redirection_to_pipe(node_command_term, mshell, str, pipefd_in[1]);
 	check_redirection_output(node_command_term, mshell);
-	print2errorfile(ft_itoa(mshell->error));
 	if (mshell->error == 0)
 	{
 		exec_function(node_command_term, mshell, pipefd_in, pipefd_out);
