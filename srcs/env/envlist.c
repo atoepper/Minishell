@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:08:38 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:42:35 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:44:41 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_env	*ft_new_env(char *key, char *value)
 {
 	t_env	*new;
 
-	new = (t_env*)malloc(sizeof(t_env));
+	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
 	new->key = key;

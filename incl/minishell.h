@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/08 12:49:55 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:51:23 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,7 @@ int				add_redirection_to_pipe(t_ast_node *node_command_term, t_shell *mshell);
 int				add_str_to_pipe(t_ast_node *node_command_term, char *str);
 bool			add_str_to_redirections(t_ast_node *node_command_term,
 					char *str, t_shell *mshell);
-int				exe_child(int *pipefd_input, int *pipefd_output,
-					t_ast_node *node_command_term, t_shell *mshell);
+int				exec_external_child(t_ast_node *node_command_term, char **argv, char *path);
 int				check_redirection_output(t_ast_node *node_command_term, t_shell *mshell);
 void			print_and_save_str(t_shell *mshell, char *str);
 int				check_if_red_out(t_ast_node *node_command_term);

@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/08 11:22:56 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:44:08 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	print_env_with_empty(char **argv, t_shell *mshell, int fd)
 		return (1);
 	while (envlst != NULL)
 	{
-			return_val = write(fd, envlst->key, ft_strlen(envlst->key));
-			return_val = write(fd, "=", 1);
-			return_val = write(fd, envlst->value, ft_strlen(envlst->value));
-			return_val = write(fd, "\n", 1);
-			envlst = envlst->next;
-			return_val++;
+		return_val = write(fd, envlst->key, ft_strlen(envlst->key));
+		return_val = write(fd, "=", 1);
+		return_val = write(fd, envlst->value, ft_strlen(envlst->value));
+		return_val = write(fd, "\n", 1);
+		envlst = envlst->next;
+		return_val++;
 	}
 	return (0);
 }
@@ -66,7 +66,8 @@ int	ft_export(char **argv, t_shell *mshell, int fd)
 			change_or_create(argv[i], key, mshell);
 		}
 		else if (ft_find_value_by_key(mshell->envlst, argv[i]) == NULL)
-			ft_add_env(&(mshell->envlst), ft_new_env(ft_strdup(argv[i]), ft_strdup("''")));
+			ft_add_env(&(mshell->envlst),
+					ft_new_env(ft_strdup(argv[i]), ft_strdup("''")));
 	}
 	return (0);
 }
