@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:57:51 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:40:53 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/08 11:20:26 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_cd(char **argv, t_shell *mshell, int fd)
 {
 	int		return_value;
 
-	((void)fd);
+	(void)fd;
 	if (argv == NULL)
 		return (1);
 	if (argv[1] == NULL)

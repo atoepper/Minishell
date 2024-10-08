@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:58:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/07 11:32:46 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/08 11:22:45 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_env(char **argv, t_shell *mshell, int fd)
 	t_env	*envlst;
 	int		return_val;
 
-	(void)fd;
 	if (argv[1] != NULL)
 		return (ft_putstr_fd("env: too many arguments\n", 2), 1);
 	envlst = mshell->envlst;
