@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/23 16:23:51 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/08 11:04:39 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,14 @@ char	*ft_join_path_and_name(char *path, char *name)
 	return (path_full);
 }
 
-int	exec_external(char **argv, t_shell *mshell, int *pipefd_in, int *pipefd_out)
+int	exec_external(t_ast_node *node_command_term, char **argv, t_shell *mshell)
 {
 	char			*path;
 	int				exit_status;
 	char			*env[1];
 	int				pid;
-	// struct termios	oldt;
 
-	(void)mshell;
-	// tcgetattr(STDIN_FILENO, &oldt);
+	((void)mshell, (void)node_command_term);
 	env[0] = NULL;
 	exit_status = 0;
 	path = search_function_in_path(argv[0], mshell);
@@ -94,18 +92,17 @@ int	exec_external(char **argv, t_shell *mshell, int *pipefd_in, int *pipefd_out)
 	pid = fork();
 	if (pid == 0)
 	{
-		// if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)) {
-		// 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-		// }
-		// else
-		// {
-			close(pipefd_in[1]);
-			close(pipefd_out[0]);
-			dup2(pipefd_in[0], 0);
-			close(pipefd_in[0]);
-			dup2(pipefd_out[1], 1);
-			close(pipefd_out[1]);
-		// }
+		if (node_command_term->in_fd[0] != 0)
+		{
+			close(node_command_term->in_fd[1]);
+			dup2(node_command_term->in_fd[0], 0);
+			close(node_command_term->in_fd[0]);
+		}
+		if (node_command_term->out_fd[1] != 1)
+		{
+			dup2(node_command_term->out_fd[1], 1);
+			close(node_command_term->out_fd[1]);
+		}
 		exit_status = execve(path, argv, env);
 		perror("execvp");
 		free(path);
@@ -113,9 +110,8 @@ int	exec_external(char **argv, t_shell *mshell, int *pipefd_in, int *pipefd_out)
 	}
 	else
 	{
-		close(pipefd_in[0]);
-		close(pipefd_in[1]);
-		close(pipefd_out[1]);
+		if (node_command_term->in_fd[0] != 0)
+			close(node_command_term->in_fd[1]);
 		wait(&exit_status);
 		free(path);
 	}

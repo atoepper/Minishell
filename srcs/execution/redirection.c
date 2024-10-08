@@ -6,57 +6,47 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/09/23 15:43:44 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/08 10:43:04 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-char	*input_read(char *input, char *str, t_shell *mshell)
+int	input_read(char *input, int fd_input, t_shell *mshell)
 {
-	int		fd_input;
+	int		fd;
 	char	buf[2];
-	char	*new_str;
 
 	buf[1] = '\0';
-	fd_input = open(input, O_RDONLY);
-	if (fd_input == -1)
-		ft_set_error(mshell, 1, "minishell: No such file or directory\n");
-	while (read(fd_input, buf, 1) == 1)
-	{
-		new_str = ft_strjoin(str, buf);
-		if (new_str == NULL)
-			return (free(str), NULL);
-		free(str);
-		str = new_str;
-	}
-	return (str);
+	fd = open(input, O_RDONLY);
+	if (fd == -1)
+		return(ft_set_error(mshell, 1,
+				"minishell: No such file or directory\n"), 1);
+	while (read(fd, buf, 1) == 1)
+		ft_putstr_fd(buf, fd_input);
+	close(fd);
+	return (0);
 }
 
-char	*input_heredoc(char *input, char *str)
+int	input_heredoc(char *input, int fd_input, t_shell *mshell)
 {
 	char	buf[1024];
 	int		read_return;
-	char	*new_str;
 
 	ft_bzero(buf, 1024);
 	input = ft_strjoin(input, "\n");
 	if (input == NULL)
-		return (perror("ft_strjoin"), NULL);
+		return (ft_set_error(mshell, 1, "minishell: ft_strjoin heredoc\n"), 1);
 	read_return = read(0, buf, 1024);
 	buf[read_return] = '\0';
 	while (ft_strncmp(buf, input, ft_strlen(input)) != 0)
 	{
-		new_str = ft_strjoin(str, buf);
-		if (new_str == NULL)
-			return (free(str), NULL);
-		free(str);
+		ft_putstr_fd(buf, fd_input);
 		ft_bzero(buf, 1024);
 		read_return = read(0, buf, 1024);
 		buf[read_return] = '\0';
-		str = new_str;
 	}
-	return (str);
+	return (0);
 }
 
 int	check_redirection_output(t_ast_node *node_command_term, t_shell *mshell)
@@ -113,17 +103,16 @@ bool	ouput_write_append(char *path, char *str, t_shell *mshell)
 	return (0);
 }
 
-char	*read_fd_to_str(int fd)
+char	*read_fd_to_str(t_ast_node *node_command_term)
 {
 	char	buf[2];
 	char	*str;
 	char	*new_str;
-	int		result;
 
-	str = NULL;
-	result = 0;
+	close(node_command_term->out_fd[1]);
 	buf[1] = '\0';
-	while (read(fd, buf, 1) == 1)
+	str = NULL;
+	while (read(node_command_term->out_fd[0], buf, 1) == 1)
 	{
 		new_str = ft_strjoin(str, buf);
 		if (new_str == NULL)
@@ -131,8 +120,7 @@ char	*read_fd_to_str(int fd)
 		free(str);
 		str = new_str;
 	}
-	close(fd);
-	result++;
+	close(node_command_term->out_fd[0]);
 	return (str);
 }
 
@@ -147,7 +135,18 @@ int	write_str_to_fd(char *str, int fd)
 	result++;
 	return (0);
 }
-int	add_redirection_to_pipe(t_ast_node *node_command_term, t_shell *mshell, char *str, int fd)
+
+int create_pipe(t_ast_node *node_command_term)
+{
+	if (node_command_term->in_fd[0] == 0)
+	{
+		if (pipe(node_command_term->in_fd) == -1)
+			return (perror("pipe"), 1);
+	}
+	return (0);
+}
+
+int	add_redirection_to_pipe(t_ast_node *node_command_term, t_shell *mshell)
 {
 	t_ast_node	*node_command;
 
@@ -155,15 +154,37 @@ int	add_redirection_to_pipe(t_ast_node *node_command_term, t_shell *mshell, char
 	while ((node_command != NULL))
 	{
 		if ((node_command->type & READ))
-			str = input_read(node_command->value, str, mshell);
+		{
+			create_pipe(node_command_term);
+			input_read(node_command->value,
+					node_command_term->in_fd[1], mshell);
+		}
 		else if ((node_command->type & HEREDOC))
-			str = input_heredoc(node_command->value, str);
+		{
+			create_pipe(node_command_term);
+			input_heredoc(node_command->value,
+					node_command_term->in_fd[1], mshell);
+		}
 		node_command = node_command->next;
 	}
+	// if (node_command_term->in_fd[0] != 0)
+	// {
+	// 	close(node_command_term->in_fd[1]);
+	// 	// dup2(node_command_term->in_fd[0],0);
+	// 	// close(node_command_term->in_fd[0]);
+	// }
+	return (0);
+}
+
+int	add_str_to_pipe(t_ast_node *node_command_term, char *str)
+{
 	if (str != NULL)
-		ft_putstr_fd(str, fd);
-	close(fd);
-	free(str);
+	{
+		create_pipe(node_command_term);
+		if (write(node_command_term->in_fd[1], str, ft_strlen(str)) != (ssize_t)ft_strlen(str))
+			return (perror("write add str to pipe"), 1);
+		free(str);
+	}
 	return (0);
 }
 
@@ -180,6 +201,22 @@ bool	add_str_to_redirections(t_ast_node *node_command_term, char *str, t_shell *
 			output = ouput_write(node_command->value, str, mshell);
 		if ((node_command->type & WRITE_APPEND))
 			output = ouput_write_append(node_command->value, str, mshell);
+		node_command = node_command->next;
+	}
+	return (output);
+}
+
+int	check_if_red_out(t_ast_node *node_command_term)
+{
+	t_ast_node	*node_command;
+	int			output;
+
+	node_command = node_command_term->child;
+	output = 0;
+	while ((node_command != NULL))
+	{
+		if ((node_command->type & WRITE) || (node_command->type & WRITE_APPEND))
+			output = 1;
 		node_command = node_command->next;
 	}
 	return (output);
