@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:37 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:36:47 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/07 09:55:02 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ t_ast_node	*parse_element(t_shell *mshell)
 			return (element_node);
 		}
 		else
-			ft_set_error(mshell, 1, "minishell:
-				syntax error near unexpected token\n");
+			ft_set_error(mshell, 1, 
+				"minishell: syntax error near unexpected token\n");
 	}
 	return (NULL);
 }
