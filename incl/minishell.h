@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 13:38:07 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:39:12 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ enum e_process_mode
 	NO_CHILD,
 	WITH_CHILD,
 	EXECUTE_CHILD,
-	HEREDOC_CHILD,
-	HEREDOC_PARENT
+	IN_HEREDOC,
 };
 
 enum e_err_type
@@ -116,7 +115,7 @@ typedef struct s_ast_node
 	int					out_fd[2];
 }	t_ast_node;
 
-struct	s_shell;
+struct		s_shell;
 
 typedef int	(*t_function_ptr)(char **argv, struct s_shell *mshell, int fd);
 
