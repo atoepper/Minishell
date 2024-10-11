@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:35:08 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:21:19 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_tokenize(t_shell *mshell)
 {
 	if (ft_string_is_empty(mshell->line))
 		return (0);
-	mshell->token_list = ft_linetolist(mshell->line, &mshell->error);
+	mshell->token_list = ft_linetolist(mshell, mshell->line, &mshell->error);
 	if (mshell->error != 0)
 		return (1);
 	if (mshell->token_list)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 10:44:13 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:16:50 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	init_shell(t_shell *mshell, char **envp)
 	set_sig_term(NO_CHILD);
 	mshell->is_exit_prog = FALSE;
 	mshell->exit_status = 0;
+	mshell->err_type = NO_ERR;
 	mshell->lst_builtins = fill_lst_builtins();
 	mshell->error = 0;
 	return (0);
@@ -78,6 +79,7 @@ void	ft_renewshell(t_shell *mshell)
 	free_ast(mshell->ast);
 	mshell->exit_status = mshell->error;
 	mshell->error = 0;
+	mshell->err_type = NO_ERR;
 	free(mshell->line);
 	free(mshell->last_output);
 	mshell->last_output = NULL;

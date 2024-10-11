@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/11 10:17:40 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:06:14 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	input_read(char *input, int fd_input, t_shell *mshell)
 	int		fd;
 	char	buf[2];
 
+	(void)mshell;
 	buf[1] = '\0';
 	fd = open(input, O_RDONLY);
 	if (fd == -1)
-		return (ft_set_error(mshell, 1,
-				"minishell: No such file or directory\n"), 1);
+		return (perror("minishell"), 1);
 	while (read(fd, buf, 1) == 1)
 		ft_putstr_fd(buf, fd_input);
 	close(fd);
@@ -36,7 +36,7 @@ int	input_heredoc(char *input, int fd_input, t_shell *mshell)
 	ft_bzero(buf, 1024);
 	input = ft_strjoin(input, "\n");
 	if (input == NULL)
-		return (ft_set_error(mshell, 1, "minishell: ft_strjoin heredoc\n"), 1);
+		return (ft_set_error(mshell, 1, MALLOC), 1);
 	read_return = read(0, buf, 1024);
 	buf[read_return] = '\0';
 	while (ft_strncmp(buf, input, ft_strlen(input)) != 0)
@@ -57,13 +57,15 @@ int	check_redirection_output(t_ast_node *node_command_term, t_shell *mshell)
 	while ((node_command != NULL))
 	{
 		if ((node_command->type & WRITE || node_command->type & WRITE_APPEND))
-			if (access(node_command->value, F_OK))
-				if (!access(node_command->value, W_OK))
-				{
-					mshell->error = 1;
-					perror("minishell");
-					return (1);
-				}
+		{
+			if (access(node_command->value, F_OK)
+				&& !access(node_command->value, W_OK))
+			{
+				mshell->error = 1;
+				perror("minishell");
+				return (1);
+			}
+		}
 		node_command = node_command->next;
 	}
 	return (0);

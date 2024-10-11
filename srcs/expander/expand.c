@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:31 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/09 11:30:07 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:05:12 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_expand_env(t_shell *mshell, char **cursor)
 		(*cursor) += ft_end_of_varname(*cursor);
 	}
 	else
-		expand_to = ft_strdup("");
+		expand_to = ft_strdup("$");
 	return (expand_to);
 }
 

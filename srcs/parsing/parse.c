@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:37 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 10:04:39 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:43:14 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ast_node	*parse_program(t_shell *mshell)
 	if (command_term_node != NULL)
 		add_child_node(program_node, command_term_node);
 	else
-		return (free_ast(program_node), NULL);
+		return (ft_set_error(mshell, 1, PARSE), free_ast(program_node), NULL);
 	while (mshell->curr_token != NULL && mshell->curr_token->type & PIPE)
 	{
 		mshell->curr_token = mshell->curr_token->next;
@@ -32,7 +32,7 @@ t_ast_node	*parse_program(t_shell *mshell)
 		if (command_term_node == NULL)
 		{
 			free_ast(program_node);
-			ft_set_error(mshell, 1, "minishell: parse error near '|'\n");
+			ft_set_error(mshell, 1, PARSE);
 			return (NULL);
 		}
 		else
@@ -92,8 +92,7 @@ t_ast_node	*parse_element(t_shell *mshell)
 			return (element_node);
 		}
 		else
-			ft_set_error(mshell, 1, 
-				"minishell: syntax error near unexpected token\n");
+			ft_set_error(mshell, 1, SYNTAX);
 	}
 	return (NULL);
 }
@@ -172,7 +171,8 @@ t_ast_node	*parse_element(t_shell *mshell)
 // 			return (redir_term_node);
 // 		}
 // 		else
-// 			ft_set_error(mshell, 1, "minishell: syntax error near unexpected token\n");
+// 			ft_set_error(mshell, 1, "minishell:
+// 				syntax error near unexpected token\n");
 // 	}
 // 	return (NULL);
 // }
@@ -194,4 +194,3 @@ t_ast_node	*parse_element(t_shell *mshell)
 // 		mshell->curr_token = mshell->curr_token->next;
 // 	return (command_node);
 // }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:51:47 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/08 11:22:16 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:11:07 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_pwd(char **argv, t_shell *mshell, int fd)
 
 	((void)argv, (void)mshell);
 	if (argv[1] != NULL)
-		return (ft_set_error(mshell, 1, "pwd: too many arguments\n"), 1);
+		return (ft_set_error(mshell, 1, PWD_ARG), 1);
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (!pwd)

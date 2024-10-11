@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 10:20:45 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:09:41 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ int	exec_function2(t_ast_node *node_command_term,
 			exit_status = exec_builtin(node_command_term,
 					node_command->argv, mshell);
 			if (exit_status)
+			{
 				exit_status = exec_external(node_command_term,
-						node_command->argv,	mshell);
+						node_command->argv, mshell);
+				mshell->error = exit_status;
+			}
 			if (exit_status == 127)
 			{
 				ft_putstr_fd("command not found: ", 2);
 				ft_putstr_fd(node_command->argv[0], 2);
 				ft_putstr_fd("\n", 2);
 			}
-			mshell->error = exit_status;
 		}
 		node_command = node_command->next;
 	}
@@ -52,8 +54,8 @@ int	exec_function(t_ast_node *node_command_term, t_shell *mshell)
 	{
 		node_command_term->out_fd[0] = node_command_term->in_fd[0];
 		node_command_term->out_fd[1] = node_command_term->in_fd[1];
+		mshell->error = 0;
 		exit_status = 0;
 	}
-	mshell->error = exit_status;
 	return (exit_status);
 }

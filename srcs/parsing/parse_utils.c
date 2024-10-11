@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:06:56 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/10 12:41:09 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:33:27 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_create_argv(t_ast_node *command)
 	node = command->child;
 	argv = (char **)malloc(sizeof(char *) * (argc + 1));
 	if (!argv)
-		return (1); /* malloc error */
+		return (1);
 	while (i < argc)
 	{
 		argv[i] = ft_strdup(node->value);

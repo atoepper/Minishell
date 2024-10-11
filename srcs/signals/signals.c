@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:17:07 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:36:15 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:31:10 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	set_termios(int mode)
 
 	tcgetattr(STDOUT_FILENO, &term_setting);
 	if (mode == NO_CHILD || mode == WITH_CHILD
-			|| mode == HEREDOC_PARENT || mode == HEREDOC_CHILD)
+		|| mode == HEREDOC_PARENT || mode == HEREDOC_CHILD)
 		term_setting.c_lflag &= ~(ECHOCTL);
 	else if (mode == EXECUTE_CHILD)
 		term_setting.c_lflag |= ECHOCTL;
