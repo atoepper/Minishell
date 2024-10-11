@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:35:06 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 10:18:54 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:09:49 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_exit(char **argv, t_shell *mshell, int fd)
 	if (argv[1] != NULL)
 	{
 		if (argv[2] != NULL)
-			return (ft_set_error(mshell, 1, "exit: too many arguments\n"), 1);
+			return (ft_set_error(mshell, 1, EXIT_ARG), 1);
 		else
 			mshell->exit_prog_val = ft_atoi(argv[1]);
 	}

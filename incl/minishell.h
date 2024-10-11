@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 11:02:33 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:38:07 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,19 @@ enum e_process_mode
 	HEREDOC_PARENT
 };
 
+enum e_err_type
+{
+	NO_ERR,
+	MALLOC,
+	SYNTAX,
+	PARSE,
+	OPEN_QUOTES,
+	NO_FILE,
+	NO_FILE_RED,
+	PWD_ARG,
+	EXIT_ARG
+};
+
 /* STRUCTURES */
 
 typedef struct s_token
@@ -105,8 +118,7 @@ typedef struct s_ast_node
 
 struct	s_shell;
 
-typedef int	(*t_function_ptr)(char **argv,
-	struct s_shell *mshell, int fd);
+typedef int	(*t_function_ptr)(char **argv, struct s_shell *mshell, int fd);
 
 typedef struct s_builtin
 {
@@ -124,6 +136,7 @@ typedef struct s_shell
 	int				error;
 	bool			is_exit_prog;
 	int				exit_prog_val;
+	enum e_err_type	err_type;
 	char			*last_output;
 	struct termios	startterm;	
 	t_token			*token_list;
@@ -131,9 +144,6 @@ typedef struct s_shell
 	t_env			*envlst;
 	t_ast_node		*ast;
 	t_builtin		**lst_builtins;
-	// bool			signint_child;
-	// t_parse_err		parse_err;
-	// bool			heredoc_sigint;
 }	t_shell;
 
 /* BUILTINS */
@@ -201,9 +211,11 @@ int				init_environment(t_shell *mshell, char **envp);
 void			ft_renewshell(t_shell *mshell);
 
 /* ERROR */
-void			ft_set_error(t_shell *mshell, int errno, char *msg);
+void			ft_set_error(t_shell *mshell, int errno,
+					enum e_err_type err_type);
 void			print2errorfile(char *str);
 int				set_error_exe(t_shell *mshell, int errno);
+void			ft_process_error(t_shell *mshell);
 
 /* EXPANDER */
 char			*ft_expand(char *value, t_shell *mshell);
@@ -214,8 +226,7 @@ t_token			*ft_newtoken(char *value, int type);
 void			ft_addtoken(t_token **tokenlist, t_token *newtoken);
 void			ft_clear_tokenlist(t_token	**tokenlist);
 void			ft_deltoken(t_token *token);
-void			ft_printlist(t_token **tokenlist);
-t_token			*ft_linetolist(char *line, int *error);
+t_token			*ft_linetolist(t_shell *mshell, char *line, int *error);
 int				ft_tokenize(t_shell *mshell);
 int				ft_joinwords(t_token **list);
 
@@ -227,7 +238,6 @@ t_ast_node		*create_ast_node(int type, char *value);
 void			add_child_node(t_ast_node *parent, t_ast_node *child);
 void			add_branch(t_ast_node *parent, t_ast_node *child);
 void			free_ast(t_ast_node *node);
-void			print_ast(t_ast_node *node, int indent);
 int				ft_count_args(t_ast_node **command);
 int				ft_create_argv(t_ast_node *command);
 

@@ -6,13 +6,13 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:24:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/10 16:11:07 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:31:58 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-t_token	*ft_newquote(char **line)
+t_token	*ft_newquote(t_shell *mshell, char **line)
 {
 	t_token	*new;
 	char	*line_ptr;
@@ -21,7 +21,7 @@ t_token	*ft_newquote(char **line)
 	line_ptr = *line;
 	if ((*line_ptr == '\"' && !ft_strchr(line_ptr + 1, '\"'))
 		|| (*line_ptr == '\'' && !ft_strchr(line_ptr + 1, '\'')))
-		return (/* error */ printf("open quotes\n"), NULL);
+		return (ft_set_error(mshell, 1, OPEN_QUOTES), NULL);
 	len = ft_nextchar(line_ptr + 1, (*line_ptr == '\'') * '\''
 			+ (*line_ptr == '\"') * '\"');
 	new = ft_newtoken(ft_substr(line_ptr, 1, len),
@@ -35,7 +35,7 @@ t_token	*ft_newquote(char **line)
 	return (new);
 }
 
-t_token	*ft_newredirection(char **line)
+t_token	*ft_newredirection(t_shell *mshell, char **line)
 {
 	t_token	*new;
 	char	*line_ptr;
@@ -43,7 +43,7 @@ t_token	*ft_newredirection(char **line)
 	line_ptr = *line;
 	new = ft_newtoken(NULL, REDIRECT);
 	if (!new)
-		return (/* malloc error */ NULL);
+		return (ft_set_error(mshell, 1, MALLOC), NULL);
 	if (!ft_strncmp(line_ptr, "<<", 2))
 		new->type |= HEREDOC;
 	else if (!ft_strncmp(line_ptr, ">>", 2))
@@ -59,18 +59,18 @@ t_token	*ft_newredirection(char **line)
 	return (new);
 }
 
-t_token	*ft_newpipe(char **line)
+t_token	*ft_newpipe(t_shell *mshell, char **line)
 {
 	t_token	*new;
 
 	new = ft_newtoken(NULL, PIPE);
 	if (!new)
-		return (/* malloc error */ NULL);
+		return (ft_set_error(mshell, 1, MALLOC), NULL);
 	(*line)++;
 	return (new);
 }
 
-t_token	*ft_newword(char **line)
+t_token	*ft_newword(t_shell *mshell, char **line)
 {
 	t_token	*new;
 	char	*word;
@@ -80,14 +80,14 @@ t_token	*ft_newword(char **line)
 	word = ft_substr(line_ptr, 0, ft_wordlength(line_ptr));
 	new = ft_newtoken(word, WORD);
 	if (!new)
-		return (/* malloc error */ NULL);
+		return (ft_set_error(mshell, 1, MALLOC), NULL);
 	if (ft_strchr(new->value, '$'))
 		new->type |= EXPANDER;
 	(*line) += ft_wordlength(line_ptr);
 	return (new);
 }
 
-t_token	*ft_linetolist(char *line, int *error)
+t_token	*ft_linetolist(t_shell *mshell, char *line, int *error)
 {
 	t_token	*list;
 	t_token	*new;
@@ -98,13 +98,13 @@ t_token	*ft_linetolist(char *line, int *error)
 	while (*line)
 	{
 		if (*line == '\'' || *line == '\"')
-			new = ft_newquote(&line);
+			new = ft_newquote(mshell, &line);
 		else if (*line == '<' || *line == '>')
-			new = ft_newredirection(&line);
+			new = ft_newredirection(mshell, &line);
 		else if (*line == '|')
-			new = ft_newpipe(&line);
+			new = ft_newpipe(mshell, &line);
 		else
-			new = ft_newword(&line);
+			new = ft_newword(mshell, &line);
 		if (!new)
 			return (ft_clear_tokenlist(&list), NULL);
 		if (new->type & WORD && !ft_isseparator(*line))

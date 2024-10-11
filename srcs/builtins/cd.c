@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:57:51 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/08 11:20:26 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:07:02 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ int	ft_cd(char **argv, t_shell *mshell, int fd)
 	}
 	if (return_value != EXIT_SUCCESS)
 		ft_set_error(mshell, return_value,
-			"cd: no such directory or file\n");
+			NO_FILE);
 	return (return_value);
 }
