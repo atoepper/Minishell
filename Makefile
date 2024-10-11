@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
+#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/09/23 09:44:27 by atoepper         ###   ########.fr        #
+#    Updated: 2024/10/11 11:36:48 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ### COMPILATION ###
-CC      = gcc
+CC      = cc
 FLAGS  = -Wall -Wextra -Werror -g
 
 ### EXECUTABLE ###
@@ -37,9 +37,12 @@ SOURCES = main.c \
 			env/envlist.c \
 			error/error.c \
 			execution/execute.c \
+			execution/execute2.c \
 			execution/exec_builtin.c \
 			execution/exec_external.c \
 			execution/redirection.c \
+			execution/redirection2.c \
+			execution/redirection3.c \
 			expander/expand.c \
 			garbage_collection/garbage_collection.c \
 			parsing/ast.c \
