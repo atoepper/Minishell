@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:43:11 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:44:13 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	init_shell(t_shell *mshell, char **envp)
 	tcgetattr(STDIN_FILENO, &(mshell->startterm));
 	set_sig_term(NO_CHILD);
 	mshell->is_exit_prog = FALSE;
+	mshell->exit_status = 0;
 	mshell->lst_builtins = fill_lst_builtins();
 	mshell->error = 0;
 	return (0);
