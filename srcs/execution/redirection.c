@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/08 16:03:09 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:17:40 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	check_redirection_output(t_ast_node *node_command_term, t_shell *mshell)
 	while ((node_command != NULL))
 	{
 		if ((node_command->type & WRITE || node_command->type & WRITE_APPEND))
-		{
 			if (access(node_command->value, F_OK))
 				if (!access(node_command->value, W_OK))
 				{
@@ -65,7 +64,6 @@ int	check_redirection_output(t_ast_node *node_command_term, t_shell *mshell)
 					perror("minishell");
 					return (1);
 				}
-		}
 		node_command = node_command->next;
 	}
 	return (0);

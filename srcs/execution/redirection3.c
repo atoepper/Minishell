@@ -6,13 +6,14 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:41:37 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/08 15:41:57 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:13:47 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-bool	add_str_to_redirections(t_ast_node *node_command_term, char *str, t_shell *mshell)
+bool	add_str_to_redirections(t_ast_node *node_command_term,
+		char *str, t_shell *mshell)
 {
 	t_ast_node	*node_command;
 	int			output;

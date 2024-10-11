@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:40:57 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/08 15:43:43 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:16:06 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ int	add_redirection_to_pipe(t_ast_node *node_command_term, t_shell *mshell)
 		{
 			create_pipe(node_command_term);
 			input_read(node_command->value,
-					node_command_term->in_fd[1], mshell);
+				node_command_term->in_fd[1], mshell);
 		}
 		else if ((node_command->type & HEREDOC))
 		{
 			create_pipe(node_command_term);
 			input_heredoc(node_command->value,
-					node_command_term->in_fd[1], mshell);
+				node_command_term->in_fd[1], mshell);
 		}
 		node_command = node_command->next;
 	}
@@ -85,10 +85,9 @@ int	add_str_to_pipe(t_ast_node *node_command_term, char *str)
 	{
 		create_pipe(node_command_term);
 		if (write(node_command_term->in_fd[1], str,
-					ft_strlen(str)) != (ssize_t)ft_strlen(str))
+				ft_strlen(str)) != (ssize_t)ft_strlen(str))
 			return (perror("write add str to pipe"), 1);
 		free(str);
 	}
 	return (0);
 }
-

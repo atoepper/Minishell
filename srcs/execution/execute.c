@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/08 15:59:59 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:14:55 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	print_and_save_str(t_shell *mshell, char *str)
 	ft_putstr_fd(str, 1);
 }
 
-
 int	check_output_fd(t_ast_node *node_command_term)
 {
-	if (node_command_term->next != NULL || check_if_red_out(node_command_term) == 1)
+	if (node_command_term->next != NULL
+		|| check_if_red_out(node_command_term) == 1)
 	{
 		if (pipe(node_command_term->out_fd) == -1)
 			return (perror("pipe"), 1);
@@ -29,12 +29,11 @@ int	check_output_fd(t_ast_node *node_command_term)
 	return (0);
 }
 
-
-
 int	execute_command_term(t_shell *mshell,
 			t_ast_node *node_command_term, char *str)
 {
 	add_str_to_pipe(node_command_term, str);
+	str = NULL;
 	add_redirection_to_pipe(node_command_term, mshell);
 	check_redirection_output(node_command_term, mshell);
 	check_output_fd(node_command_term);
@@ -55,7 +54,6 @@ int	execute_command_term(t_shell *mshell,
 		free(str);
 	return (0);
 }
-
 
 int	execute_programm(t_shell *mshell)
 {

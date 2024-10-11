@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/08 15:51:23 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:02:33 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@
 # define REDIR_ITER		0b00000000000000100000000000000000
 # define REDIR_TERM		0b00000000000000010000000000000000
 
-
 # ifndef ECHOCTL
 #  define ECHOCTL 0x00000040
 # endif
@@ -100,14 +99,14 @@ typedef struct s_ast_node
 	char				**argv;
 	struct s_ast_node	*child;
 	struct s_ast_node	*next;
-	int		in_fd[2];
-	int		out_fd[2];
+	int					in_fd[2];
+	int					out_fd[2];
 }	t_ast_node;
 
 struct	s_shell;
 
-typedef int			(*t_function_ptr)(char **argv,
-							struct s_shell *mshell, int fd);
+typedef int	(*t_function_ptr)(char **argv,
+	struct s_shell *mshell, int fd);
 
 typedef struct s_builtin
 {
@@ -160,18 +159,21 @@ void			ft_remove_env(t_env **envlist, char *key);
 void			ft_printenvlist(t_shell *mshell);
 
 /* EXECUTION */
-int				exec_external(t_ast_node *node_command_term, char **argv, t_shell *mshell);
+int				exec_external(t_ast_node *node_command_term,
+					char **argv, t_shell *mshell);
 char			*ft_join_path_and_name(char *path, char *name);
 char			*search_function_in_path(char *name, t_shell *mshell);
 int				search_file_in_directory(const char *directory, char *name);
-int				exec_builtin(t_ast_node *node_command_term, char **argv, t_shell *mshell);
+int				exec_builtin(t_ast_node *node_command_term,
+					char **argv, t_shell *mshell);
 t_function_ptr	functionpath_builtins(char *name, t_shell *mshell);
 t_builtin		**fill_lst_builtins(void);
 t_builtin		**alloc_lst_builtins(void);
 void			free_lst_builtin(t_builtin	**lst_builtins);
 int				exec_function(t_ast_node *node_command_term, t_shell *mshell);
 int				execute_programm(t_shell *mshell);
-int				execute_command_term(t_shell *mshell, t_ast_node *node_command_term, char *str);
+int				execute_command_term(t_shell *mshell,
+					t_ast_node *node_command_term, char *str);
 int				execute_command(t_shell *mshell,
 					t_ast_node *node_command, int in_fd);
 int				input_read(char *input, int fd_input, t_shell *mshell);
@@ -180,12 +182,15 @@ bool			ouput_write(char *path, char *str, t_shell *mshell);
 bool			ouput_write_append(char *path, char *str, t_shell *mshell);
 char			*read_fd_to_str(t_ast_node *node_command_term);
 int				write_str_to_fd(char *str, int fd);
-int				add_redirection_to_pipe(t_ast_node *node_command_term, t_shell *mshell);
+int				add_redirection_to_pipe(t_ast_node *node_command_term,
+					t_shell *mshell);
 int				add_str_to_pipe(t_ast_node *node_command_term, char *str);
 bool			add_str_to_redirections(t_ast_node *node_command_term,
 					char *str, t_shell *mshell);
-int				exec_external_child(t_ast_node *node_command_term, char **argv, char *path);
-int				check_redirection_output(t_ast_node *node_command_term, t_shell *mshell);
+int				exec_external_child(t_ast_node *node_command_term,
+					char **argv, char *path);
+int				check_redirection_output(t_ast_node *node_command_term,
+					t_shell *mshell);
 void			print_and_save_str(t_shell *mshell, char *str);
 int				check_if_red_out(t_ast_node *node_command_term);
 
@@ -194,7 +199,6 @@ int				init_shell(t_shell *mshell, char **envp);
 void			create_prompt(t_shell *mshell);
 int				init_environment(t_shell *mshell, char **envp);
 void			ft_renewshell(t_shell *mshell);
-
 
 /* ERROR */
 void			ft_set_error(t_shell *mshell, int errno, char *msg);
@@ -236,7 +240,6 @@ void			sigint_handler(int signo);
 void			sigint_handler_newline(int signo);
 void			set_signal(int mode);
 void			set_termios(int mode);
-
 
 /* UTILS */
 void			ft_skipspaces(char **line);
