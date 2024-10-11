@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:37 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/07 09:55:02 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:04:39 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_ast_node	*parse_element(t_shell *mshell)
 			&& mshell->curr_token->next->type & WORD)
 		{
 			element_node = create_ast_node(mshell->curr_token->type,
-					ft_strdup(mshell->curr_token->next->value));
+					mshell->curr_token->next->value);
 			mshell->curr_token = mshell->curr_token->next->next;
 			return (element_node);
 		}
