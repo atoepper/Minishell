@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/11 15:23:08 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:24:37 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	input_read(char *input, int fd_input, t_shell *mshell)
 	buf[1] = '\0';
 	fd = open(input, O_RDONLY);
 	if (fd == -1)
-		return (ft_set_error(mshell, 1,
-				"minishell: No such file or directory\n"), 1);
+		return (perror("mshell"), 1);
 	while (read(fd, buf, 1) == 1)
 		ft_putstr_fd(buf, fd_input);
 	close(fd);
