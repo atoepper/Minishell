@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/11 15:24:37 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:36:47 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	input_read(char *input, int fd_input, t_shell *mshell)
 	buf[1] = '\0';
 	fd = open(input, O_RDONLY);
 	if (fd == -1)
-		return (perror("mshell"), 1);
+		return (perror("minishell"), 1);
 	while (read(fd, buf, 1) == 1)
 		ft_putstr_fd(buf, fd_input);
 	close(fd);
@@ -39,6 +39,7 @@ int	input_heredoc(char *input, int fd_input, t_shell *mshell)
 		return (ft_set_error(mshell, 1, MALLOC), 1);
 	read_return = read(0, buf, 1024);
 	buf[read_return] = '\0';
+	set_sig_term(IN_HEREDOC);
 	while (ft_strncmp(buf, input, ft_strlen(input)) != 0)
 	{
 		ft_putstr_fd(buf, fd_input);
@@ -46,6 +47,7 @@ int	input_heredoc(char *input, int fd_input, t_shell *mshell)
 		read_return = read(0, buf, 1024);
 		buf[read_return] = '\0';
 	}
+	set_sig_term(NO_CHILD);
 	return (0);
 }
 

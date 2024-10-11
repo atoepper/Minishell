@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:17:07 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 15:15:06 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:47:18 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	sigint_handler(int signo)
 	}
 }
 
-void	sigint_handler_newline(int signo)
+void	sigint_heredoc_handler(int signo)
 {
 	if (signo == SIGINT)
 		write(2, "\n", 1);
@@ -52,6 +52,11 @@ void	set_signal(int mode)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
+	else if (mode == IN_HEREDOC)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }
 
 void	set_termios(int mode)
@@ -59,7 +64,7 @@ void	set_termios(int mode)
 	struct termios	term_setting;
 
 	tcgetattr(STDOUT_FILENO, &term_setting);
-	if (mode == NO_CHILD || mode == WITH_CHILD)
+	if (mode == NO_CHILD || mode == WITH_CHILD || mode == IN_HEREDOC)
 		term_setting.c_lflag &= ~(ECHOCTL);
 	else if (mode == EXECUTE_CHILD)
 		term_setting.c_lflag |= ECHOCTL;
