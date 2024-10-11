@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 13:12:46 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:50:39 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		add_history(mshell.line);
 		ft_tokenize(&mshell);
-		mshell.ast = parse_program(&mshell);
+		if (mshell.token_list != NULL)
+			mshell.ast = parse_program(&mshell);
 		execute_programm(&mshell);
 		ft_process_error(&mshell);
 		ft_renewshell(&mshell);
