@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/14 11:34:41 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:51:07 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+extern int g_signal_flag;
 
 char	*ft_increase_shlvl(char *value)
 {
@@ -83,11 +85,18 @@ void	ft_renewshell(t_shell *mshell)
 {
 	create_prompt(mshell);
 	ft_clear_tokenlist(&(mshell->token_list));
+	mshell->token_list = NULL;
 	free_ast(mshell->ast);
+	mshell->ast = NULL;
 	mshell->exit_status = mshell->error;
 	mshell->error = 0;
 	mshell->err_type = NO_ERR;
 	free(mshell->line);
 	free(mshell->last_output);
+	if (g_signal_flag == 1)
+	{
+		g_signal_flag = 0;
+		mshell->exit_status = 130;
+	}
 	mshell->last_output = NULL;
 }
