@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:58:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/08 11:22:45 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:16:32 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_env(char **argv, t_shell *mshell, int fd)
 		return (1);
 	while (envlst != NULL)
 	{
-		if (ft_strncmp(envlst->value, "''", 3) != 0)
+		if (envlst->value != NULL)
 		{
 			return_val = write(fd, envlst->key, ft_strlen(envlst->key));
 			return_val = write(fd, "=", 1);
