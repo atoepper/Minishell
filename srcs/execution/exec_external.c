@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/14 11:38:45 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:18:18 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*ft_join_path_and_name(char *path, char *name)
 int	exec_external_child(t_ast_node *node_command_term,
 	char **argv, char *path, t_shell *mshell)
 {
-	int		exit_status;
+	int	exit_status;
 
 	if (node_command_term->in_fd[0] != 0)
 	{
@@ -119,5 +119,5 @@ int	exec_external(t_ast_node *node_command_term, char **argv, t_shell *mshell)
 		wait(&exit_status);
 		free(path);
 	}
-	return (exit_status);
+	return (WEXITSTATUS(exit_status));
 }

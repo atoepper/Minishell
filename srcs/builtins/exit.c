@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:35:06 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 13:09:49 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:51:13 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_exit(char **argv, t_shell *mshell, int fd)
 			mshell->exit_prog_val = ft_atoi(argv[1]);
 	}
 	else
-		mshell->exit_prog_val = 0;
+		mshell->exit_prog_val = mshell->exit_status;
 	mshell->is_exit_prog = TRUE;
 	return (0);
 }

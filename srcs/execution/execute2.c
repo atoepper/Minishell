@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 15:09:41 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:30:25 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	exec_function2(t_ast_node *node_command_term,
 						node_command->argv, mshell);
 				mshell->error = exit_status;
 			}
-			if (exit_status == 127)
+			if (exit_status == 127 && ft_strncmp(node_command->argv[0],
+					"./minishell", 12) != 0)
 			{
 				ft_putstr_fd("command not found: ", 2);
 				ft_putstr_fd(node_command->argv[0], 2);
