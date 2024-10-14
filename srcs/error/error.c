@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:53:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 13:26:52 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:51:57 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ void	ft_process_error(t_shell *mshell)
 	else if (err_type == NO_FILE_RED)
 		ft_putstr_fd("minishell: no such directory or file\n", 2);
 	else if (err_type == EXIT_ARG)
-		ft_putstr_fd("exit: too many arguments", 2);
+		ft_putstr_fd("exit: too many arguments\n", 2);
+	else if (err_type == EXIT_ARG_NUM)
+		ft_putstr_fd("exit: numeric argument required\n", 2);
 	else if (err_type == PWD_ARG)
-		ft_putstr_fd("pwd: too many arguments", 2);
+		ft_putstr_fd("pwd: too many arguments\n", 2);
 }
 
 void	print2errorfile(char *str)
