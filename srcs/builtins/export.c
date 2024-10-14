@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/14 11:14:32 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:21:31 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,20 @@ int	print_env_with_empty(char **argv, t_shell *mshell, int fd)
 		return (1);
 	while (envlst != NULL)
 	{
-		return_val = write(fd, envlst->key, ft_strlen(envlst->key));
-		return_val = write(fd, "=", 1);
-		return_val = write(fd, envlst->value, ft_strlen(envlst->value));
-		return_val = write(fd, "\n", 1);
+		if (envlst->value != NULL)
+		{
+			return_val = write(fd, "declare -x ", 11);
+			return_val = write(fd, envlst->key, ft_strlen(envlst->key));
+			return_val = write(fd, "=\"", 2);
+			return_val = write(fd, envlst->value, ft_strlen(envlst->value));
+			return_val = write(fd, "\"\n", 2);
+		}
+		else
+		{
+			return_val = write(fd, "declare -x ", 11);
+			return_val = write(fd, envlst->key, ft_strlen(envlst->key));
+			return_val = write(fd, "\n", 1);
+		}
 		envlst = envlst->next;
 		return_val++;
 	}
@@ -67,7 +77,7 @@ int	ft_export(char **argv, t_shell *mshell, int fd)
 		}
 		else if (ft_find_value_by_key(mshell->envlst, argv[i]) == NULL)
 			ft_add_env(&(mshell->envlst),
-				ft_new_env(ft_strdup(argv[i]), ft_strdup("''")));
+				ft_new_env(ft_strdup(argv[i]), NULL));
 	}
 	mshell->env = ft_remake_env(mshell);
 	return (0);
