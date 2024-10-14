@@ -6,17 +6,17 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:43:47 by atoepper          #+#    #+#             */
-/*   Updated: 2023/11/27 17:47:41 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:38:12 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
-	int	nbr;
-	int	sign;
+	long long	nbr;
+	long long	sign;
 
 	sign = 1;
 	nbr = 0;
