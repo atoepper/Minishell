@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:27:57 by atoepper          #+#    #+#             */
-/*   Updated: 2024/04/18 12:25:30 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:19:10 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_list
 }	t_list;
 
 int		ft_isalpha(int c);
-int		ft_atoi(const char *str);
+long long	ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_freearray(char **arr);
