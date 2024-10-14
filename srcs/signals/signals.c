@@ -6,11 +6,13 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:17:07 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 15:47:18 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:50:54 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+extern int g_signal_flag;
 
 void	set_sig_term(int mode)
 {
@@ -26,6 +28,7 @@ void	sigint_handler(int signo)
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();
+		g_signal_flag = 1;
 	}
 }
 
