@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/14 12:15:00 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:48:44 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
@@ -84,7 +85,8 @@ enum e_err_type
 	NO_FILE,
 	NO_FILE_RED,
 	PWD_ARG,
-	EXIT_ARG
+	EXIT_ARG,
+	EXIT_ARG_NUM
 };
 
 /* STRUCTURES */
