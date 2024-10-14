@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 13:16:50 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:34:41 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+char	*ft_increase_shlvl(char *value)
+{
+	char	*new_level;
+
+	new_level = ft_itoa(ft_atoi(value) + 1);
+	free(value);
+	return (new_level);
+}
 
 int	init_environment(t_shell *mshell, char **envp)
 {
@@ -25,16 +34,12 @@ int	init_environment(t_shell *mshell, char **envp)
 		value = ft_getvalue(envp[i]);
 		key = ft_getkeyword(envp[i++]);
 		if (!key || !value)
-		{
-			free(key);
-			return (free(value), -1);
-		}
+			return (free(key), free(value), -1);
+		if (ft_strncmp(key, "SHLVL", 6) == 0)
+			value = ft_increase_shlvl(value);
 		new_env = ft_new_env(key, value);
 		if (!new_env)
-		{
-			free(key);
-			return (free(value), -1);
-		}
+			return (free(key), free(value), -1);
 		ft_add_env(&mshell->envlst, new_env);
 	}
 	return (0);
@@ -58,7 +63,9 @@ void	create_prompt(t_shell *mshell)
 int	init_shell(t_shell *mshell, char **envp)
 {
 	ft_memset(mshell, 0, sizeof(t_shell));
+	mshell->env = NULL;
 	init_environment(mshell, envp);
+	mshell->env = ft_remake_env(mshell);
 	create_prompt(mshell);
 	mshell->in = dup(0);
 	mshell->out = dup(1);

@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/08 15:51:46 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:38:45 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,11 @@ char	*ft_join_path_and_name(char *path, char *name)
 	return (path_full);
 }
 
-int	exec_external_child(t_ast_node *node_command_term, char **argv, char *path)
+int	exec_external_child(t_ast_node *node_command_term,
+	char **argv, char *path, t_shell *mshell)
 {
 	int		exit_status;
-	char	*env[1];
 
-	env[0] = NULL;
 	if (node_command_term->in_fd[0] != 0)
 	{
 		close(node_command_term->in_fd[1]);
@@ -93,7 +92,7 @@ int	exec_external_child(t_ast_node *node_command_term, char **argv, char *path)
 		dup2(node_command_term->out_fd[1], 1);
 		close(node_command_term->out_fd[1]);
 	}
-	exit_status = execve(path, argv, env);
+	exit_status = execve(path, argv, mshell->env);
 	perror("execvp");
 	free(path);
 	exit(exit_status);
@@ -112,7 +111,7 @@ int	exec_external(t_ast_node *node_command_term, char **argv, t_shell *mshell)
 		return (127);
 	pid = fork();
 	if (pid == 0)
-		exec_external_child(node_command_term, argv, path);
+		exec_external_child(node_command_term, argv, path, mshell);
 	else
 	{
 		if (node_command_term->in_fd[0] != 0)

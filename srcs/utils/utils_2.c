@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:02:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:34:31 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:55:13 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	free_array(char **arr)
 	int	i;
 
 	i = 0;
+	if (arr == NULL)
+		return ;
 	while (arr[i])
 	{
 		free(arr[i]);

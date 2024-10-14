@@ -6,7 +6,7 @@
 #    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/10/11 11:36:48 by jweingar         ###   ########.fr        #
+#    Updated: 2024/10/14 10:59:03 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SOURCES = main.c \
 			builtins/pwd.c \
 			env/env.c \
 			env/envlist.c \
+			env/env_relist.c \
 			error/error.c \
 			execution/execute.c \
 			execution/execute2.c \

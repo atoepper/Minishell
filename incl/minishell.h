@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 15:39:12 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:09:33 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ typedef struct s_shell
 	t_env			*envlst;
 	t_ast_node		*ast;
 	t_builtin		**lst_builtins;
+	char			**env;
 }	t_shell;
 
 /* BUILTINS */
@@ -166,6 +167,8 @@ char			*ft_getkeyword(char *str);
 void			ft_change_envvalue(t_env *envlist, char *key, char *new_value);
 void			ft_remove_env(t_env **envlist, char *key);
 void			ft_printenvlist(t_shell *mshell);
+char			**ft_remake_env(t_shell *mshell);
+void			print_env(char **env);
 
 /* EXECUTION */
 int				exec_external(t_ast_node *node_command_term,
@@ -197,7 +200,7 @@ int				add_str_to_pipe(t_ast_node *node_command_term, char *str);
 bool			add_str_to_redirections(t_ast_node *node_command_term,
 					char *str, t_shell *mshell);
 int				exec_external_child(t_ast_node *node_command_term,
-					char **argv, char *path);
+					char **argv, char *path, t_shell *mshell);
 int				check_redirection_output(t_ast_node *node_command_term,
 					t_shell *mshell);
 void			print_and_save_str(t_shell *mshell, char *str);

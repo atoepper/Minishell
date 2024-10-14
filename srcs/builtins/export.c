@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/11 10:15:55 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:14:32 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int	ft_export(char **argv, t_shell *mshell, int fd)
 			ft_add_env(&(mshell->envlst),
 				ft_new_env(ft_strdup(argv[i]), ft_strdup("''")));
 	}
+	mshell->env = ft_remake_env(mshell);
 	return (0);
 }

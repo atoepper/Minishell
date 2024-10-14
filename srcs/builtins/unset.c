@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/08 11:23:01 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:53:47 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int	ft_unset(char **argv, t_shell *mshell, int fd)
 			ft_remove_env(&(mshell->envlst), argv[i]);
 		i++;
 	}
+	mshell->env = ft_remake_env(mshell);
 	return (0);
 }
