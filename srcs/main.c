@@ -6,12 +6,14 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 15:50:39 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:55:29 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 #include <readline/readline.h>
+
+int g_signal_flag = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -22,6 +24,8 @@ int	main(int argc, char **argv, char **envp)
 	while (!mshell.is_exit_prog)
 	{
 		mshell.line = readline(mshell.prompt);
+		if (g_signal_flag == 1)
+			mshell.exit_status = 130;
 		if (!mshell.line)
 			break ;
 		add_history(mshell.line);
