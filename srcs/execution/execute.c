@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 15:51:20 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:52:22 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,8 @@ void	wait_for_all(t_ast_node	*node_command_term, t_shell *mshell)
 	while (node_command_term != NULL)
 	{
 		waitpid(node_command_term->pid, &exit_status, 0);
-		if (WIFEXITED(exit_status))
-			printf("exited\n");
 		if (node_command_term->pid != 0)
 			mshell->error = WEXITSTATUS(exit_status);
-		printf("type: %i, pid: %i, error: %i\n", node_command_term->type, node_command_term->pid, WEXITSTATUS(exit_status));
 		node_command_term = node_command_term->next;
 	}
 }
