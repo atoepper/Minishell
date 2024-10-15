@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/14 18:21:31 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:07:29 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,20 @@ int	print_env_with_empty(char **argv, t_shell *mshell, int fd)
 
 void	change_or_create(char *arg, char *key, t_shell *mshell)
 {
-	if (ft_find_value_by_key(mshell->envlst, key) != NULL)
+	if (ft_find_key(mshell->envlst, key) != NULL)
 	{
+		print2errorfile("1");
+		print2errorfile(key);
 		ft_change_envvalue(mshell->envlst, key, ft_getvalue(arg));
 		free(key);
 	}
 	else
+	{
+		print2errorfile("2");
+		print2errorfile(key);
 		ft_add_env(&(mshell->envlst), ft_new_env(key,
 				ft_getvalue(arg)));
+	}
 }
 
 int	ft_export(char **argv, t_shell *mshell, int fd)
@@ -68,16 +74,10 @@ int	ft_export(char **argv, t_shell *mshell, int fd)
 	i = 0;
 	while (argv[++i] != NULL)
 	{
-		if (ft_strchr(argv[i], '=') != NULL)
-		{
-			key = ft_getkeyword(argv[i]);
-			if (key == NULL)
-				return (1);
-			change_or_create(argv[i], key, mshell);
-		}
-		else if (ft_find_value_by_key(mshell->envlst, argv[i]) == NULL)
-			ft_add_env(&(mshell->envlst),
-				ft_new_env(ft_strdup(argv[i]), NULL));
+		key = ft_getkeyword(argv[i]);
+		if (key == NULL)
+			return (1);
+		change_or_create(argv[i], key, mshell);
 	}
 	mshell->env = ft_remake_env(mshell);
 	return (0);

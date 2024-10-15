@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:14:23 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/23 16:41:52 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:49:21 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 char	*ft_getvalue(char *str)
 {
 	char	*value;
+	char	*equals_sign;
 
-	value = ft_strdup(ft_strchr(str, '=') + 1);
+	equals_sign = ft_strchr(str, '=');
+	if (equals_sign == NULL)
+		return (NULL);
+	value = ft_strdup(equals_sign + 1);
 	if (value == NULL)
 		return (NULL);
 	return (value);
@@ -26,7 +30,7 @@ char	*ft_getkeyword(char *str)
 {
 	char	*key;
 
-	key = ft_substr(str, 0, ft_nextchar(str, '='));
+	key = ft_substr(str, 0, ft_find_equal(str));
 	return (key);
 }
 
