@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 13:42:08 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:44:32 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	create_prompt(t_shell *mshell)
 	cwd = getcwd(cwd, 0);
 	if (mshell->prompt)
 		free (mshell->prompt);
-	tmp = ft_strjoin ("\033[0mminishell \033[1;34m", cwd);
-	mshell->prompt = ft_strjoin(tmp, "\033[0m % ");
+	tmp = ft_strjoin ("\tminishell ", cwd);
+	mshell->prompt = ft_strjoin(tmp, " % ");
 	free (cwd);
 	free (tmp);
 }
@@ -98,5 +98,6 @@ void	ft_renewshell(t_shell *mshell)
 		g_signal_flag = 0;
 		mshell->exit_status = 130;
 	}
+	//set_sig_term(NO_CHILD);
 	mshell->last_output = NULL;
 }

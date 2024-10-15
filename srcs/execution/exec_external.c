@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/15 13:35:50 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:44:42 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	exec_external_child(t_ast_node *node_command_term,
 {
 	int	exit_status;
 
+	//set_sig_term(EXECUTE_CHILD);
 	if (node_command_term->fd[0] != 0)
 	{
 		dup2(node_command_term->fd[0], 0);
@@ -101,13 +102,12 @@ int	exec_external_child(t_ast_node *node_command_term,
 int	exec_external(t_ast_node *node_command_term, char **argv, t_shell *mshell)
 {
 	char	*path;
-	int		exit_status;
 
-	exit_status = 0;
 	path = search_function_in_path(argv[0], mshell);
 	if (path == NULL)
 		return (127);
 	node_command_term->pid = fork();
+	//set_sig_term(WITH_CHILD);
 	if (node_command_term->pid == 0)
 	{
 		exec_external_child(node_command_term, argv, path, mshell);
@@ -116,5 +116,5 @@ int	exec_external(t_ast_node *node_command_term, char **argv, t_shell *mshell)
 	}
 	else
 		free(path);
-	return (WEXITSTATUS(exit_status));
+	return (0);
 }

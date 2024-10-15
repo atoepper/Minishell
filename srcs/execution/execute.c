@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 13:33:43 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:51:20 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ int	exec_function2(t_ast_node *node_command_term,
 			{
 				exit_status = exec_external(node_command_term,
 						node_command->argv, mshell);
+				if (exit_status == 127)
+				{
+					ft_putstr_fd("command not found: ", 2);
+					ft_putstr_fd(node_command->argv[0], 2);
+					ft_putstr_fd("\n", 2);
+				}
 				mshell->error = exit_status;
-			}
-			if (exit_status == 127 && ft_strncmp(node_command->argv[0],
-					"./minishell", 12) != 0)
-			{
-				ft_putstr_fd("command not found: ", 2);
-				ft_putstr_fd(node_command->argv[0], 2);
-				ft_putstr_fd("\n", 2);
 			}
 		}
 		node_command = node_command->next;
@@ -86,8 +85,11 @@ void	wait_for_all(t_ast_node	*node_command_term, t_shell *mshell)
 	while (node_command_term != NULL)
 	{
 		waitpid(node_command_term->pid, &exit_status, 0);
-		node_command_term->exit_status = WEXITSTATUS(exit_status);
-		mshell->error = node_command_term->exit_status;
+		if (WIFEXITED(exit_status))
+			printf("exited\n");
+		if (node_command_term->pid != 0)
+			mshell->error = WEXITSTATUS(exit_status);
+		printf("type: %i, pid: %i, error: %i\n", node_command_term->type, node_command_term->pid, WEXITSTATUS(exit_status));
 		node_command_term = node_command_term->next;
 	}
 }
