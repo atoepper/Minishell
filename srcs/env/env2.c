@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:14:23 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 13:35:17 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:58:59 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_find_key(t_env *list, char *keyword)
 {
 	while (list)
 	{
-		if (!ft_strncmp(list->key, keyword, ft_strlen(keyword)))
+		if (!ft_strncmp(list->key, keyword, ft_strlen(keyword) + 1))
 			return (list->key);
 		else
 			list = list->next;

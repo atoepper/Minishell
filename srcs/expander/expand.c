@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:31 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 15:05:12 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:03:39 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_expand_env(t_shell *mshell, char **cursor)
 	else if (ft_iskeyword(*cursor))
 	{
 		key = ft_substr(*cursor, 0, ft_end_of_varname(*cursor));
-		if (ft_find_value_by_key(mshell->envlst, key))
+		if (ft_find_key(mshell->envlst, key))
 			expand_to = ft_strdup(ft_find_value_by_key(mshell->envlst, key));
 		else
 			expand_to = ft_strdup("");

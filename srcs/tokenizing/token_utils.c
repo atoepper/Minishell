@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:25:12 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 12:25:03 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:49:47 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,48 +68,48 @@ void	ft_clear_tokenlist(t_token	**tokenlist)
 
 /* Tester */
 
-// void	ft_printtypes(int type)
-// {
-// 	if (type & DQUOTE)
-// 		printf("DQUOTE ");
-// 	if (type & SQUOTE)
-// 		printf("SQUOTE ");
-// 	if (type & WORD)
-// 		printf("WORD ");
-// 	if (type & EXPANDER)
-// 		printf("EXPANDER ");
-// 	if (type & PIPE)
-// 		printf("PIPE ");
-// 	if (type & REDIRECT)
-// 		printf("REDIRECT ");
-// 	if (type & WRITE)
-// 		printf("WRITE ");
-// 	if (type & WRITE_APPEND)
-// 		printf("WRITE APPEND ");
-// 	if (type & HEREDOC)
-// 		printf("HEREDOC ");
-// 	if (type & READ)
-// 		printf("READ ");
-// 	if (type & RIGHT_JOIN)
-// 		printf("RIGHT_JOIN");
-// 	printf ("\n");
-// }
+void	ft_printtypes(int type)
+{
+	if (type & DQUOTE)
+		printf("DQUOTE ");
+	if (type & SQUOTE)
+		printf("SQUOTE ");
+	if (type & WORD)
+		printf("WORD ");
+	if (type & EXPANDER)
+		printf("EXPANDER ");
+	if (type & PIPE)
+		printf("PIPE ");
+	if (type & REDIRECT)
+		printf("REDIRECT ");
+	if (type & WRITE)
+		printf("WRITE ");
+	if (type & WRITE_APPEND)
+		printf("WRITE APPEND ");
+	if (type & HEREDOC)
+		printf("HEREDOC ");
+	if (type & READ)
+		printf("READ ");
+	if (type & RIGHT_JOIN)
+		printf("RIGHT_JOIN");
+	printf ("\n");
+}
 
-// void	ft_printlist(t_token **tokenlist)
-// {
-// 	t_token	*current;
+void	ft_printlist(t_token **tokenlist)
+{
+	t_token	*current;
 
-// 	current = *tokenlist;
-// 	if (!tokenlist || !*tokenlist)
-// 	{
-// 		printf("list is empty\n");
-// 		return ;
-// 	}
-// 	printf("token list: \n");
-// 	while (current)
-// 	{
-// 		printf("Value: %s, Type: ", current->value);
-// 		ft_printtypes(current->type);
-// 		current = current->next;
-// 	}
-// }
+	current = *tokenlist;
+	if (!tokenlist || !*tokenlist)
+	{
+		printf("list is empty\n");
+		return ;
+	}
+	printf("token list: \n");
+	while (current)
+	{
+		printf("Value: %s, Type: ", current->value);
+		ft_printtypes(current->type);
+		current = current->next;
+	}
+}
