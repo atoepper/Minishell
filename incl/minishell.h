@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 13:41:47 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:50:03 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,7 @@ void			ft_deltoken(t_token *token);
 t_token			*ft_linetolist(t_shell *mshell, char *line, int *error);
 int				ft_tokenize(t_shell *mshell);
 int				ft_joinwords(t_token **list);
+void			ft_printlist(t_token **tokenlist);
 
 /* PARSING */
 t_ast_node		*parse_program(t_shell *mshell);
