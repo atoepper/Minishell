@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 11:06:38 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:41:47 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,9 @@ typedef struct s_ast_node
 	char				**argv;
 	struct s_ast_node	*child;
 	struct s_ast_node	*next;
-	int					in_fd[2];
-	int					out_fd[2];
+	int					pid;
+	int					exit_status;
+	int					fd[2];
 }	t_ast_node;
 
 struct		s_shell;
@@ -188,26 +189,31 @@ void			free_lst_builtin(t_builtin	**lst_builtins);
 int				exec_function(t_ast_node *node_command_term, t_shell *mshell);
 int				execute_programm(t_shell *mshell);
 int				execute_command_term(t_shell *mshell,
-					t_ast_node *node_command_term, char *str);
+					t_ast_node *node_command_term);
 int				execute_command(t_shell *mshell,
 					t_ast_node *node_command, int in_fd);
-int				input_read(char *input, int fd_input, t_shell *mshell);
-int				input_heredoc(char *input, int fd_input, t_shell *mshell);
-bool			ouput_write(char *path, char *str, t_shell *mshell);
-bool			ouput_write_append(char *path, char *str, t_shell *mshell);
+int				input_read(t_ast_node *node_command_term,
+					char *input, t_shell *mshell);
+int				input_heredoc(t_ast_node *node_command_term,
+					char *input, t_shell *mshell);
+int				ouput_write(t_ast_node *node_command_term,
+					char *path, t_shell *mshell);
+int				ouput_write_append(t_ast_node *node_command_term,
+					char *path, t_shell *mshell);
 char			*read_fd_to_str(t_ast_node *node_command_term);
 int				write_str_to_fd(char *str, int fd);
-int				add_redirection_to_pipe(t_ast_node *node_command_term,
+int				add_re_in_to_pipe(t_ast_node *node_command_term,
+					t_shell *mshell);
+int				add_re_out_to_pipe(t_ast_node *node_command_term,
 					t_shell *mshell);
 int				add_str_to_pipe(t_ast_node *node_command_term, char *str);
 bool			add_str_to_redirections(t_ast_node *node_command_term,
 					char *str, t_shell *mshell);
 int				exec_external_child(t_ast_node *node_command_term,
 					char **argv, char *path, t_shell *mshell);
-int				check_redirection_output(t_ast_node *node_command_term,
-					t_shell *mshell);
 void			print_and_save_str(t_shell *mshell, char *str);
 int				check_if_red_out(t_ast_node *node_command_term);
+int				create_pipe(int *pipe_fd);
 
 /* INIT */
 int				init_shell(t_shell *mshell, char **envp);

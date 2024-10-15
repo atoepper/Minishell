@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 12:06:57 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/07 13:25:13 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 12:43:40 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ t_ast_node	*create_ast_node(int type, char *value)
 	node->argv = (NULL);
 	node->child = (NULL);
 	node->next = (NULL);
-	node->in_fd[0] = 0;
-	node->in_fd[1] = -1;
-	node->out_fd[0] = -1;
-	node->out_fd[1] = 1;
+	node->exit_status = -1;
+	node->pid = 0;
+	node->fd[0] = 0;
+	node->fd[1] = 1;
 	return (node);
 }
 

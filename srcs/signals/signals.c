@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:17:07 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/14 17:50:54 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:42:25 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-extern int g_signal_flag;
+extern int	g_signal_flag;
 
 void	set_sig_term(int mode)
 {

@@ -6,13 +6,13 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 11:14:12 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:42:08 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-extern int g_signal_flag;
+extern int	g_signal_flag;
 
 char	*ft_increase_shlvl(char *value)
 {

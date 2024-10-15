@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
+#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/10/15 12:58:26 by atoepper         ###   ########.fr        #
+#    Updated: 2024/10/15 13:55:47 by jweingar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,12 +39,10 @@ SOURCES = main.c \
 			env/env_relist.c \
 			error/error.c \
 			execution/execute.c \
-			execution/execute2.c \
 			execution/exec_builtin.c \
 			execution/exec_external.c \
 			execution/redirection.c \
 			execution/redirection2.c \
-			execution/redirection3.c \
 			expander/expand.c \
 			garbage_collection/garbage_collection.c \
 			parsing/ast.c \
