@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/14 17:51:07 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:14:12 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	init_environment(t_shell *mshell, char **envp)
 	{
 		value = ft_getvalue(envp[i]);
 		key = ft_getkeyword(envp[i++]);
-		if (!key || !value)
+		if (!key)
 			return (free(key), free(value), -1);
 		if (ft_strncmp(key, "SHLVL", 6) == 0)
 			value = ft_increase_shlvl(value);
