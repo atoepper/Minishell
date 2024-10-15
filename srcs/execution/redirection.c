@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:55:26 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/11 15:36:47 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:36:10 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	input_heredoc(char *input, int fd_input, t_shell *mshell)
 		read_return = read(0, buf, 1024);
 		buf[read_return] = '\0';
 	}
+	free(input);
 	set_sig_term(NO_CHILD);
 	return (0);
 }
