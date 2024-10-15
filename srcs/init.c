@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 15:52:33 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:36:49 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,7 @@ void	ft_renewshell(t_shell *mshell)
 	mshell->err_type = NO_ERR;
 	free(mshell->line);
 	free(mshell->last_output);
-	if (g_signal_flag == 1)
-	{
-		g_signal_flag = 0;
-		mshell->exit_status = 130;
-	}
+	g_signal_flag = 0;
 	set_sig_term(NO_CHILD);
 	mshell->last_output = NULL;
 }
