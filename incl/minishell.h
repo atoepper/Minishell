@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/14 17:48:44 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:06:38 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void			ft_remove_env(t_env **envlist, char *key);
 void			ft_printenvlist(t_shell *mshell);
 char			**ft_remake_env(t_shell *mshell);
 void			print_env(char **env);
+char			*ft_find_key(t_env *list, char *keyword);
 
 /* EXECUTION */
 int				exec_external(t_ast_node *node_command_term,
@@ -265,5 +266,6 @@ int				ft_end_of_varname(char *str);
 bool			ft_iskeyword(char *str);
 void			free_array(char **arr);
 bool			is_output_without_nl(t_shell *mshell);
+int				ft_find_equal(char *str);
 
 #endif
