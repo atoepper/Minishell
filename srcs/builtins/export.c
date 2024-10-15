@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:07:29 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:40:06 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	print_env_with_empty(char **argv, t_shell *mshell, int fd)
 {
 	t_env	*envlst;
-	int		return_val;
 
 	if (argv[1] != NULL)
 		return (ft_putstr_fd("env: too many arguments\n", 2), 1);
@@ -24,22 +23,17 @@ int	print_env_with_empty(char **argv, t_shell *mshell, int fd)
 		return (1);
 	while (envlst != NULL)
 	{
+		write(fd, "declare -x ", 11);
+		write(fd, envlst->key, ft_strlen(envlst->key));
 		if (envlst->value != NULL)
 		{
-			return_val = write(fd, "declare -x ", 11);
-			return_val = write(fd, envlst->key, ft_strlen(envlst->key));
-			return_val = write(fd, "=\"", 2);
-			return_val = write(fd, envlst->value, ft_strlen(envlst->value));
-			return_val = write(fd, "\"\n", 2);
+			write(fd, "=\"", 2);
+			write(fd, envlst->value, ft_strlen(envlst->value));
+			write(fd, "\"\n", 2);
 		}
 		else
-		{
-			return_val = write(fd, "declare -x ", 11);
-			return_val = write(fd, envlst->key, ft_strlen(envlst->key));
-			return_val = write(fd, "\n", 1);
-		}
+			write(fd, "\n", 1);
 		envlst = envlst->next;
-		return_val++;
 	}
 	return (0);
 }

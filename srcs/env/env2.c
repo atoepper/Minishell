@@ -6,12 +6,11 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:14:23 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 11:05:52 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:35:17 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
 
 char	*ft_find_key(t_env *list, char *keyword)
 {

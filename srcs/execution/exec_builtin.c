@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:38:05 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/08 11:23:33 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:06:56 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	exec_builtin(t_ast_node *node_command_term, char **argv, t_shell *mshell)
 	func = functionpath_builtins(argv[0], mshell);
 	if (func != NULL)
 	{
-		mshell->error = func(argv, mshell, node_command_term->out_fd[1]);
+		mshell->error = func(argv, mshell, node_command_term->fd[1]);
 		return (0);
 	}
 	else
