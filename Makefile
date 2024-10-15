@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/10/15 11:08:56 by jweingar         ###   ########.fr        #
+#    Updated: 2024/10/15 12:58:26 by atoepper         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ lib:
 
 $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) -L $(LIBFT) -o $@ $^ -lft -lreadline
-	@echo "$(GREEN)Project successfully compiled"
+	@echo "$(GREEN)Project successfully compiled$(NOC)"
 
 tmp:
 	@mkdir -p $(OBJ_PATH)/builtins
