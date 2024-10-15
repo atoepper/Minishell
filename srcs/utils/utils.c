@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:41:34 by atoepper          #+#    #+#             */
-/*   Updated: 2024/09/09 11:03:06 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:23:58 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+int	ft_find_equal(char *str)
+{
+	int	index;
+
+	index = 0;
+	while (str[index] && str[index] != '=')
+		index++;
+	return (index);
+}
 
 int	ft_nextchar(char *str, char c)
 {
