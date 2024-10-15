@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:53:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/14 16:51:57 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:45:06 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ void	print2errorfile(char *str)
 
 	fd_output = open("errorfile.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
 	write_return = write(fd_output, str, ft_strlen(str));
+	write_return = write(fd_output, "\n", 1);
 	write_return++;
 }
