@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/15 13:40:06 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:49:55 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,18 @@ void	change_or_create(char *arg, char *key, t_shell *mshell)
 	}
 }
 
+void	ft_export_error(char *key, int *errno)
+{
+	ft_putstr_fd("minishell: export: \'", 2);
+	ft_putstr_fd(key, 2);
+	ft_putstr_fd("\': not a valid identifier\n", 2);
+	*errno = 1;
+}
+
 int	ft_export(char **argv, t_shell *mshell, int fd)
 {
 	int		i;
+	int		errno;
 	char	*key;
 
 	if (argv == NULL)
@@ -66,13 +75,17 @@ int	ft_export(char **argv, t_shell *mshell, int fd)
 	if (argv[1] == NULL)
 		return (print_env_with_empty(argv, mshell, fd), 0);
 	i = 0;
+	errno = 0;
 	while (argv[++i] != NULL)
 	{
 		key = ft_getkeyword(argv[i]);
 		if (key == NULL)
-			return (1);
-		change_or_create(argv[i], key, mshell);
+			return (ft_set_error(mshell, 1 , MALLOC), 1);
+		if (!ft_iskeyword(key))
+			ft_export_error(key, &errno);
+		else
+			change_or_create(argv[i], key, mshell);
 	}
 	mshell->env = ft_remake_env(mshell);
-	return (0);
+	return (errno);
 }
