@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/16 11:49:55 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:33:33 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_export(char **argv, t_shell *mshell, int fd)
 	{
 		key = ft_getkeyword(argv[i]);
 		if (key == NULL)
-			return (ft_set_error(mshell, 1 , MALLOC), 1);
+			return (ft_set_error(mshell, 1, MALLOC), 1);
 		if (!ft_iskeyword(key))
 			ft_export_error(key, &errno);
 		else
