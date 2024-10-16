@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/16 12:33:33 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:26:30 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	change_or_create(char *arg, char *key, t_shell *mshell)
 	{
 		print2errorfile("1");
 		print2errorfile(key);
-		ft_change_envvalue(mshell->envlst, key, ft_getvalue(arg));
+		if (ft_getvalue(arg) != NULL)
+			ft_change_envvalue(mshell->envlst, key, ft_getvalue(arg));
 		free(key);
 	}
 	else
