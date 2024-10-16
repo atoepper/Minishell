@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 16:50:03 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:28:55 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ enum e_err_type
 	OPEN_QUOTES,
 	NO_FILE,
 	NO_FILE_RED,
-	PWD_ARG,
+	CD_ARG,
 	EXIT_ARG,
 	EXIT_ARG_NUM
 };
