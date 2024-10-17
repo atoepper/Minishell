@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/16 12:28:55 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:32:01 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ int				set_error_exe(t_shell *mshell, int errno);
 void			ft_process_error(t_shell *mshell);
 
 /* EXPANDER */
-char			*ft_expand(char *value, t_shell *mshell);
+char			*ft_expand(char *value, t_shell *mshell, int type);
 int				expander(t_shell *mshell);
 
 /* TOKENIZING */
