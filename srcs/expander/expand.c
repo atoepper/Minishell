@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:31 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/17 13:04:53 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:36:38 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_expand_env(t_shell *mshell, char **cursor, int type)
 		free(key);
 		(*cursor) += ft_end_of_varname(*cursor);
 	}
-	else if (*(*cursor) == '\0' && !(type & RIGHT_JOIN))
+	else if ((*(*cursor) == '\0' && !(type & RIGHT_JOIN)) || *(*cursor) == ' ')
 		expand_to = ft_strdup("$");
 	else
 		expand_to = ft_strdup("");

@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:35:06 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/18 11:03:23 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:39:42 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_exit(char **argv, t_shell *mshell, int fd)
 		if (!is_numeric(argv[1]) || (ft_strlen(argv[1]) > 19
 				|| ft_atoi(argv[1]) < 0))
 		{
-			//mshell->exit_prog_val = 2;
 			if (fd == 1)
 				mshell->is_exit_prog = TRUE;
 			return (ft_set_error(mshell, 2, EXIT_ARG_NUM), 2);

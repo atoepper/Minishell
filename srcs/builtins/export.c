@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/16 13:26:30 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:48:18 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,12 @@ void	change_or_create(char *arg, char *key, t_shell *mshell)
 {
 	if (ft_find_key(mshell->envlst, key) != NULL)
 	{
-		print2errorfile("1");
-		print2errorfile(key);
 		if (ft_getvalue(arg) != NULL)
 			ft_change_envvalue(mshell->envlst, key, ft_getvalue(arg));
-		free(key);
 	}
 	else
 	{
-		print2errorfile("2");
-		print2errorfile(key);
-		ft_add_env(&(mshell->envlst), ft_new_env(key,
+		ft_add_env(&(mshell->envlst), ft_new_env(ft_strdup(key),
 				ft_getvalue(arg)));
 	}
 }
@@ -82,10 +77,13 @@ int	ft_export(char **argv, t_shell *mshell, int fd)
 		key = ft_getkeyword(argv[i]);
 		if (key == NULL)
 			return (ft_set_error(mshell, 1, MALLOC), 1);
-		if (!ft_iskeyword(key))
+		if (*argv[i] == '=')
+			ft_export_error("=", &errno);
+		else if (!ft_iskeyword(key))
 			ft_export_error(key, &errno);
 		else
 			change_or_create(argv[i], key, mshell);
+		free(key);
 	}
 	mshell->env = ft_remake_env(mshell);
 	return (errno);

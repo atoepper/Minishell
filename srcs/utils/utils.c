@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:41:34 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/16 13:05:38 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:52:22 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,15 @@ int	ft_wordlength(char *line)
 
 bool	ft_iskeyword(char *str)
 {
-	if (*str && ft_isalpha(str[0]))
-		return (TRUE);
-	else if (*str && *str == '_')
+	if (str == NULL)
+		return (FALSE);
+	if (*str == '\0' || !(ft_isalpha(str[0]) || str[0] == '_'))
+		return (FALSE);
+	while (*str)
 	{
-		while (*str == '_')
-			str++;
-		if (ft_isalnum(*str) || *str == '\0')
-			return (TRUE);
+		if (!(ft_isalnum(*str) || *str == '_'))
+			return (FALSE);
+		str++;
 	}
-	return (FALSE);
+	return (TRUE);
 }
