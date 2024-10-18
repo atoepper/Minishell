@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:53:14 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/16 12:29:29 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:51:55 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_set_error(t_shell *mshell, int errno, enum e_err_type err_type)
 {
 	mshell->error = errno;
 	mshell->err_type = err_type;
+	ft_process_error(mshell);
 }
 
 void	ft_process_error(t_shell *mshell)
@@ -29,8 +30,6 @@ void	ft_process_error(t_shell *mshell)
 	enum e_err_type	err_type;
 
 	err_type = mshell->err_type;
-	if (mshell->error == 0 || err_type == NO_ERR)
-		return ;
 	if (err_type == MALLOC)
 		ft_putstr_fd("minishell: malloc error\n", 2);
 	else if (err_type == SYNTAX)

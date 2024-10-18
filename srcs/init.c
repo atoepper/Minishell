@@ -6,11 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:06:36 by atoepper          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2024/10/15 16:36:49 by jweingar         ###   ########.fr       */
-=======
-/*   Updated: 2024/10/15 13:42:08 by jweingar         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2024/10/18 10:21:08 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

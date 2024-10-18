@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:09:29 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/18 10:12:22 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:07:17 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ int	execute_command_term(t_shell *mshell, t_ast_node *node_command_term)
 	add_pipe_to_output(node_command_term, mshell);
 	add_re_in_to_pipe(node_command_term, mshell);
 	add_re_out_to_pipe(node_command_term, mshell);
-	if (mshell->error == 0)
-		exec_function(node_command_term, mshell);
+	exec_function(node_command_term, mshell);
 	if (node_command_term->next != NULL)
 	{
 		close(node_command_term->fd[1]);

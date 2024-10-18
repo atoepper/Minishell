@@ -6,11 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2024/10/15 16:32:26 by jweingar         ###   ########.fr       */
-=======
-/*   Updated: 2024/10/15 13:42:18 by jweingar         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2024/10/18 11:11:24 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +33,9 @@ int	main(int argc, char **argv, char **envp)
 		if (mshell.token_list != NULL)
 			mshell.ast = parse_program(&mshell);
 		execute_programm(&mshell);
-		ft_process_error(&mshell);
 		ft_renewshell(&mshell);
 	}
 	clear_garbage(&mshell);
 	ft_putstr_fd("exit\n", 1);
-<<<<<<< Updated upstream
-	return (mshell.exit_status);
-=======
 	return (mshell.exit_prog_val);
->>>>>>> Stashed changes
 }
