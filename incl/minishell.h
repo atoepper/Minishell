@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 16:50:03 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:07:05 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ int				exec_external_child(t_ast_node *node_command_term,
 void			print_and_save_str(t_shell *mshell, char *str);
 int				check_if_red_out(t_ast_node *node_command_term);
 int				create_pipe(int *pipe_fd);
+void			add_pipe_to_output(t_ast_node *node_command_term, t_shell *mshell);
 
 /* INIT */
 int				init_shell(t_shell *mshell, char **envp);
