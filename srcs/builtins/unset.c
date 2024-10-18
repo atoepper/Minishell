@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:53:41 by jweingar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:10:30 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:53:28 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_unset(char **argv, t_shell *mshell, int fd)
 	if (argv == NULL)
 		return (1);
 	if (argv[1] == NULL)
-		return (printf("unset: not enough arguments\n"), 1);
+		return (0);
 	while (argv[i] != NULL)
 	{
 		if (ft_find_key(mshell->envlst, argv[i]) != NULL)
