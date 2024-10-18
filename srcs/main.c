@@ -6,7 +6,11 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:22:17 by atoepper          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2024/10/15 16:32:26 by jweingar         ###   ########.fr       */
+=======
+/*   Updated: 2024/10/15 13:42:18 by jweingar         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		mshell.line = readline(mshell.prompt);
 		if (g_signal_flag == 1)
-			mshell.exit_status = 130;
+			mshell.exit_prog_val = 130;
 		if (!mshell.line)
 			break ;
 		add_history(mshell.line);
@@ -38,5 +42,9 @@ int	main(int argc, char **argv, char **envp)
 	}
 	clear_garbage(&mshell);
 	ft_putstr_fd("exit\n", 1);
+<<<<<<< Updated upstream
 	return (mshell.exit_status);
+=======
+	return (mshell.exit_prog_val);
+>>>>>>> Stashed changes
 }
