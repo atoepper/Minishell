@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:06:31 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 17:03:39 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:04:53 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-char	*ft_expand_env(t_shell *mshell, char **cursor)
+char	*ft_expand_env(t_shell *mshell, char **cursor, int type)
 {
 	char	*expand_to;
 	char	*key;
@@ -33,8 +33,10 @@ char	*ft_expand_env(t_shell *mshell, char **cursor)
 		free(key);
 		(*cursor) += ft_end_of_varname(*cursor);
 	}
-	else
+	else if (*(*cursor) == '\0' && !(type & RIGHT_JOIN))
 		expand_to = ft_strdup("$");
+	else
+		expand_to = ft_strdup("");
 	return (expand_to);
 }
 
@@ -57,7 +59,7 @@ char	*ft_no_expand(char **cursor)
 	return (str);
 }
 
-char	*ft_expand(char *value, t_shell *mshell)
+char	*ft_expand(char *value, t_shell *mshell, int type)
 {
 	char	*expanded;
 	char	*tmp;
@@ -69,7 +71,7 @@ char	*ft_expand(char *value, t_shell *mshell)
 	while (*cursor != '\0')
 	{
 		if (*cursor == '$')
-			insert = ft_expand_env(mshell, &cursor);
+			insert = ft_expand_env(mshell, &cursor, type);
 		else
 			insert = ft_no_expand(&cursor);
 		tmp = expanded;
@@ -115,7 +117,7 @@ int	expander(t_shell *mshell)
 		if (current->type & EXPANDER)
 		{
 			tmp = current->value;
-			current->value = ft_expand(current->value, mshell);
+			current->value = ft_expand(current->value, mshell, current->type);
 			free(tmp);
 		}
 		current = current->next;

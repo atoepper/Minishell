@@ -6,7 +6,7 @@
 /*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:20:04 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/18 10:07:05 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:15:27 by jweingar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ enum e_err_type
 	OPEN_QUOTES,
 	NO_FILE,
 	NO_FILE_RED,
-	PWD_ARG,
+	CD_ARG,
 	EXIT_ARG,
 	EXIT_ARG_NUM
 };
@@ -230,7 +230,7 @@ int				set_error_exe(t_shell *mshell, int errno);
 void			ft_process_error(t_shell *mshell);
 
 /* EXPANDER */
-char			*ft_expand(char *value, t_shell *mshell);
+char			*ft_expand(char *value, t_shell *mshell, int type);
 int				expander(t_shell *mshell);
 
 /* TOKENIZING */

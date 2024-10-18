@@ -6,7 +6,7 @@
 /*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:57:51 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/11 13:07:02 by atoepper         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:28:43 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	ft_cd(char **argv, t_shell *mshell, int fd)
 		return (1);
 	if (argv[1] == NULL)
 		return_value = go_to_home(mshell);
+	else if (argv[2] != 0)
+		return (ft_set_error(mshell, 1, CD_ARG), 1);
 	else
 	{
 		if (!access(argv[1], F_OK))

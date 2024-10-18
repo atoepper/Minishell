@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: atoepper <atoepper@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:41:34 by atoepper          #+#    #+#             */
-/*   Updated: 2024/10/15 10:23:58 by jweingar         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:05:38 by atoepper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	ft_iskeyword(char *str)
 	{
 		while (*str == '_')
 			str++;
-		if (ft_isalnum(*str))
+		if (ft_isalnum(*str) || *str == '\0')
 			return (TRUE);
 	}
 	return (FALSE);
