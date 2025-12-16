@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jweingar <jweingar@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: alexander <alexander@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/02 14:26:28 by atoepper          #+#    #+#              #
-#    Updated: 2024/10/18 10:18:26 by jweingar         ###   ########.fr        #
+#    Updated: 2024/10/29 19:39:33 by alexander        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ### COMPILATION ###
 CC      = cc
-FLAGS  = -Wall -Wextra -Werror -g
+FLAGS  = -Wall -Wextra #-Werror -g
 
 ### EXECUTABLE ###
 NAME   = minishell
